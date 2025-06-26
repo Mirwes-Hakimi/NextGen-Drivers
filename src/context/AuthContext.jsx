@@ -19,8 +19,8 @@ export const AuthProvider = ({ children}) => { ///provider component that wraps 
     },[]);
 
     return (
-        <AuthContext.Provider>
-        
+        <AuthContext.Provider value={{ user }}>
+          {children}
         </AuthContext.Provider>
     );
 };
