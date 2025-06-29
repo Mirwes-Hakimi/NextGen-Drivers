@@ -1,0 +1,59 @@
+.container {
+    text-align: center;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.logoutSection {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    text-align: right;
+}
+
+.logoutText {
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+.logoutButton {
+    background-color: #ef4444;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 0375rem;
+    cursor: pointer;
+    transform: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: #dc2626;
+
+}
+
+.heading {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #22c55e;
+    margin-top: 2rem;
+}
+
+.subText {
+    margin-top: 1rem;
+    font-size: 1.123rem;
+}
+.dmvLink {
+    margin-top: 1.5rem;
+    display: inline-block;
+    background-color: #22c55e;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dmvLink:hover {
+    background-color: #15803d;
+}

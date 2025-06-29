@@ -10,3 +10,14 @@ export default {
     },
     plugins: [],
 }
+
+
+
+
+theme: {
+  extend: {
+    colors: {
+      customgreen: '#10B981',
+    },
+  },
+}

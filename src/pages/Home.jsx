@@ -1,25 +1,45 @@
+
+import { useAuth } from "../components/AuthContext"; /// get loggedin user
+import { signOut } from "firebase/auth"; /// firebase sign out
+import { auth } from "../firebase"; ///firebase config
 import { motion } from "framer-motion";
 import CallbackButton from "../components/CallbackButton";
+import styles from "../styles/Home.module.css";
 
 export default function Home(){
+    const { user } = useAuth(); // GET current user
+    
+    const handleLogout = () => {
+        signOut(auth)// sign the user out
+    };
 
     return (
-        <div className="text-center p-6">
-         <motion.h1
-         className="text-4xl font-bold text-lime-600"
-         initial={{ y:-100, opacity: 0  }}
+        <div className={styles.container}>
+          <div className={styles.logutSection}>
+          {user && (
+
+            <>
+              <p className={styles.logoutText}>Logged in as: {user.email}</p>
+           
+           <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+            </>
+          )}
+        </div>
+       <motion.h1
+         className={styles.heading}
+         initial={{ y: -100, opacity: 0 }}
          animate={{ y: 0, opacity: 1 }}
          transition={{ duration: 0.6 }}
-         >Welcome to A & B Driving School</motion.h1>
-         <p>Learn safe driving from the best instructors. Choose your package now.</p>
-         <a
-         href="https://www.dmv.ca.gov/" 
-         target="_blank"
+         
+       >Welcome to Next Gen Driving School</motion.h1>
+       <p className={styles.subText}> Learn safe driving from the best instructors. Choose your package now.</p>
+       <a
+         href="https://www.dmv.ca.gov/"
+         target="_black"
          rel="noopener noreferrer"
-         className="mt-6 inline-block bg-lime-600 text-white px-6 py-2 rounded-xl hover:bg-lime-700 transition"
-         >Visit DMV site</a>
-         <CallbackButton />
-        
-        </div>
-    )
+         className={styles.dmvLink}
+       >Visit DMV site</a>
+       <CallbackButton />
+    </div>
+    );
 }
