@@ -5,6 +5,7 @@ import { auth } from "../firebase"; ///firebase config
 import { motion } from "framer-motion";
 import CallbackButton from "../components/CallbackButton";
 import styles from "../styles/Home.module.css";
+import { Link, Routes, Route } from "react-router-dom";
 
 export default function Home(){
     const { user } = useAuth(); // GET current user
@@ -35,11 +36,15 @@ export default function Home(){
        <p className={styles.subText}> Learn safe driving from the best instructors. Choose your package now.</p>
        <a
          href="https://www.dmv.ca.gov/"
-         target="_black"
+         target="_blank"
          rel="noopener noreferrer"
          className={styles.dmvLink}
        >Visit DMV site</a>
        <CallbackButton />
+     
+       <Link to="/packages" className={styles.viewPackagesLink}>View Packages</Link>
+       
+       
     </div>
     );
 }

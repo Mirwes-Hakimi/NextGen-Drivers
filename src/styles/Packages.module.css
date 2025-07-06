@@ -1,0 +1,60 @@
+.container {
+    padding: 2rem;
+    text-align: center;
+}
+
+.heading {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #1a202c;
+}
+
+.grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+background-color: #f1f5f9;
+padding:  1.5rem;
+border-radius: 0.75rem;
+box-shadow: 0 4px rgba(0, 0, 0, 0.1);
+width: 250px;
+transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.title {
+    font-size: 1.5rem;
+    color: #16a34a;
+}
+
+.price {
+    font-size: 1.25rem;
+    color: #334155;
+    margin: 0.5rem 0;
+}
+
+.desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.buyBtn {
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.buyBtn:hover {
+    background-color: #15803d;
+}
