@@ -32,7 +32,7 @@ function Packages(){
         <button className={styles.buyBtn} onClick={() => handleBuy("Standard")}>Buy Now</button>
      </div>
 
-        {/* package 3 basic*/}
+        {/* package 3 basics*/}
      <div className={styles.card}>
        <h2 className={styles.title}>DMV Package</h2>
         <p className={styles.price}>$230</p>
