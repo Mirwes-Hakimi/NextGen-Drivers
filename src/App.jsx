@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import { useAuth } from "./components/AuthContext";
 import Packages from "./pages/Packages";
 import PrivateRoute from "./components/PrivateRoute";
+import LandingPage from "./pages/LandingPage";
 
 
 function App(){
@@ -12,16 +13,20 @@ function App(){
   return (
     <Router>
       <Routes>
-        <Route path="/" element={user ? <Home /> : <Navigate to="/login"/>} />
+        <Route path="/" element={<LandingPage/>}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/packages" element={ 
-          <PrivateRoute>
-          <Packages />
-          </PrivateRoute>
+        <Route path="/packages" element={ <Packages />
+          
          }
           />
+          <Route path="/dashboard" element={
+            <PrivateRoute>
+            <Home/>
+            </PrivateRoute> }
+            />
       </Routes>
+
 
     </Router>
   )

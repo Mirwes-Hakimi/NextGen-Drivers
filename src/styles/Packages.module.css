@@ -1,4 +1,4 @@
-.container {
+/* .container {
     padding: 2rem;
     text-align: center;
 }
@@ -58,3 +58,132 @@ transition: transform 0.3s;
 .buyBtn:hover {
     background-color: #15803d;
 }
+ */
+
+ .container {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.6s ease-in;
+ }
+
+ .sectionTitle {
+    font-size: 2rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    animation: slideInTop 0.5s forwards;
+ }
+
+ .mainHeading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2d6a4f;
+    animation: slideInTop 0.7s 0.2s forwards;   
+ }
+
+ .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+ }
+
+ .card{
+    background-color:  #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: zoomIn 0.5s ease-in;
+ }
+
+ .card:hover {
+    transform: translate(-5px);;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+ }
+
+ .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1b4332;
+ }
+.price {
+    font-size: 1.5rem;
+    color: #40916c;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.desc {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.featureItem {
+    margin-bottom: 0.5rem;
+    color: #2d6a4f;
+    display: flex;
+    align-items: center;
+}
+
+.buyBtn {
+    background-color: #2d6a4f;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buyBtn:hover {
+    background-color: #12af6e;
+}
+
+
+
+@media (max-width: 600px){
+    .mainHeading{
+        font-size: 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
+    }
+  .price {
+    font-size: 1.25rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
+
+@keyframes fadeIn {
+    0%{opacity: 0; transform: translate(20px);}
+    100% {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes slidInTop {
+    from {
+        opacity: 0;
+        transform: translateY(-30);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
