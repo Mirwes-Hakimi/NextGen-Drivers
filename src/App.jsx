@@ -6,12 +6,14 @@ import { useAuth } from "./components/AuthContext";
 import Packages from "./pages/Packages";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./pages/LandingPage";
+import Navbar from "./pages/Navbar";
 
 
 function App(){
   const { user } = useAuth();
   return (
     <Router>
+    <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage/>}/>
         <Route path="/login" element={<Login />}/>

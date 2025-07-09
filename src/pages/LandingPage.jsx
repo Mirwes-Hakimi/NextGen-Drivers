@@ -15,7 +15,7 @@ export default function LandingPage(){
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1 }}
            >
-             <img src="./background.png" alt="Next Gen Driving School" className={styles.logo} />
+             <img src="./logo.png" alt="Next Gen Driving School" className={styles.logo} />
               <h1 className={styles.title}>Next Gen Driving School</h1>
              <p className={styles.subtitle}>Master the road with confidence & certified instructors.</p>
              <a href="/packages">
