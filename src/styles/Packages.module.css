@@ -1,70 +1,17 @@
-/* .container {
-    padding: 2rem;
-    text-align: center;
-}
+/* 
 
-.heading {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #1a202c;
-}
 
-.grid {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.card {
-background-color: #f1f5f9;
-padding:  1.5rem;
-border-radius: 0.75rem;
-box-shadow: 0 4px rgba(0, 0, 0, 0.1);
-width: 250px;
-transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.title {
-    font-size: 1.5rem;
-    color: #16a34a;
-}
-
-.price {
-    font-size: 1.25rem;
-    color: #334155;
-    margin: 0.5rem 0;
-}
-
-.desc {
-    font-size: 0.95rem;
-    color: #64748b;
-    margin-bottom: 1rem;
-}
-
-.buyBtn {
-    background-color: #16a34a;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.buyBtn:hover {
-    background-color: #15803d;
-}
- */
 
  .container {
-    max-width: 950px;
-    margin: 0 auto;
-    padding: 2rem;
-    animation: fadeIn 0.6s ease-in;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    box-sizing: border-box;
+
  }
 
  .sectionTitle {
@@ -88,15 +35,20 @@ transition: transform 0.3s;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    flex-grow: 1;
  }
 
- .card{
+ .card {
     background-color:  #f9f9f9;
     padding: 1.5rem;
     border-radius: 1rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: zoomIn 0.5s ease-in;
+    width: 100%; 
+    max-width: 420px;
+    box-sizing: border-box;
+   
  }
 
  .card:hover {
@@ -110,6 +62,7 @@ transition: transform 0.3s;
     margin-bottom: 0.5rem;
     color: #1b4332;
  }
+
 .price {
     font-size: 1.5rem;
     color: #40916c;
@@ -186,4 +139,169 @@ transition: transform 0.3s;
     }
 }
 
+ */
 
+
+
+
+ /* ====== Layout wrappers ====== */
+
+.container {                         /* page max width + center */
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  padding-bottom: 3.5rem;
+  margin-top: 72px;
+}
+
+.sectionTitle {                      /* small section kicker */
+  text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.mainHeading {                       /* hero heading */
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f5132;
+  margin-bottom: 1.25rem;
+}
+
+/* ====== Location (choose city first) ====== */
+
+.locationBar {                       /* bar holding ZIP + City inputs */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: end;
+  margin: 1rem auto 1.25rem;
+  max-width: 720px;
+}
+
+.fieldLabel {                        /* label wrapper */
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+.zipInput,
+.citySelect {                         /* inputs + select base */
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #fff;
+}
+
+.zipInput:focus,
+.citySelect:focus {                   /* focus ring */
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52,211,153,0.2);
+}
+
+.warning {                            /* invalid ZIP warning */
+  text-align: center;
+  color: #b91c1c;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.helperText {                         /* hint to choose city first */
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0.25rem 0 0.75rem;
+}
+
+/* ====== Cards grid (only shows when a city is selected) ====== */
+
+.grid {                               /* responsive cards grid */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {                               /* package card shell */
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.1rem;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.04);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.card:hover {                         /* subtle hover lift */
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.08);
+}
+
+.title {                              /* package name */
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.4rem;
+}
+
+.price {                              /* price for selected city */
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #065f46;
+  margin-bottom: 0.35rem;
+}
+
+.features {                           /* features list wrapper */
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0.85rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.featureItem {                         /* each feature line */
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.buyBtn {                              /* book now button */
+  width: 100%;
+  border: 0;
+  background: linear-gradient(90deg, #10b981, #059669);
+  color: #ffffff;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 160ms ease, transform 160ms ease;
+}
+
+.buyBtn:hover {                        /* hover feedback */
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* ====== Responsive ====== */
+
+@media (max-width: 960px) {           /* tablet: 2 columns */
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {           /* mobile: single column */
+  .locationBar {
+    grid-template-columns: 1fr;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .mainHeading {
+    font-size: 1.35rem;
+  }
+}

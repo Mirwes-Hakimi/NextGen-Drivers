@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -123,4 +123,154 @@
     .mobileMenu {
         display: flex;
     }
+} */
+
+
+
+/* Top nav container, sticks to the top */
+.navbar {
+  position: sticky;               /* stay at top when scrolling */
+  top: 0;
+  z-index: 1000;                  /* above page content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e293b;      /* slate-800 */
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Brand area: logo + text */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logoImg {
+  height: 36px;                   /* keep small for mobile */
+  width: auto;
+}
+
+.logoText {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Desktop links row */
+.desktopLinks {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Links base style */
+.link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;    /* FIX: 0.3e -> 0.3s */
+}
+
+.link:hover {
+  color: #93c5fd;                 /* light blue */
+}
+
+/* Dropdown wrapper (desktop) */
+.dropdown {
+  position: relative;
+}
+
+/* The “View More” button – keep dark so it never turns white-on-white */
+.dropdownButton {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.dropdownButton:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Dropdown panel (desktop hover) */
+.dropdownContent {
+  display: none;                  /* hidden by default */
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: #0f172a;      /* slate-950 */
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  min-width: 220px;
+  box-shadow: 0 10px 24px rgba(2,6,23,0.35);
+}
+
+.dropdown:hover .dropdownContent {
+  display: flex;                  /* show on hover */
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.dropdownContent .link {          /* dropdown links */
+  color: #e5e7eb;
+  padding: 0.35rem 0.25rem;
+  border-radius: 6px;
+}
+
+.dropdownContent .link:hover {
+  background: rgba(255,255,255,0.06);
+  color: #93c5fd;
+}
+
+/* Mobile hamburger area */
+.mobileMenu {
+  display: none;                  /* hidden on desktop */
+  align-items: center;
+}
+
+.menuButton {
+  background: none;
+  color: #ffffff;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Mobile dropdown (rendered conditionally) */
+.mobileDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;                       /* full width */
+  background-color: #1e293b;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 999;                   /* above content but under navbar */
+  animation: slideDown 0.3s ease-in-out;  /* FIX: correct keyframes + duration unit */
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .desktopLinks { display: none; }  /* hide desktop menu */
+  .mobileMenu { display: flex; }    /* show hamburger */
+}
+
+/* Optional: give page content space under sticky nav.
+   If your page/container already adds margin-top, you can remove this. */
+:root {
+  --navbar-height: 56px;
 }

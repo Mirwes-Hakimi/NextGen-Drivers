@@ -3,3 +3,29 @@
 @tailwind utilities;
 
 
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    font-family: sans-serif;
+}
+
+/* ---------- GLOBAL RESET ---------- */
+/* Make sizing predictable */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+/* Let the page scroll normally on mobile */
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;                                 /* remove default margin */
+  overflow-y: auto;                          /* enable vertical scrolling */
+  -webkit-overflow-scrolling: touch;         /* smooth iOS scroll */
+  background: #f5f7fb;                       /* subtle app background */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left); /* iPhone notch */
+}

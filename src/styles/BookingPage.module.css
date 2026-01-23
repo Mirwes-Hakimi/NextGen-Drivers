@@ -1,0 +1,228 @@
+/* ====== Page shell ====== */
+
+.container {                      /* centered card layout under sticky navbar */
+  --brand-green: #10b981;         /* primary accent (emerald) */
+  --brand-green-dark: #059669;    /* darker emerald for hovers */
+  --ink-900: #0f172a;             /* slate-900 text */
+  --ink-700: #374151;             /* slate-700 text */
+  --ink-500: #6b7280;             /* slate-500 text */
+  --ring: rgba(16,185,129,0.22);  /* emerald focus ring */
+  --panel: #ffffff;               /* panel background */
+  --panel-soft: #f8fafc;          /* soft background */
+  --border: #e5e7eb;              /* light border */
+
+  max-width: 980px;
+  margin: 72px auto 24px;         /* leave space for sticky navbar */
+  padding: 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.08);
+  animation: fadeIn 280ms ease-out;
+}
+
+.heading {                        /* page title */
+  text-align: center;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--ink-900);
+  margin: 4px 0 4px;
+}
+
+.summary {                        /* selected package/city/price */
+  text-align: center;
+  color: var(--ink-700);
+  font-size: 0.98rem;
+  margin-bottom: 14px;
+}
+
+/* ====== Form layout ====== */
+
+.form {                           /* overall form stack */
+  display: grid;
+  gap: 16px;
+}
+
+.formGrid {                       /* responsive grid for personal fields */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.fieldLabel {                     /* label + input group */
+  display: grid;
+  gap: 6px;
+  color: var(--ink-900);
+  font-size: 0.95rem;
+}
+
+/* Unified input look */
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="date"],
+.form input[type="time"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink-900);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.form input::placeholder {
+  color: var(--ink-500);
+}
+
+.form input:focus {
+  border-color: var(--brand-green);
+  box-shadow: 0 0 0 3px var(--ring);
+  background: #ffffff;
+}
+
+/* ====== Section titles ====== */
+
+.subHeading {                     /* “Session Scheduling” */
+  margin-top: 2px;
+  font-size: 1.05rem;
+  color: var(--brand-green-dark);
+  font-weight: 800;
+}
+
+/* ====== Session cards ====== */
+
+.sessionCard {                    /* one card per session */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px dashed #c7eadf;
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 60%);
+  animation: floatIn 260ms ease-out;
+}
+
+.sessionCard h4 {                 /* “Session 1/2/3” */
+  grid-column: 1 / -1;
+  margin: 2px 0 6px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+/* ====== Terms + actions ====== */
+
+.termsRow {                       /* terms checkbox row */
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--ink-700);
+  font-size: 0.95rem;
+  padding: 6px 2px 0;
+}
+
+.buttonRow {                      /* submit buttons */
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.primaryBtn {                     /* Pay Now (CTA) */
+  border: 0;
+  background: linear-gradient(90deg, var(--brand-green), var(--brand-green-dark));
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 140ms ease, filter 140ms ease, box-shadow 140ms ease;
+  box-shadow: 0 10px 18px rgba(16,185,129,0.22);
+}
+
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.primaryBtn:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+.secondaryBtn {                   /* Pay Later */
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--ink-900);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+}
+
+.secondaryBtn:hover {
+  background: var(--panel-soft);
+  transform: translateY(-1px);
+}
+
+.secondaryBtn:active {
+  transform: translateY(0);
+}
+
+/* ====== Helper pills (optional) ====== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #065f46;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+/* ====== Animations ====== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ====== Responsive ====== */
+
+@media (max-width: 960px) {       /* tablet */
+  .formGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sessionCard {
+    grid-template-columns: 1fr;   /* stack session fields */
+  }
+}
+
+@media (max-width: 640px) {       /* mobile */
+  .container {
+    margin: 64px 10px 18px;       /* a hair tighter on small screens */
+    padding: 14px;
+    border-radius: 12px;
+  }
+  .heading {
+    font-size: 1.35rem;
+  }
+  .formGrid {
+    grid-template-columns: 1fr;   /* single column inputs */
+  }
+  .buttonRow {
+    gap: 8px;
+  }
+}

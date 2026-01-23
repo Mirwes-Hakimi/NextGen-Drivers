@@ -7,6 +7,7 @@ import Packages from "./pages/Packages";
 import PrivateRoute from "./components/PrivateRoute";
 import LandingPage from "./pages/LandingPage";
 import Navbar from "./pages/Navbar";
+import BookingPage from "./pages/BookingPage";
 
 
 function App(){
@@ -18,10 +19,11 @@ function App(){
         <Route path="/" element={<LandingPage/>}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/packages" element={ <Packages />
+        <Route path="/packages" element={ <Packages />} />
+        <Route  path="/booking" element={<BookingPage />} />
           
-         }
-          />
+         
+          
           <Route path="/dashboard" element={
             <PrivateRoute>
             <Home/>

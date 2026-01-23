@@ -1,0 +1,45 @@
+// src/data/locations.js
+// ZIP → City mapping
+// Only includes the exact cities used inside Packages.jsx (cities:{})
+
+export const zipToCity = {
+  // --- San Francisco ---
+  94102: "San Francisco", 94103: "San Francisco",
+  94107: "San Francisco", 94109: "San Francisco",
+  94110: "San Francisco", 94112: "San Francisco",
+  94114: "San Francisco", 94115: "San Francisco",
+  94116: "San Francisco", 94117: "San Francisco",
+  94118: "San Francisco", 94121: "San Francisco",
+  94122: "San Francisco", 94123: "San Francisco",
+  94124: "San Francisco", 94127: "San Francisco",
+  94131: "San Francisco", 94132: "San Francisco",
+  94133: "San Francisco", 94134: "San Francisco",
+
+  94014: "Daly City",
+  94015: "Daly City",
+  94550: "Livermore",
+  94551: "Livermore",
+  94618: "Oakland",
+  94621: "Oakland",
+  94566: "Pleasanton",
+  94588: "Pleasanton",
+  94568: "Dublin",
+  94582: "San Ramon",
+  94583: "San Ramon",
+  94506: "Danville",
+  94526: "Danville",
+  94507: "Alamo",
+  94595: "Walnut Creek",
+  94596: "Walnut Creek",
+  94597: "Walnut Creek",
+  94598: "Walnut Creek",
+  94523: "Pleasant Hill",
+  94518: "Concord",
+  94519: "Concord",
+  94520: "Concord",
+  94521: "Concord",
+  94565: "Pittsburg",
+  94509: "Antioch",
+  94531: "Antioch",
+  94513: "Brentwood",
+};
