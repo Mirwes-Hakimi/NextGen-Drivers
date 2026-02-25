@@ -9,6 +9,8 @@ export default function BookingPage() {
   const selectedCity = state?.selectedCity || "";         // city chosen on Packages page
   const price = state?.price || "";                       /// price for that city
 
+  const isDMV = selectedPackage.type === "DMV";
+
   const [formData, setFormData] = useState({              /// all form values in one object
     firstName: "",                                        // student first name
     lastName: "",                                         /// student last name
@@ -67,24 +69,81 @@ export default function BookingPage() {
   const handleSessionStartChange = (sessionIndex, startTime) => {
     // Save start time
     handleSessionChange(sessionIndex, "startTime", startTime);
+
     // Calculate end time as +110 minutes (2:30 -> 4:20 example)
-    const endTime = addMinutesToTime(startTime, 120);
+const duration = selectedPackage.sessionDurationMinutes || 120;
+const endTime = addMinutesToTime(startTime, duration);
+
     // Save end time automatically
     handleSessionChange(sessionIndex, "endTime", endTime);
   };
 
+
+
+  function calculateAge(dob) {
+    const birth = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
+
   const handleSubmit = (e) => {
-    e.preventDefault();                                     // prevent page reload
+  e.preventDefault();
 
-    if (!selectedCity || !price) {                          // must have city + price
-      alert("Something went wrong. Please go back and select your city again.");
+  // ✅ Age validation
+  if (!formData.dob) {
+    alert("Please enter date of birth.");
+    return;
+  }
+
+  if (calculateAge(formData.dob) < 15) {
+    alert("Students must be at least 15 years old to book a session.");
+    return;
+  }
+
+  const now = new Date();
+
+  // ✅ Validate each session
+  for (let i = 0; i < formData.sessions.length; i++) {
+    const session = formData.sessions[i];
+
+    if (!session?.date || !session?.startTime) {
+      alert(`Please complete date and time for Session ${i + 1}.`);
       return;
     }
 
-    if (!formData.agreedToTerms) {                          // must accept terms
-      alert("Please acknowledge the Terms and Conditions.");
+    const selectedDateTime = new Date(`${session.date}T${session.startTime}`);
+
+    // ❌ No past sessions
+    if (selectedDateTime <= now) {
+      alert(`Session ${i + 1} cannot be in the past.`);
       return;
     }
+
+    // ✅ Business hours only (8AM–6PM)
+    const hour = selectedDateTime.getHours();
+    if (hour < 8 || hour >= 18) {
+      alert(`Session ${i + 1} must be between 8:00 AM and 6:00 PM.`);
+      return;
+    }
+  }
+
+  // ✅ Terms agreement
+  if (!formData.agreedToTerms) {
+    alert("Please acknowledge the Terms and Conditions.");
+    return;
+  }
+
 
     console.log("Booking Data:", {                          // log data for now
       package: selectedPackage,
@@ -194,6 +253,12 @@ export default function BookingPage() {
 
         {/* Sessions area */}
         <h3 className={styles.subHeading}>Session Scheduling</h3>
+
+        {isDMV && (
+  <p className={styles.dmvNote}>
+    This appointment includes a 45-minute warm-up practice before the DMV test.
+  </p>
+)}
 
         {sessionNumbers.map((num, idx) => {
           // Get session data if exists

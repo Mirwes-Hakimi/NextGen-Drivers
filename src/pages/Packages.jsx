@@ -9,9 +9,9 @@ export default function Packages() {
     {
       // Title for 2-hour package
       title: "Behind The Wheel Training Package: 2 Hours",
-      // Number of sessions in this package
+      // Number of sessions in this package\/
+      type: "TRAINING",
       sessions: 1,
-      // Prices per city (numbers, not strings)
       cities: {
         "San Francisco": 210,
         "Daly City": 200,
@@ -41,6 +41,7 @@ export default function Packages() {
       // Title for 4-hour package
       title: "Behind The Wheel Training Package: 4 Hours",
       // 2 sessions of 2 hours
+      type: "TRAINING",
       sessions: 2,
       cities: {
         "San Francisco": 390,
@@ -71,8 +72,9 @@ export default function Packages() {
     {
       // Title for 6-hour package
       title: "Behind The Wheel Training Package: 6 Hours",
-      // 3 sessions of 2 hours
+      type: "TRAINING",
       sessions: 3,
+
       cities: {
         "San Francisco": 590,
         "Daly City": 550,
@@ -106,6 +108,7 @@ export default function Packages() {
   title: "DMV Behind-The-Wheel Road Test (2 Hours)",
   
   // One appointment (practice + test)
+   type: "DMV",
   sessions: 1,
 
   // City-based pricing
