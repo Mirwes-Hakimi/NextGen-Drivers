@@ -1,83 +1,471 @@
-.container {
-    background-color: #ffffff;
-    color: #2d2d2d;
-    padding: 2rem;
-    font-family: 'Segoe UI', sans-serif;
+/* ─────────────────────────────────────────
+   BASE
+───────────────────────────────────────── */
+.page {
+  font-family: 'Segoe UI', sans-serif;
+  color: #1f2937;
+  background: #ffffff;
 }
 
-
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
 .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 2rem;
-    background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
-    animation: fadIn 1s ease-in-out;
-
+  /* Deep dark charcoal base — makes the green accents pop */
+  background: #0a0f0d;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.logo {
-    width: 100px;
-    margin-bottom: 1rem;
+/* Large bright green radial glow behind the content */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(34,197,94,0.22) 0%, rgba(16,185,129,0.1) 40%, transparent 70%);
+  pointer-events: none;
 }
 
-.title {
-    font-size: 3rem;
-    color: #555;
-    font-weight: bold;
-    color: #1e3a8a;
-    margin-bottom: 1rem;
-    
+/* Bottom-left decorative blurred circle */
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
-.subtitle {
-    color: #555;
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin-bottom: 2rem;
+/* ─────────────────────────────────────────
+   ANIMATED ORBS
+   Each orb is a blurred circle that floats
+   slowly around the hero background.
+───────────────────────────────────────── */
+
+/* Base orb style — all orbs share these */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);            /* heavy blur = soft glowing look */
+  opacity: 0.55;
+  pointer-events: none;          /* don't block clicks */
+  z-index: 0;
 }
 
-.ctaButton {
-    background-color: #00b894;
-    color: white;
+/* Top-left — large bright green, drifts diagonally */
+.orb1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #22c55e, #16a34a);
+  top: -100px;
+  left: -100px;
+  animation: floatA 12s ease-in-out infinite;
+}
+
+/* Top-right — teal, drifts in a slow oval */
+.orb2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #10b981, #059669);
+  top: 20px;
+  right: -60px;
+  animation: floatB 15s ease-in-out infinite;
+}
+
+/* Bottom-center — emerald, pulses and drifts upward */
+.orb3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #34d399, #22c55e);
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatC 10s ease-in-out infinite;
+}
+
+/* Bottom-right — small accent orb, fast movement */
+.orb4 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #6ee7b7, #34d399);
+  bottom: -40px;
+  right: 80px;
+  animation: floatD 8s ease-in-out infinite;
+}
+
+/* Float animations — each moves in a unique path */
+@keyframes floatA {
+  0%   { transform: translate(0px, 0px);    }
+  33%  { transform: translate(60px, 40px);  }
+  66%  { transform: translate(-30px, 70px); }
+  100% { transform: translate(0px, 0px);    }
+}
+
+@keyframes floatB {
+  0%   { transform: translate(0px, 0px);    }
+  33%  { transform: translate(-50px, 60px); }
+  66%  { transform: translate(40px, 30px);  }
+  100% { transform: translate(0px, 0px);    }
+}
+
+@keyframes floatC {
+  0%   { transform: translateX(-50%) translateY(0px);   }
+  50%  { transform: translateX(-50%) translateY(-50px); }
+  100% { transform: translateX(-50%) translateY(0px);   }
+}
+
+@keyframes floatD {
+  0%   { transform: translate(0px, 0px);    }
+  50%  { transform: translate(-40px, -35px);}
+  100% { transform: translate(0px, 0px);    }
+}
+
+/* ─────────────────────────────────────────
+   HERO OVERLAY (sits above the orbs)
+───────────────────────────────────────── */
+.heroOverlay {
+  position: relative;
+  z-index: 1;                    /* above the orbs */
+  width: 100%;
+  max-width: 800px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* .logo removed — replaced by <AnimatedLogo /> component */
+
+.heroTitle {
+  font-size: 3.25rem;
+  font-weight: 800;
+  color: #f0fdf4;                /* near-white with green tint */
+  line-height: 1.2;
+  margin: 0;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+
+/* Bright green accent on second line */
+.heroAccent {
+  color: #22c55e;
+  text-shadow: 0 0 40px rgba(34,197,94,0.4); /* subtle green glow */
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  color: #9ca3af;                /* muted gray — readable on dark bg */
+  max-width: 560px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Two CTA buttons side by side */
+.heroBtns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Primary green button */
+.btnPrimary {
+  background: #22c55e;
+  color: #fff;
+  padding: 0.85rem 2rem;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s;
+  display: inline-block;
+}
+
+.btnPrimary:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+/* Secondary ghost button */
+.btnSecondary {
+  background: transparent;
+  color: #d1fae5;
+  padding: 0.85rem 2rem;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #6ee7b7;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
+  display: inline-block;
+}
+
+.btnSecondary:hover {
+  background: #6ee7b7;
+  color: #064e3b;
+  transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────
+   STATS BAR
+───────────────────────────────────────── */
+.statsBar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  background: #f0fdf4;
+  border-top: 1px solid #bbf7d0;
+  border-bottom: 1px solid #bbf7d0;
+  padding: 1.5rem 1rem;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 2.5rem;
+  border-right: 1px solid #bbf7d0;
+}
+
+/* Remove right border from last stat */
+.statItem:last-child {
+  border-right: none;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #16a34a;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─────────────────────────────────────────
+   SHARED SECTION STYLES
+───────────────────────────────────────── */
+.section {
+  padding: 5rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Gray background variant — used for How It Works */
+.sectionGray {
+  background: #f9fafb;
+  max-width: 100%;
+  padding: 5rem 1.5rem;
+}
+
+/* Small green label above the section title */
+.sectionLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #16a34a;
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 2.5rem;
+}
+
+/* ─────────────────────────────────────────
+   WHY CHOOSE US — feature cards grid
+───────────────────────────────────────── */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.featureCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.featureCard:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+
+.featureIcon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.featureTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.4rem;
+}
+
+.featureDesc {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   HOW IT WORKS — 3-step row
+───────────────────────────────────────── */
+.stepsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.stepCard {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Giant step number watermark in the background */
+.stepNumber {
+  font-size: 5rem;
+  font-weight: 900;
+  color: #d1fae5;
+  position: absolute;
+  top: -0.5rem;
+  right: 0.75rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.stepTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  position: relative;  /* sit above the watermark number */
+}
+
+.stepDesc {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────
+   FINAL CTA BANNER
+───────────────────────────────────────── */
+.ctaBanner {
+  background: #0a0f0d;           /* same dark base as the hero */
+  border-top: 1px solid #1f2d23;
+  text-align: center;
+  padding: 5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow accent behind CTA heading */
+.ctaBanner::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(34,197,94,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ctaTitle {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #f0fdf4;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.ctaSubtitle {
+  font-size: 1.1rem;
+  color: #9ca3af;
+  max-width: 520px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .heroTitle {
+    font-size: 2.25rem;
+  }
+
+  .heroSubtitle {
     font-size: 1rem;
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-    cursor: pointer;
-}
+  }
 
-.ctaButton:hover {
-    background-color: #019274;
-}
+  .featuresGrid,
+  .stepsRow {
+    grid-template-columns: 1fr;
+  }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translate(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+  .statItem {
+    padding: 0.75rem 1.25rem;
+    border-right: none;
+    border-bottom: 1px solid #bbf7d0;
+  }
 
-@media (max-width: 768px){
-    .title {
-        font-size: 2rem;
-    }
+  .statItem:last-child {
+    border-bottom: none;
+  }
 
-    .subtitle{
-        font-size: 1rem;
-    }
-
-    .cta {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.5rem;
-    }
+  .ctaTitle {
+    font-size: 1.75rem;
+  }
 }

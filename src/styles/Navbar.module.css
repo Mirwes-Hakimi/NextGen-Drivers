@@ -1,276 +1,395 @@
-/* .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1e293b;
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo {
-    height: 60px;
-    color: white;
-}
-
-.desktopLinks {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.link {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: color 0.3e ease;
-}
-
-.link:hover {
-    color: #93dbfa;
-}
-
-.dropdown {
-    position: relative;
-}
-
-.dropdownButton {
-    background:none;
-    color: #ffffff;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-
-.dropdownContent {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #334155;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    flex-direction: column;
-    min-width: 220px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    flex-direction: column;
-    z-index: 10;
-}
-
-.dropdown:hover .dropdownContent {
-    display: flex;
-}
-
-.dropdownContent .link {
-    color: #ffffff;
-    padding: 0.4rem 0;
-    text-align: left;
-}
-
-.dropdownContent .link:hover {
-    color: #38bdf8;
-}
-
-.mobileMenu {
-    display: none;
-    gap: 1rem;
-    align-items: center;
-
-}
-
-.menuButton {
-    background: none;
-    color: #ffffff;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.mobileDropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #1e293b;
-    padding: 1rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    animation: slidedown 0.3e ease-in-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 768px){
-    .desktopLinks {
-        display: none;
-    }
-
-    .mobileMenu {
-        display: flex;
-    }
-} */
-
-
-
-/* Top nav container, sticks to the top */
+/* ─────────────────────────────────────────
+   NAVBAR BASE
+   Transparent at the very top of the page,
+   gains a solid dark bg + shadow once scrolled
+───────────────────────────────────────── */
 .navbar {
-  position: sticky;               /* stay at top when scrolling */
+  position: sticky;
   top: 0;
-  z-index: 1000;                  /* above page content */
+  z-index: 1000;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #1e293b;      /* slate-800 */
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  justify-content: space-between;
+  padding: 0.7rem 1.5rem;
+  background: rgba(10, 15, 13, 0.85);      /* semi-transparent dark */
+  backdrop-filter: blur(12px);             /* frosted glass effect */
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(34, 197, 94, 0.12); /* subtle green underline */
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  gap: 1rem;
 }
 
-/* Brand area: logo + text */
+/* Solid background after scrolling */
+.scrolled {
+  background: rgba(10, 15, 13, 0.97);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ─────────────────────────────────────────
+   BRAND (logo + school name)
+───────────────────────────────────────── */
 .brand {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
-.logoImg {
-  height: 36px;                   /* keep small for mobile */
-  width: auto;
+/* .logoImg removed — replaced by <NavLogo /> component */
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
 }
 
-.logoText {
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.2px;
+/* "NEXT GEN" — white, bold */
+.brandMain {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f0fdf4;
+  letter-spacing: 0.08em;
 }
 
-/* Desktop links row */
+/* "DRIVING SCHOOL" — green, smaller */
+.brandSub {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #22c55e;
+  letter-spacing: 0.12em;
+}
+
+/* ─────────────────────────────────────────
+   DESKTOP NAV LINKS
+───────────────────────────────────────── */
 .desktopLinks {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.25rem;
+  flex: 1;
+  justify-content: center;             /* center the main links */
 }
 
-/* Links base style */
+/* Individual nav link */
 .link {
-  color: #ffffff;
+  color: #d1d5db;
   text-decoration: none;
+  font-size: 0.9rem;
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: color 0.3s ease;    /* FIX: 0.3e -> 0.3s */
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.4rem;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
 }
 
 .link:hover {
-  color: #93c5fd;                 /* light blue */
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
 }
 
-/* Dropdown wrapper (desktop) */
+/* Active page — green underline dot */
+.activeLink {
+  color: #22c55e !important;
+  position: relative;
+}
+
+.activeLink::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 2px;
+  background: #22c55e;
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────
+   "MORE" DROPDOWN
+───────────────────────────────────────── */
 .dropdown {
   position: relative;
 }
 
-/* The “View More” button – keep dark so it never turns white-on-white */
-.dropdownButton {
+.dropdownBtn {
   background: transparent;
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 0.35rem 0.6rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  color: #d1d5db;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.4rem;
   cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
 }
 
-.dropdownButton:hover {
-  background: rgba(255,255,255,0.08);
+.dropdownBtn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
 }
 
-/* Dropdown panel (desktop hover) */
-.dropdownContent {
-  display: none;                  /* hidden by default */
+/* Animated caret arrow */
+.caret {
+  display: inline-block;
+  transition: transform 0.2s;
+  margin-left: 2px;
+}
+
+.dropdown:hover .caret {
+  transform: rotate(180deg);
+}
+
+/* Dropdown panel — hidden by default, shown on hover */
+.dropdownPanel {
+  display: none;
   position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  background-color: #0f172a;      /* slate-950 */
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  min-width: 220px;
-  box-shadow: 0 10px 24px rgba(2,6,23,0.35);
-}
-
-.dropdown:hover .dropdownContent {
-  display: flex;                  /* show on hover */
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0d1f16;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 0.6rem;
+  padding: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.1rem;
+  z-index: 10;
 }
 
-.dropdownContent .link {          /* dropdown links */
-  color: #e5e7eb;
-  padding: 0.35rem 0.25rem;
-  border-radius: 6px;
+.dropdown:hover .dropdownPanel {
+  display: flex;
 }
 
-.dropdownContent .link:hover {
-  background: rgba(255,255,255,0.06);
-  color: #93c5fd;
+.dropdownLink {
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.4rem;
+  transition: color 0.2s, background 0.2s;
 }
 
-/* Mobile hamburger area */
-.mobileMenu {
-  display: none;                  /* hidden on desktop */
+.dropdownLink:hover {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+/* ─────────────────────────────────────────
+   DESKTOP RIGHT SIDE (auth + Book Now)
+───────────────────────────────────────── */
+.desktopRight {
+  display: flex;
   align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
 }
 
-.menuButton {
+/* Logged-in user chip (email + icon) */
+.userChip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.2s;
+  max-width: 180px;
+}
+
+.userChip:hover {
+  background: rgba(255,255,255,0.07);
+}
+
+.userIcon {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+/* Truncate long email addresses */
+.userEmail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Logout button */
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  color: #9ca3af;
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.82rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.logoutBtn:hover {
+  color: #ef4444;
+  border-color: rgba(239,68,68,0.4);
+}
+
+/* Login button (logged-out state) */
+.loginBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: color 0.2s, background 0.2s;
+}
+
+.loginBtn:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.07);
+}
+
+/* Book Now — bright green CTA, always visible */
+.bookBtn {
+  background: #22c55e;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.45rem 1.1rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.bookBtn:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────
+   MOBILE HAMBURGER BUTTON
+───────────────────────────────────────── */
+.hamburger {
+  display: none;              /* hidden on desktop */
   background: none;
   color: #ffffff;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   cursor: pointer;
+  padding: 0.3rem;
+  flex-shrink: 0;
 }
 
-/* Mobile dropdown (rendered conditionally) */
-.mobileDropdown {
+/* ─────────────────────────────────────────
+   MOBILE SLIDE-DOWN MENU
+───────────────────────────────────────── */
+.mobileMenu {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;                       /* full width */
-  background-color: #1e293b;
-  padding: 0.9rem 1rem;
+  right: 0;
+  background: #0a0f0d;
+  border-bottom: 1px solid rgba(34, 197, 94, 0.15);
+  padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  z-index: 999;                   /* above content but under navbar */
-  animation: slideDown 0.3s ease-in-out;  /* FIX: correct keyframes + duration unit */
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  gap: 0.25rem;
+  z-index: 999;
+  animation: slideDown 0.25s ease-out;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0);     }
 }
 
-/* Responsive */
+/* Mobile nav link */
+.mobileLink {
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.6rem 0.5rem;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.mobileLink:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.06);
+}
+
+/* Active mobile link */
+.activeMobileLink {
+  color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+/* Thin divider line */
+.mobileDivider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 0.4rem 0;
+}
+
+/* Mobile logout button */
+.mobileLogoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border-radius: 0.4rem;
+  transition: color 0.2s;
+}
+
+.mobileLogoutBtn:hover {
+  color: #ef4444;
+}
+
+/* Mobile Book Now button */
+.mobileBookBtn {
+  display: block;
+  background: #22c55e;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.mobileBookBtn:hover {
+  background: #16a34a;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — switch to mobile at 900px
+───────────────────────────────────────── */
 @media (max-width: 900px) {
-  .desktopLinks { display: none; }  /* hide desktop menu */
-  .mobileMenu { display: flex; }    /* show hamburger */
-}
-
-/* Optional: give page content space under sticky nav.
-   If your page/container already adds margin-top, you can remove this. */
-:root {
-  --navbar-height: 56px;
+  .desktopLinks  { display: none; }
+  .desktopRight  { display: none; }
+  .hamburger     { display: flex; }
 }

@@ -1,196 +1,233 @@
-/* ====== Page shell ====== */
+/* ─────────────────────────────────────────
+   BOOKING PAGE — dark theme
+───────────────────────────────────────── */
 
-.container {                      /* centered card layout under sticky navbar */
-  --brand-green: #10b981;         /* primary accent (emerald) */
-  --brand-green-dark: #059669;    /* darker emerald for hovers */
-  --ink-900: #0f172a;             /* slate-900 text */
-  --ink-700: #374151;             /* slate-700 text */
-  --ink-500: #6b7280;             /* slate-500 text */
-  --ring: rgba(16,185,129,0.22);  /* emerald focus ring */
-  --panel: #ffffff;               /* panel background */
-  --panel-soft: #f8fafc;          /* soft background */
-  --border: #e5e7eb;              /* light border */
+/* ── Page shell ── */
+.page {
+  min-height: 100vh;
+  background: #0a0f0d;
+  padding: 2rem 1.25rem 4rem;
+}
 
-  max-width: 980px;
-  margin: 72px auto 24px;         /* leave space for sticky navbar */
-  padding: 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.08);
+/* ── Centered card ── */
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  background: #0d1f16;
+  border: 1px solid rgba(34,197,94,0.15);
+  border-radius: 18px;
+  padding: 2rem 2rem 2.5rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   animation: fadeIn 280ms ease-out;
 }
 
-.heading {                        /* page title */
+/* ── Header ── */
+.heading {
   text-align: center;
-  font-size: 1.55rem;
-  font-weight: 800;
-  color: var(--ink-900);
-  margin: 4px 0 4px;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #f0fdf4;
+  margin: 0 0 0.35rem;
+  line-height: 1.3;
 }
 
-.summary {                        /* selected package/city/price */
+.summary {
   text-align: center;
-  color: var(--ink-700);
-  font-size: 0.98rem;
-  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 1.75rem;
 }
 
-/* ====== Form layout ====== */
+.summary strong {
+  color: #22c55e;
+}
 
-.form {                           /* overall form stack */
+/* ── Form layout ── */
+.form {
   display: grid;
-  gap: 16px;
+  gap: 1.25rem;
 }
 
-.formGrid {                       /* responsive grid for personal fields */
+.formGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 0.9rem;
 }
 
-.fieldLabel {                     /* label + input group */
+.fieldLabel {
   display: grid;
-  gap: 6px;
-  color: var(--ink-900);
-  font-size: 0.95rem;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  letter-spacing: 0.02em;
 }
 
-/* Unified input look */
+/* ── Inputs ── */
 .form input[type="text"],
 .form input[type="email"],
+.form input[type="tel"],
 .form input[type="date"],
-.form input[type="time"] {
+.form input[type="time"],
+.form input:not([type="checkbox"]) {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
+  padding: 0.65rem 0.85rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(34,197,94,0.2);
   border-radius: 10px;
-  background: #fff;
-  color: var(--ink-900);
-  font-size: 1rem;
+  color: #f0fdf4;
+  font-size: 0.95rem;
   outline: none;
-  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  transition: border-color 140ms, box-shadow 140ms;
+  box-sizing: border-box;
+  color-scheme: dark;
 }
 
 .form input::placeholder {
-  color: var(--ink-500);
+  color: #4b5563;
 }
 
 .form input:focus {
-  border-color: var(--brand-green);
-  box-shadow: 0 0 0 3px var(--ring);
-  background: #ffffff;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
 }
 
-/* ====== Section titles ====== */
-
-.subHeading {                     /* “Session Scheduling” */
-  margin-top: 2px;
-  font-size: 1.05rem;
-  color: var(--brand-green-dark);
-  font-weight: 800;
-}
-
-/* ====== Session cards ====== */
-
-.sessionCard {                    /* one card per session */
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px dashed #c7eadf;
-  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 60%);
-  animation: floatIn 260ms ease-out;
-}
-
-.sessionCard h4 {                 /* “Session 1/2/3” */
-  grid-column: 1 / -1;
-  margin: 2px 0 6px;
+/* ── Section heading ── */
+.subHeading {
   font-size: 1rem;
   font-weight: 800;
-  color: var(--ink-900);
+  color: #22c55e;
+  margin: 0.25rem 0 0;
+  letter-spacing: 0.02em;
 }
 
-/* ====== Terms + actions ====== */
+/* ── DMV note ── */
+.dmvNote {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  background: rgba(34,197,94,0.06);
+  border: 1px solid rgba(34,197,94,0.15);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  margin: 0;
+}
 
-.termsRow {                       /* terms checkbox row */
+/* ── Session cards ── */
+.sessionCard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 1.1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(34,197,94,0.18);
+  background: rgba(34,197,94,0.04);
+  animation: floatIn 240ms ease-out;
+}
+
+.sessionCard h4 {
+  grid-column: 1 / -1;
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f0fdf4;
+}
+
+/* Time row — "start  to  end" */
+.timeRow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeRow span {
+  color: #6b7280;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.timeRow input {
+  flex: 1;
+}
+
+/* ── Terms row ── */
+.termsRow {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  color: var(--ink-700);
-  font-size: 0.95rem;
-  padding: 6px 2px 0;
+  gap: 0.6rem;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  padding-top: 0.25rem;
 }
 
-.buttonRow {                      /* submit buttons */
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.termsRow input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #22c55e;
+  flex-shrink: 0;
   margin-top: 2px;
 }
 
-.primaryBtn {                     /* Pay Now (CTA) */
+/* ── Button row ── */
+.buttonRow {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.primaryBtn {
+  flex: 1;
+  min-width: 160px;
   border: 0;
-  background: linear-gradient(90deg, var(--brand-green), var(--brand-green-dark));
+  background: linear-gradient(90deg, #16a34a, #22c55e);
   color: #fff;
-  padding: 12px 16px;
+  padding: 0.8rem 1.25rem;
   border-radius: 12px;
   font-weight: 800;
+  font-size: 1rem;
   cursor: pointer;
-  transition: transform 140ms ease, filter 140ms ease, box-shadow 140ms ease;
-  box-shadow: 0 10px 18px rgba(16,185,129,0.22);
+  transition: transform 140ms, filter 140ms, box-shadow 140ms;
+  box-shadow: 0 8px 20px rgba(34,197,94,0.25);
 }
 
 .primaryBtn:hover {
   transform: translateY(-1px);
-  filter: brightness(1.03);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 28px rgba(34,197,94,0.35);
 }
 
 .primaryBtn:active {
   transform: translateY(0);
-  filter: brightness(0.98);
+  filter: brightness(0.97);
 }
 
-.secondaryBtn {                   /* Pay Later */
-  border: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--ink-900);
-  padding: 12px 16px;
+.primaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secondaryBtn {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #d1d5db;
+  padding: 0.8rem 1.25rem;
   border-radius: 12px;
   font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+  transition: background 140ms, transform 140ms;
 }
 
 .secondaryBtn:hover {
-  background: var(--panel-soft);
+  background: rgba(255,255,255,0.08);
   transform: translateY(-1px);
 }
 
-.secondaryBtn:active {
-  transform: translateY(0);
-}
-
-/* ====== Helper pills (optional) ====== */
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #065f46;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-}
-
-/* ====== Animations ====== */
-
+/* ── Animations ── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -199,30 +236,39 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ====== Responsive ====== */
-
-@media (max-width: 960px) {       /* tablet */
+/* ── Responsive ── */
+@media (max-width: 960px) {
   .formGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .sessionCard {
-    grid-template-columns: 1fr;   /* stack session fields */
+    grid-template-columns: 1fr;
+  }
+  .timeRow {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
-@media (max-width: 640px) {       /* mobile */
+@media (max-width: 640px) {
+  .page {
+    padding: 1rem 0.75rem 3rem;
+  }
   .container {
-    margin: 64px 10px 18px;       /* a hair tighter on small screens */
-    padding: 14px;
-    border-radius: 12px;
+    padding: 1.5rem 1.25rem 2rem;
+    border-radius: 14px;
   }
   .heading {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
   }
   .formGrid {
-    grid-template-columns: 1fr;   /* single column inputs */
+    grid-template-columns: 1fr;
   }
   .buttonRow {
-    gap: 8px;
+    flex-direction: column;
+  }
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
   }
 }

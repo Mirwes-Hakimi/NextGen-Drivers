@@ -1,0 +1,280 @@
+/* ── Small variant — used in the navbar ── */
+.badgeSmall {
+  width: 44px !important;
+  height: 44px !important;
+  box-shadow:
+    0 0 0 3px rgba(34, 197, 94, 0.08),
+    0 0 14px rgba(34, 197, 94, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Scale the car SVG down inside the small badge */
+.carSmall {
+  width: 34px !important;
+}
+
+/* ── Badge container ── */
+.badge {
+  position: relative;
+  width: 155px;
+  height: 155px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, #14532d 0%, #0a0f0d 70%);
+  border-radius: 50%;
+  border: 2px solid rgba(34, 197, 94, 0.35);
+  box-shadow:
+    0 0 0 6px rgba(34, 197, 94, 0.08),
+    0 0 40px rgba(34, 197, 94, 0.25),
+    0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Spinning conic gradient ring around badge ── */
+.ring {
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#0a0f0d, #0a0f0d) padding-box,
+    conic-gradient(
+      from 0deg,
+      rgba(34,197,94,1)   0%,
+      rgba(34,197,94,0.1) 35%,
+      rgba(34,197,94,1)   65%,
+      rgba(34,197,94,0.1) 100%
+    ) border-box;
+  animation: spinRing 4s linear infinite;
+}
+
+@keyframes spinRing {
+  to { transform: rotate(360deg); }
+}
+
+/* ── SVG car — subtle driving bounce ── */
+.car {
+  width: 126px;
+  animation: bounce 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0px);  }
+  to   { transform: translateY(-3px); }
+}
+
+/* ═══════════════════════════════
+   CAR BODY PARTS
+═══════════════════════════════ */
+
+/* Main body — brand green */
+.body {
+  fill: #22c55e;
+}
+
+/* Cabin/greenhouse overlay — slightly darker green for roof depth */
+.cabin {
+  fill: #15803d;
+}
+
+/* Lower cladding — dark strip between wheel arches */
+.cladding {
+  fill: #14532d;
+  opacity: 0.85;
+}
+
+/* Window glass — blue-tinted translucent */
+.glass {
+  fill: rgba(186, 230, 253, 0.78);
+}
+
+/* Windshield gloss — faint diagonal white shine */
+.gloss {
+  fill: rgba(255, 255, 255, 0.2);
+}
+
+/* B-pillar between doors */
+.pillar {
+  fill: #0f2d1a;
+}
+
+/* Beltline (bottom edge of windows) */
+.beltline {
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 0.8;
+  fill: none;
+}
+
+/* Door seam lines (subtle vertical splits) */
+.doorSeam {
+  stroke: rgba(0, 0, 0, 0.25);
+  stroke-width: 0.8;
+}
+
+/* Body character crease line along doors */
+.characterLine {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 1;
+}
+
+/* Roof rail highlight */
+.roofRail {
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 0.8;
+}
+
+/* ── LIGHTS ── */
+
+/* LED DRL strip (green — brand color) */
+.drl {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px #22c55e);
+  animation: drlPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes drlPulse {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.6; }
+}
+
+/* Main headlight lens */
+.headlight {
+  fill: #fef3c7;
+  filter: drop-shadow(0 0 4px rgba(254,243,199,0.8));
+}
+
+/* Full-height rear LED bar */
+.taillight {
+  fill: #ef4444;
+  filter: drop-shadow(0 0 3px #ef4444);
+  animation: tailPulse 2s ease-in-out infinite;
+}
+
+@keyframes tailPulse {
+  0%, 100% { opacity: 0.95; }
+  50%       { opacity: 0.55; }
+}
+
+/* Rear chrome strip / diffuser */
+.chrome {
+  fill: #9ca3af;
+  opacity: 0.7;
+}
+
+/* Exhaust tips */
+.exhaust {
+  fill: #374151;
+}
+
+/* Lower front grille cutout */
+.grille {
+  fill: #0a0f0d;
+  opacity: 0.6;
+}
+
+/* ── SCHOOL NAME BANNER ── */
+
+/* Dark ribbon background that runs across the door panels */
+.bannerBg {
+  fill: #0f2d1a;         /* very dark green — stands out against the bright body */
+  opacity: 0.9;
+}
+
+/* School name text on the banner */
+.bannerText {
+  font-family: 'Arial Narrow', Arial, sans-serif;
+  font-size: 5.5px;      /* tiny in SVG units but legible at badge size */
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  fill: #22c55e;          /* bright green text */
+  dominant-baseline: middle;
+}
+
+/* Dashed road line */
+.road {
+  stroke: rgba(34, 197, 94, 0.25);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+/* ═══════════════════════════════
+   WHEELS
+═══════════════════════════════ */
+
+/* Rotate each wheel group around its own center */
+.wheelGroup {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: spinWheel 0.55s linear infinite;
+}
+
+@keyframes spinWheel {
+  to { transform: rotate(360deg); }
+}
+
+/* Outer tyre (dark rubber) */
+.tyre {
+  fill: #111827;
+  stroke: #1f2937;
+  stroke-width: 0.5;
+}
+
+/* Outer alloy rim ring */
+.rimOuter {
+  fill: #4b5563;
+}
+
+/* Inner rim dish */
+.rimInner {
+  fill: #374151;
+}
+
+/* 5-spoke lines */
+.spoke {
+  stroke: #d1d5db;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
+/* Center hub cap */
+.hub {
+  fill: #f3f4f6;
+}
+
+/* ═══════════════════════════════
+   SPEED LINES
+═══════════════════════════════ */
+
+.speedLine {
+  stroke: #22c55e;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+/* Staggered fade — each line animates slightly after the previous */
+.s1 { animation: speed 1s ease-in-out infinite 0s;   }
+.s2 { animation: speed 1s ease-in-out infinite 0.2s; }
+.s3 { animation: speed 1s ease-in-out infinite 0.4s; }
+
+@keyframes speed {
+  0%   { opacity: 0;    transform: translateX(5px);  }
+  35%  { opacity: 0.95; transform: translateX(0);    }
+  65%  { opacity: 0.95; transform: translateX(0);    }
+  100% { opacity: 0;    transform: translateX(-5px); }
+}
+
+/* ── "NG" initials below the car ── */
+.initials {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #22c55e;
+  margin-top: -2px;
+  text-shadow: 0 0 8px rgba(34,197,94,0.5);
+}

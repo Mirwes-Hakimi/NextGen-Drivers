@@ -1,0 +1,391 @@
+/* ─────────────────────────────────────────
+   ADMIN PAGE — dark theme
+───────────────────────────────────────── */
+
+/* Full-page dark background */
+.page {
+  min-height: 100vh;
+  background: #0a0f0d;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* Centered content column */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Page title */
+.heading {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #f0fdf4;
+  margin-bottom: 0.25rem;
+}
+
+/* Subtitle under the heading */
+.subHeading {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 1.75rem;
+}
+
+/* ── Filter tabs ── */
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Each tab pill button */
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 9999px;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 150ms, color 150ms, border-color 150ms;
+}
+
+.tab:hover {
+  background: rgba(255,255,255,0.05);
+  color: #f0fdf4;
+}
+
+/* Active tab — green filled */
+.activeTab {
+  background: #16a34a;
+  color: #fff;
+  border-color: #16a34a;
+}
+
+/* Small count bubble inside the tab */
+.tabCount {
+  background: rgba(255,255,255,0.15);
+  border-radius: 9999px;
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.activeTab .tabCount {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ── State messages ── */
+.statusText {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.errorText {
+  color: #f87171;
+  font-size: 0.95rem;
+}
+
+/* ── Booking card ── */
+.card {
+  background: #0d1f16;
+  border: 1px solid rgba(34,197,94,0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  animation: fadeUp 250ms ease-out;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card top row: name block on left, badge on right */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+/* Student name */
+.name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0fdf4;
+  margin: 0 0 0.2rem;
+}
+
+/* Package name below the student name */
+.packageLabel {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Status badge (top-right corner) ── */
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.pending   { background: rgba(251,191,36,0.15);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+.confirmed { background: rgba(34,197,94,0.12);   color: #22c55e; border: 1px solid rgba(34,197,94,0.3);  }
+.cancelled { background: rgba(239,68,68,0.12);   color: #f87171; border: 1px solid rgba(239,68,68,0.3);  }
+
+/* ── Info grid: two columns ── */
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 1rem;
+  font-size: 0.875rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Small dim label before each value */
+.label {
+  display: block;
+  font-size: 0.72rem;
+  color: #6b7280;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+/* ── Sessions block ── */
+.sessionsBlock {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* "Sessions" heading + edit button side by side */
+.sessionsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.sessionsTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Read-only session list ── */
+.sessionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.sessionItem {
+  font-size: 0.875rem;
+  color: #d1d5db;
+}
+
+/* Green session number label */
+.sessionNum {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #22c55e;
+  margin-right: 0.5rem;
+}
+
+/* ── Edit block (shown when edit mode is open) ── */
+.editBlock {
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* One row per session in edit mode */
+.editSessionRow {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(34,197,94,0.04);
+  border: 1px solid rgba(34,197,94,0.12);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}
+
+/* Label above each input in edit mode */
+.editLabel {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Inputs in edit mode */
+.editInput {
+  padding: 0.5rem 0.65rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(34,197,94,0.25);
+  border-radius: 8px;
+  color: #f0fdf4;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 140ms, box-shadow 140ms;
+  color-scheme: dark;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editInput:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+}
+
+/* Read-only end-time input — slightly dimmer */
+.readOnly {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Save + Cancel buttons row */
+.editActions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
+/* Green "Save Changes" button */
+.saveBtn {
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: filter 140ms, transform 140ms;
+}
+
+.saveBtn:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Pencil edit button */
+.editBtn {
+  background: rgba(34,197,94,0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34,197,94,0.25);
+  padding: 0.3rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 140ms;
+}
+
+.editBtn:hover {
+  background: rgba(34,197,94,0.18);
+}
+
+/* ✕ Cancel edit button */
+.cancelEditBtn {
+  background: rgba(255,255,255,0.05);
+  color: #9ca3af;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.3rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 140ms, color 140ms;
+}
+
+.cancelEditBtn:hover {
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+  border-color: rgba(239,68,68,0.25);
+}
+
+/* ── Status update row ── */
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.statusLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Base status button */
+.statusBtn {
+  padding: 0.3rem 0.85rem;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: opacity 150ms, transform 150ms;
+}
+
+.statusBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.statusBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Per-status colors */
+.pendingBtn   { background: rgba(251,191,36,0.12); color: #fbbf24; border-color: rgba(251,191,36,0.25); }
+.confirmedBtn { background: rgba(34,197,94,0.12);  color: #22c55e; border-color: rgba(34,197,94,0.25);  }
+.cancelledBtn { background: rgba(239,68,68,0.12);  color: #f87171; border-color: rgba(239,68,68,0.25);  }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .editSessionRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .editSessionRow .sessionNum {
+    grid-column: 1 / -1;
+  }
+}

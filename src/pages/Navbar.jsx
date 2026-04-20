@@ -1,69 +1,167 @@
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaBars, FaTimes, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useAuth } from "../components/AuthContext";
+import styles from "../styles/Navbar.module.css";
+import AnimatedLogo from "../components/AnimatedLogo"; // same logo as landing page, small variant
 
-import React, { useState } from "react";                 
-import { Link } from "react-router-dom";                 
-import styles from "../styles/Navbar.module.css";        
-import { FaBars, FaUser } from "react-icons/fa";         
+// Links shown in the main nav row
+const NAV_LINKS = [
+  { label: "Home",          to: "/"            },
+  { label: "Teen Course",   to: "/teen-course" },
+  { label: "Packages",      to: "/packages"    },
+  { label: "Adult Permit",  to: "/adult-course"},
+];
+
+// Links inside the "More ▾" dropdown
+const MORE_LINKS = [
+  { label: "DMV Info",               to: "/dmv"          },
+  { label: "Permit Practice",        to: "/practice"     },
+  { label: "New Drivers",            to: "/new-drivers"  },
+  { label: "Driver Ed Videos",       to: "/education"    },
+];
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);       
-  const toggleMenu = () => setMenuOpen((v) => !v);       
-  const closeMenu = () => setMenuOpen(false);            
+  const { user } = useAuth();                         // logged-in user (or null)
+  const location = useLocation();                     // current route
+  const navigate  = useNavigate();
+
+  const [menuOpen,  setMenuOpen]  = useState(false);  // mobile menu open/closed
+  const [scrolled,  setScrolled]  = useState(false);  // has user scrolled down?
+
+  // Add a CSS class when the page is scrolled so the navbar gets a solid bg + shadow
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close mobile menu whenever the route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/");                                    // send to landing page on logout
+  };
+
+  // Helper: returns true if this link is the active route
+  const isActive = (to) =>
+    to === "/" ? location.pathname === "/" : location.pathname.startsWith(to);
 
   return (
-    <nav className={styles.navbar}>
-      {/* Brand (logo + text) */}
-      <div className={styles.brand}>
-        
-        <img src="/logo.png" alt="Next Gen Driving School" className={styles.logoImg} />
-        <span className={styles.logoText}>Next Gen Driving School</span>
-      </div>
+    <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
 
-      {/* Desktop Links */}
+      {/* ── Brand ── */}
+      <Link to="/" className={styles.brand} onClick={() => setMenuOpen(false)}>
+        <AnimatedLogo small />
+        <span className={styles.brandText}>
+          <span className={styles.brandMain}>NEXT GEN</span>
+          <span className={styles.brandSub}>DRIVING SCHOOL</span>
+        </span>
+      </Link>
+
+      {/* ── Desktop navigation links ── */}
       <div className={styles.desktopLinks}>
-        <Link to="/" className={styles.link}>Home</Link>
-        <Link to="/teen-course" className={styles.link}>Teen Course</Link>
-        <Link to="/packages" className={styles.link}>Packages</Link>
-        <Link to="/adult-course" className={styles.link}>Adult Course Permit</Link>
+        {NAV_LINKS.map((link) => (
+          <Link
+            key={link.to}
+            to={link.to}
+            className={`${styles.link} ${isActive(link.to) ? styles.activeLink : ""}`}
+          >
+            {link.label}
+          </Link>
+        ))}
 
-        {/* Desktop dropdown (hover) */}
+        {/* "More" dropdown */}
         <div className={styles.dropdown}>
-          <button className={styles.dropdownButton} type="button" aria-haspopup="true" aria-expanded="false">
-            View More ▾
+          <button className={styles.dropdownBtn} type="button">
+            More <span className={styles.caret}>▾</span>
           </button>
-          <div className={styles.dropdownContent} role="menu">
-            <Link to="/dmv" className={styles.link}>DMV</Link>
-            <Link to="/practice" className={styles.link}>Permit Practice Set</Link>
-            <Link to="/new-drivers" className={styles.link}>New Drivers</Link>
-            <Link to="/education" className={styles.link}>Drivers Education Videos</Link>
+          <div className={styles.dropdownPanel}>
+            {MORE_LINKS.map((link) => (
+              <Link key={link.to} to={link.to} className={styles.dropdownLink}>
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* Optional: quick user icon route */}
-        <Link to="/login" className={styles.link} aria-label="Student Login">
-          <FaUser style={{ verticalAlign: "-2px" }} />
+      {/* ── Desktop right side: auth + Book Now ── */}
+      <div className={styles.desktopRight}>
+        {user ? (
+          // Logged in: show email + logout button
+          <>
+            <Link to="/dashboard" className={styles.userChip}>
+              <FaUser className={styles.userIcon} />
+              <span className={styles.userEmail}>{user.email}</span>
+            </Link>
+            <button onClick={handleLogout} className={styles.logoutBtn}>
+              <FaSignOutAlt /> Logout
+            </button>
+          </>
+        ) : (
+          // Logged out: show Login link
+          <Link to="/login" className={styles.loginBtn}>
+            <FaUser /> Login
+          </Link>
+        )}
+
+        {/* Book Now CTA — always visible */}
+        <Link to="/packages" className={styles.bookBtn}>
+          Book Now
         </Link>
       </div>
 
-      {/* Mobile hamburger */}
-      <div className={styles.mobileMenu}>
-        <button onClick={toggleMenu} className={styles.menuButton} aria-label="Open menu" aria-expanded={menuOpen}>
-          <FaBars />
-        </button>
-      </div>
+      {/* ── Mobile hamburger button ── */}
+      <button
+        className={styles.hamburger}
+        onClick={() => setMenuOpen((v) => !v)}
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+      >
+        {menuOpen ? <FaTimes /> : <FaBars />}
+      </button>
 
-      {/* Mobile dropdown – only rendered when open */}
+      {/* ── Mobile slide-down menu ── */}
       {menuOpen && (
-        <div className={styles.mobileDropdown}>
-          <Link to="/" className={styles.link} onClick={closeMenu}>Home</Link>
-          <Link to="/teen-course" className={styles.link} onClick={closeMenu}>Teen Course</Link>
-          <Link to="/packages" className={styles.link} onClick={closeMenu}>Packages</Link>
-          <Link to="/adult-course" className={styles.link} onClick={closeMenu}>Adult Course Permit</Link>
-          <Link to="/dmv" className={styles.link} onClick={closeMenu}>DMV</Link>
-          <Link to="/practice" className={styles.link} onClick={closeMenu}>Permit Practice Set</Link>
-          <Link to="/new-drivers" className={styles.link} onClick={closeMenu}>New Drivers</Link>
-          <Link to="/education" className={styles.link} onClick={closeMenu}>Drivers Education Videos</Link>
-          <Link to="/login" className={styles.link} onClick={closeMenu}>
-            <FaUser style={{ verticalAlign: "-2px" }} /> Student Login
+        <div className={styles.mobileMenu}>
+          {/* All nav links */}
+          {[...NAV_LINKS, ...MORE_LINKS].map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`${styles.mobileLink} ${isActive(link.to) ? styles.activeMobileLink : ""}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          {/* Divider */}
+          <div className={styles.mobileDivider} />
+
+          {/* Auth section */}
+          {user ? (
+            <>
+              <Link to="/dashboard" className={styles.mobileLink}>
+                <FaUser /> {user.email}
+              </Link>
+              <button onClick={handleLogout} className={styles.mobileLogoutBtn}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className={styles.mobileLink}>
+              <FaUser /> Login
+            </Link>
+          )}
+
+          {/* Book Now CTA */}
+          <Link to="/packages" className={styles.mobileBookBtn}>
+            Book Now
           </Link>
         </div>
       )}

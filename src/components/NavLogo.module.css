@@ -1,0 +1,113 @@
+/* ── SVG car — sized to sit neatly in the navbar ── */
+.car {
+  height: 36px;              /* controls the display height */
+  width: auto;               /* aspect ratio preserved (≈ 92px wide) */
+  /* Gentle bounce like it's idling */
+  animation: idle 1.2s ease-in-out infinite alternate;
+  flex-shrink: 0;
+}
+
+@keyframes idle {
+  from { transform: translateY(0px);  }
+  to   { transform: translateY(-2px); }
+}
+
+/* ── Car body — brand green ── */
+.body {
+  fill: #22c55e;
+}
+
+/* ── Cabin overlay — darker green for roof depth ── */
+.cabin {
+  fill: #15803d;
+}
+
+/* ── Window glass ── */
+.glass {
+  fill: rgba(186, 230, 253, 0.75);
+}
+
+/* ── Windshield gloss ── */
+.gloss {
+  fill: rgba(255, 255, 255, 0.2);
+}
+
+/* ── B-pillar ── */
+.pillar {
+  fill: #0f2d1a;
+}
+
+/* ── Front LED DRL ── */
+.drl {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px #22c55e);
+  animation: drlPulse 2s ease-in-out infinite;
+}
+
+@keyframes drlPulse {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.5; }
+}
+
+/* ── Rear taillight ── */
+.taillight {
+  fill: #ef4444;
+  filter: drop-shadow(0 0 2px #ef4444);
+  animation: tailPulse 2s ease-in-out infinite;
+}
+
+@keyframes tailPulse {
+  0%, 100% { opacity: 0.9; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Wheels — spin around their own centers ── */
+.wheel {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.tyre {
+  fill: #111827;
+}
+
+.rim {
+  fill: #374151;
+}
+
+.spoke {
+  stroke: #9ca3af;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.hub {
+  fill: #e5e7eb;
+}
+
+/* ── Speed lines ── */
+.speedLine {
+  stroke: #22c55e;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+.s1 { animation: speed 1s ease-in-out infinite 0s;    }
+.s2 { animation: speed 1s ease-in-out infinite 0.18s; }
+.s3 { animation: speed 1s ease-in-out infinite 0.36s; }
+
+@keyframes speed {
+  0%   { opacity: 0;   transform: translateX(4px);  }
+  35%  { opacity: 0.8; transform: translateX(0);    }
+  65%  { opacity: 0.8; transform: translateX(0);    }
+  100% { opacity: 0;   transform: translateX(-4px); }
+}

@@ -1,13 +1,24 @@
 
-import React, { useState } from "react";                 
-import { useLocation } from "react-router-dom";          
-import styles from "../styles/BookingPage.module.css";  
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
+import { useAuth } from "../components/AuthContext";
+import emailjs from "@emailjs/browser";                    // email sending library
+import {
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+  EMAILJS_PUBLIC_KEY,
+} from "../emailjs.config";                               // your EmailJS credentials
+import styles from "../styles/BookingPage.module.css";
 
 export default function BookingPage() {
-  const { state } = useLocation();                        /// get state from navigate()
-  const selectedPackage = state?.selectedPackage || {};   /// selected package object
-  const selectedCity = state?.selectedCity || "";         // city chosen on Packages page
-  const price = state?.price || "";                       /// price for that city
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const selectedPackage = state?.selectedPackage || {};
+  const selectedCity = state?.selectedCity || "";
+  const price = state?.price || "";
 
   const isDMV = selectedPackage.type === "DMV";
 
@@ -97,90 +108,136 @@ const endTime = addMinutesToTime(startTime, duration);
   }
 
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
+  const [submitting, setSubmitting] = useState(false);
 
-  // ✅ Age validation
-  if (!formData.dob) {
-    alert("Please enter date of birth.");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (calculateAge(formData.dob) < 15) {
-    alert("Students must be at least 15 years old to book a session.");
-    return;
-  }
-
-  const now = new Date();
-
-  // ✅ Validate each session
-  for (let i = 0; i < formData.sessions.length; i++) {
-    const session = formData.sessions[i];
-
-    if (!session?.date || !session?.startTime) {
-      alert(`Please complete date and time for Session ${i + 1}.`);
+    if (!formData.dob) {
+      alert("Please enter date of birth.");
       return;
     }
 
-    const selectedDateTime = new Date(`${session.date}T${session.startTime}`);
-
-    // ❌ No past sessions
-    if (selectedDateTime <= now) {
-      alert(`Session ${i + 1} cannot be in the past.`);
+    if (calculateAge(formData.dob) < 15) {
+      alert("Students must be at least 15 years old to book a session.");
       return;
     }
 
-    // ✅ Business hours only (8AM–6PM)
-    const hour = selectedDateTime.getHours();
-    if (hour < 8 || hour >= 18) {
-      alert(`Session ${i + 1} must be between 8:00 AM and 6:00 PM.`);
+    const now = new Date();
+
+    for (let i = 0; i < formData.sessions.length; i++) {
+      const session = formData.sessions[i];
+
+      if (!session?.date || !session?.startTime) {
+        alert(`Please complete date and time for Session ${i + 1}.`);
+        return;
+      }
+
+      const selectedDateTime = new Date(`${session.date}T${session.startTime}`);
+
+      if (selectedDateTime <= now) {
+        alert(`Session ${i + 1} cannot be in the past.`);
+        return;
+      }
+
+      const hour = selectedDateTime.getHours();
+      if (hour < 8 || hour >= 18) {
+        alert(`Session ${i + 1} must be between 8:00 AM and 6:00 PM.`);
+        return;
+      }
+    }
+
+    if (!formData.agreedToTerms) {
+      alert("Please acknowledge the Terms and Conditions.");
       return;
     }
-  }
 
-  // ✅ Terms agreement
-  if (!formData.agreedToTerms) {
-    alert("Please acknowledge the Terms and Conditions.");
-    return;
-  }
+    try {
+      setSubmitting(true);
 
+      // ── Step 1: Save the booking to Firestore ──
+      await addDoc(collection(db, "bookings"), {
+        userId: user.uid,
+        userEmail: user.email,
+        package: selectedPackage.title,
+        packageType: selectedPackage.type,
+        city: selectedCity,
+        price,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        dob: formData.dob,
+        address: formData.address,
+        sessions: formData.sessions,
+        status: "pending",
+        createdAt: serverTimestamp(),
+      });
 
-    console.log("Booking Data:", {                          // log data for now
-      package: selectedPackage,
-      city: selectedCity,
-      price,
-      formData,
-    });
+      // ── Step 2: Build a readable sessions summary for the email ──
+      // Turns each session into "Session 1: Mon Apr 14 — 10:00 AM to 12:00 PM"
+      const sessionsText = formData.sessions
+        .map((s, i) => {
+          // Format the date from "YYYY-MM-DD" to a readable string
+          const dateLabel = s.date
+            ? new Date(s.date + "T00:00:00").toDateString()
+            : "TBD";
 
-    alert(
-      `Booking confirmed!\n` +
-        `Package: ${selectedPackage.title}\n` +
-        `City: ${selectedCity}\n` +
-        `Price: $${price}`
-    );
+          // Format start/end times from "HH:MM" to "12:30 PM" style
+          const fmt = (t) => {
+            if (!t) return "TBD";
+            const [hh, mm] = t.split(":");
+            const d = new Date();
+            d.setHours(parseInt(hh, 10));
+            d.setMinutes(parseInt(mm, 10));
+            return d.toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            });
+          };
 
-    // Reset form after submit (optional)
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "+1",
-      dob: "",
-      address: "",
-      agreedToTerms: false,
-      sessions: [],
-    });
+          return `Session ${i + 1}: ${dateLabel} — ${fmt(s.startTime)} to ${fmt(s.endTime)}`;
+        })
+        .join("\n");                               // one session per line in the email
+
+      // ── Step 3: Send confirmation email via EmailJS ──
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,                        // your EmailJS service
+        EMAILJS_TEMPLATE_ID,                       // your EmailJS template
+        {
+          // These variable names must match exactly what you used in your template
+          to_email:      formData.email,                              // recipient
+          student_name:  `${formData.firstName} ${formData.lastName}`,// full name
+          package_title: selectedPackage.title,                       // package name
+          city:          selectedCity,                                 // city
+          price:         price,                                        // price (no $)
+          sessions_text: sessionsText,                                 // session list
+        },
+        EMAILJS_PUBLIC_KEY                         // your EmailJS public key
+      );
+
+      alert(
+        `Booking confirmed! A confirmation email has been sent to ${formData.email}.`
+      );
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Booking failed:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   /// Get todays date in
   const todayStr = new Date().toISOString().split("T")[0];
 
   return (
+    <div className={styles.page}>
     <div className={styles.container}>
       {/* Top summary: package + city + price */}
       <h2 className={styles.heading}>Book: {selectedPackage.title}</h2>
       <p className={styles.summary}>
-        City: <strong>{selectedCity}</strong> | Price:{" "}
+        City: <strong>{selectedCity}</strong> &nbsp;·&nbsp; Price:{" "}
         <strong>${price}</strong>
       </p>
 
@@ -281,25 +338,23 @@ const endTime = addMinutesToTime(startTime, duration);
               </label>
 
               <label className={styles.fieldLabel}>
-                Time:
-                {/* Start time input */}
-                <input
-                  type="time"
-                  value={session.startTime || ""}
-                  onChange={(e) =>
-                    handleSessionStartChange(idx, e.target.value)
-                  }
-                  required
-                  min={todayStr}
-                />
-                {"  "}to{"  "}
-                {/* End time auto-filled, read-only */}
-                <input
-                  type="time"
-                  value={session.endTime || ""}
-                  readOnly
-                  min={todayStr}
-                />
+                Time
+                <div className={styles.timeRow}>
+                  <input
+                    type="time"
+                    value={session.startTime || ""}
+                    onChange={(e) =>
+                      handleSessionStartChange(idx, e.target.value)
+                    }
+                    required
+                  />
+                  <span>to</span>
+                  <input
+                    type="time"
+                    value={session.endTime || ""}
+                    readOnly
+                  />
+                </div>
               </label>
             </div>
           );
@@ -321,8 +376,8 @@ const endTime = addMinutesToTime(startTime, duration);
 
         {/* Buttons row */}
         <div className={styles.buttonRow}>
-          <button type="submit" className={styles.primaryBtn}>
-            Pay Now (Stripe later)
+          <button type="submit" className={styles.primaryBtn} disabled={submitting}>
+            {submitting ? "Saving..." : "Pay Now (Stripe later)"}
           </button>
           <button
             type="button"
@@ -333,6 +388,7 @@ const endTime = addMinutesToTime(startTime, duration);
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 }
