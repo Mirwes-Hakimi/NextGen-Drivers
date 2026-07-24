@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
@@ -9,6 +9,7 @@ import {
   EMAILJS_SERVICE_ID,
   EMAILJS_TEMPLATE_ID,
   EMAILJS_PUBLIC_KEY,
+  SCHOOL_NOTIFY_EMAIL,
 } from "../emailjs.config";                               // your EmailJS credentials
 import styles from "../styles/BookingPage.module.css";
 
@@ -33,6 +34,14 @@ export default function BookingPage() {
     sessions: [],                                         // array to store session data
   });
 
+  // Signing up is optional — if the customer happens to be logged in,
+  // save them a step by pre-filling their email.
+  useEffect(() => {
+    if (user?.email) {
+      setFormData((prev) => (prev.email ? prev : { ...prev, email: user.email }));
+    }
+  }, [user]);
+
   const sessionCount = selectedPackage.sessions || 1;     // how many sessions this package has
   const sessionNumbers = Array.from(                     // [1, 2, ..., sessionCount]
     { length: sessionCount },
@@ -50,6 +59,36 @@ export default function BookingPage() {
     const newM = String(date.getMinutes()).padStart(2, "0");// format minutes 2 digits
     return `${newH}:${newM}`;                             // return "HH:MM" string
   };
+
+  // Format a "HH:MM" 24-hour string as "8:00 AM" for display
+  const formatTime12 = (timeStr) => {
+    const [hh, mm] = timeStr.split(":");
+    const d = new Date();
+    d.setHours(parseInt(hh, 10));
+    d.setMinutes(parseInt(mm, 10));
+    return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  };
+
+  // Pre-built list of selectable "start – end" slots, stepped every 30 minutes,
+  // sized to this package's session length, and kept within business hours (8 AM–6 PM).
+  const sessionDuration = selectedPackage.sessionDurationMinutes || 120;
+  const BUSINESS_START_MIN = 8 * 60;   // 8:00 AM
+  const BUSINESS_END_MIN = 18 * 60;    // 6:00 PM
+  const SLOT_STEP_MIN = 30;
+
+  const timeSlots = [];
+  for (
+    let start = BUSINESS_START_MIN;
+    start + sessionDuration <= BUSINESS_END_MIN;
+    start += SLOT_STEP_MIN
+  ) {
+    const startTime = `${String(Math.floor(start / 60)).padStart(2, "0")}:${String(start % 60).padStart(2, "0")}`;
+    const endTime = addMinutesToTime(startTime, sessionDuration);
+    timeSlots.push({
+      startTime,
+      label: `${formatTime12(startTime)} - ${formatTime12(endTime)}`,
+    });
+  }
 
   // Update general (non-session) field values
   const handleFieldChange = (e) => {
@@ -110,6 +149,14 @@ const endTime = addMinutesToTime(startTime, duration);
 
   const [submitting, setSubmitting] = useState(false);
 
+  // Rejects with `message` if `promise` hasn't settled within `ms` —
+  // so a slow/stuck network call can never leave the button stuck on "Saving..." forever.
+  const withTimeout = (promise, ms, message) =>
+    Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms)),
+    ]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -156,23 +203,37 @@ const endTime = addMinutesToTime(startTime, duration);
       setSubmitting(true);
 
       // ── Step 1: Save the booking to Firestore ──
-      await addDoc(collection(db, "bookings"), {
-        userId: user.uid,
-        userEmail: user.email,
-        package: selectedPackage.title,
-        packageType: selectedPackage.type,
-        city: selectedCity,
-        price,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        dob: formData.dob,
-        address: formData.address,
-        sessions: formData.sessions,
-        status: "pending",
-        createdAt: serverTimestamp(),
-      });
+      // Signing up is optional, so guests (user === null) can book too —
+      // userId is just null for them instead of crashing on user.uid.
+      // Wrapped in a timeout so a stalled connection can't leave the
+      // button stuck on "Saving..." forever.
+      await withTimeout(
+        addDoc(collection(db, "bookings"), {
+          userId: user?.uid || null,
+          userEmail: user?.email || formData.email,
+          package: selectedPackage.title,
+          packageType: selectedPackage.type,
+          city: selectedCity,
+          price,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          dob: formData.dob,
+          address: formData.address,
+          sessions: formData.sessions,
+          status: "pending",
+          createdAt: serverTimestamp(),
+        }),
+        20000,
+        "Saving your booking is taking longer than expected. Please check your connection and try again."
+      );
+
+      // The booking is safely saved — unblock the UI right away.
+      // Email delivery happens next, but it shouldn't hold up the confirmation.
+      setSubmitting(false);
+      alert(`Booking confirmed! A confirmation email is on its way to ${formData.email}.`);
+      navigate(user ? "/dashboard" : "/");
 
       // ── Step 2: Build a readable sessions summary for the email ──
       // Turns each session into "Session 1: Mon Apr 14 — 10:00 AM to 12:00 PM"
@@ -196,33 +257,44 @@ const endTime = addMinutesToTime(startTime, duration);
             });
           };
 
-          return `Session ${i + 1}: ${dateLabel} — ${fmt(s.startTime)} to ${fmt(s.endTime)}`;
+          return `Session ${i + 1}: ${dateLabel}, ${fmt(s.startTime)} to ${fmt(s.endTime)}`;
         })
         .join("\n");                               // one session per line in the email
 
-      // ── Step 3: Send confirmation email via EmailJS ──
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,                        // your EmailJS service
-        EMAILJS_TEMPLATE_ID,                       // your EmailJS template
-        {
-          // These variable names must match exactly what you used in your template
-          to_email:      formData.email,                              // recipient
-          student_name:  `${formData.firstName} ${formData.lastName}`,// full name
-          package_title: selectedPackage.title,                       // package name
-          city:          selectedCity,                                 // city
-          price:         price,                                        // price (no $)
-          sessions_text: sessionsText,                                 // session list
-        },
-        EMAILJS_PUBLIC_KEY                         // your EmailJS public key
-      );
+      // ── Step 3: Email the customer AND the school — best effort ──
+      // Neither of these can re-stick the button; failures are just logged.
+      const emailFields = {
+        student_name:  `${formData.firstName} ${formData.lastName}`,// full name
+        package_title: selectedPackage.title,                       // package name
+        city:          selectedCity,                                 // city
+        price:         price,                                        // price (no $)
+        sessions_text: sessionsText,                                 // session list
+      };
 
-      alert(
-        `Booking confirmed! A confirmation email has been sent to ${formData.email}.`
-      );
-      navigate("/dashboard");
+      const [customerResult, schoolResult] = await Promise.allSettled([
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          { ...emailFields, to_email: formData.email },     // confirmation to the customer
+          EMAILJS_PUBLIC_KEY
+        ),
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          { ...emailFields, to_email: SCHOOL_NOTIFY_EMAIL }, // copy to the school
+          EMAILJS_PUBLIC_KEY
+        ),
+      ]);
+
+      if (customerResult.status === "rejected") {
+        console.error("Customer confirmation email failed:", customerResult.reason);
+      }
+      if (schoolResult.status === "rejected") {
+        console.error("School notification email failed:", schoolResult.reason);
+      }
     } catch (err) {
       console.error("Booking failed:", err);
-      alert("Something went wrong. Please try again.");
+      alert(err.message || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -313,7 +385,7 @@ const endTime = addMinutesToTime(startTime, duration);
 
         {isDMV && (
   <p className={styles.dmvNote}>
-    This appointment includes a 45-minute warm-up practice before the DMV test.
+    This appointment includes a 50-minute warm-up practice before the DMV test.
   </p>
 )}
 
@@ -338,23 +410,21 @@ const endTime = addMinutesToTime(startTime, duration);
               </label>
 
               <label className={styles.fieldLabel}>
-                Time
-                <div className={styles.timeRow}>
-                  <input
-                    type="time"
-                    value={session.startTime || ""}
-                    onChange={(e) =>
-                      handleSessionStartChange(idx, e.target.value)
-                    }
-                    required
-                  />
-                  <span>to</span>
-                  <input
-                    type="time"
-                    value={session.endTime || ""}
-                    readOnly
-                  />
-                </div>
+                Time:
+                <select
+                  value={session.startTime || ""}
+                  onChange={(e) =>
+                    handleSessionStartChange(idx, e.target.value)
+                  }
+                  required
+                >
+                  <option value="" disabled>Select a time</option>
+                  {timeSlots.map((slot) => (
+                    <option key={slot.startTime} value={slot.startTime}>
+                      {slot.label}
+                    </option>
+                  ))}
+                </select>
               </label>
             </div>
           );

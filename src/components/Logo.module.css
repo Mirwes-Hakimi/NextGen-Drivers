@@ -1,0 +1,60 @@
+/* ── Lockup — icon + wordmark side by side ── */
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.lockupSm .icon {
+  height: 40px;
+  width: auto;
+}
+
+.lockupLg {
+  gap: 1rem;
+}
+
+.lockupLg .icon {
+  height: 96px;
+  width: auto;
+}
+
+.icon {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* ── Wordmark ── */
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.lockupSm .brandMain {
+  font-size: 1.15rem;
+}
+
+.lockupSm .brandSub {
+  font-size: 0.6rem;
+}
+
+.lockupLg .brandMain {
+  font-size: 2.75rem;
+}
+
+.lockupLg .brandSub {
+  font-size: 1.15rem;
+}
+
+.brandMain {
+  font-weight: 800;
+  color: #1e3a8a;
+  letter-spacing: -0.01em;
+}
+
+.brandSub {
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}

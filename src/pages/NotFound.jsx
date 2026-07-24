@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
-        <p className={styles.heroEyebrow}>404 — Page Not Found</p>
+        <p className={styles.heroEyebrow}>Error 404</p>
         <h1 className={styles.heroHeading}>
           Looks Like You <span>Took a Wrong Turn</span>
         </h1>

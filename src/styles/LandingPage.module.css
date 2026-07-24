@@ -11,8 +11,8 @@
    HERO
 ───────────────────────────────────────── */
 .hero {
-  /* Deep dark charcoal base — makes the green accents pop */
-  background: #0a0f0d;
+  /* Soft light-blue-to-white gradient — echoes the logo's white background */
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 70%);
   min-height: 88vh;
   display: flex;
   align-items: center;
@@ -21,7 +21,7 @@
   overflow: hidden;
 }
 
-/* Large bright green radial glow behind the content */
+/* Large soft blue radial glow behind the content */
 .hero::before {
   content: "";
   position: absolute;
@@ -30,7 +30,7 @@
   transform: translateX(-50%);
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(34,197,94,0.22) 0%, rgba(16,185,129,0.1) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, rgba(56,189,248,0.06) 40%, transparent 70%);
   pointer-events: none;
 }
 
@@ -42,7 +42,7 @@
   left: -80px;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -58,36 +58,36 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);            /* heavy blur = soft glowing look */
-  opacity: 0.55;
+  opacity: 0.4;
   pointer-events: none;          /* don't block clicks */
   z-index: 0;
 }
 
-/* Top-left — large bright green, drifts diagonally */
+/* Top-left — large navy, drifts diagonally */
 .orb1 {
   width: 420px;
   height: 420px;
-  background: radial-gradient(circle, #22c55e, #16a34a);
+  background: radial-gradient(circle, #1e3a8a, #2563eb);
   top: -100px;
   left: -100px;
   animation: floatA 12s ease-in-out infinite;
 }
 
-/* Top-right — teal, drifts in a slow oval */
+/* Top-right — sky blue, drifts in a slow oval */
 .orb2 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, #10b981, #059669);
+  background: radial-gradient(circle, #38bdf8, #0ea5e9);
   top: 20px;
   right: -60px;
   animation: floatB 15s ease-in-out infinite;
 }
 
-/* Bottom-center — emerald, pulses and drifts upward */
+/* Bottom-center — bright blue, pulses and drifts upward */
 .orb3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(circle, #34d399, #22c55e);
+  background: radial-gradient(circle, #60a5fa, #2563eb);
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
@@ -98,7 +98,7 @@
 .orb4 {
   width: 180px;
   height: 180px;
-  background: radial-gradient(circle, #6ee7b7, #34d399);
+  background: radial-gradient(circle, #93c5fd, #60a5fa);
   bottom: -40px;
   right: 80px;
   animation: floatD 8s ease-in-out infinite;
@@ -150,26 +150,22 @@
   gap: 1.25rem;
 }
 
-/* .logo removed — replaced by <AnimatedLogo /> component */
-
 .heroTitle {
   font-size: 3.25rem;
   font-weight: 800;
-  color: #f0fdf4;                /* near-white with green tint */
+  color: #0f172a;
   line-height: 1.2;
   margin: 0;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
 }
 
-/* Bright green accent on second line */
+/* Blue accent on second line */
 .heroAccent {
-  color: #22c55e;
-  text-shadow: 0 0 40px rgba(34,197,94,0.4); /* subtle green glow */
+  color: #2563eb;
 }
 
 .heroSubtitle {
   font-size: 1.15rem;
-  color: #9ca3af;                /* muted gray — readable on dark bg */
+  color: #64748b;                /* muted slate — readable on light bg */
   max-width: 560px;
   line-height: 1.6;
   margin: 0;
@@ -184,9 +180,9 @@
   margin-top: 0.5rem;
 }
 
-/* Primary green button */
+/* Primary blue button */
 .btnPrimary {
-  background: #22c55e;
+  background: #2563eb;
   color: #fff;
   padding: 0.85rem 2rem;
   border-radius: 0.6rem;
@@ -198,27 +194,27 @@
 }
 
 .btnPrimary:hover {
-  background: #16a34a;
+  background: #1d4ed8;
   transform: translateY(-2px);
 }
 
 /* Secondary ghost button */
 .btnSecondary {
   background: transparent;
-  color: #d1fae5;
+  color: #1e3a8a;
   padding: 0.85rem 2rem;
   border-radius: 0.6rem;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
-  border: 2px solid #6ee7b7;
+  border: 2px solid #93c5fd;
   transition: background 0.25s, color 0.25s, transform 0.2s;
   display: inline-block;
 }
 
 .btnSecondary:hover {
-  background: #6ee7b7;
-  color: #064e3b;
+  background: #eff6ff;
+  color: #1e3a8a;
   transform: translateY(-2px);
 }
 
@@ -230,9 +226,9 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 0;
-  background: #f0fdf4;
-  border-top: 1px solid #bbf7d0;
-  border-bottom: 1px solid #bbf7d0;
+  background: #eff6ff;
+  border-top: 1px solid #dbeafe;
+  border-bottom: 1px solid #dbeafe;
   padding: 1.5rem 1rem;
 }
 
@@ -241,7 +237,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0.75rem 2.5rem;
-  border-right: 1px solid #bbf7d0;
+  border-right: 1px solid #dbeafe;
 }
 
 /* Remove right border from last stat */
@@ -252,7 +248,7 @@
 .statValue {
   font-size: 2rem;
   font-weight: 800;
-  color: #16a34a;
+  color: #1d4ed8;
   line-height: 1;
 }
 
@@ -276,18 +272,18 @@
 
 /* Gray background variant — used for How It Works */
 .sectionGray {
-  background: #f9fafb;
+  background: #f8fafc;
   max-width: 100%;
   padding: 5rem 1.5rem;
 }
 
-/* Small green label above the section title */
+/* Small blue label above the section title */
 .sectionLabel {
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #16a34a;
+  color: #2563eb;
   margin-bottom: 0.5rem;
 }
 
@@ -313,11 +309,12 @@
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
   padding: 1.5rem;
-  transition: box-shadow 0.25s, transform 0.25s;
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
 }
 
 .featureCard:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
+  border-color: #bfdbfe;
   transform: translateY(-4px);
 }
 
@@ -359,14 +356,14 @@
   padding: 2rem 1.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
 }
 
 /* Giant step number watermark in the background */
 .stepNumber {
   font-size: 5rem;
   font-weight: 900;
-  color: #d1fae5;
+  color: #dbeafe;
   position: absolute;
   top: -0.5rem;
   right: 0.75rem;
@@ -394,8 +391,7 @@
    FINAL CTA BANNER
 ───────────────────────────────────────── */
 .ctaBanner {
-  background: #0a0f0d;           /* same dark base as the hero */
-  border-top: 1px solid #1f2d23;
+  background: linear-gradient(120deg, #1e3a8a, #2563eb);
   text-align: center;
   padding: 5rem 1.5rem;
   position: relative;
@@ -411,25 +407,35 @@
   transform: translate(-50%, -50%);
   width: 500px;
   height: 300px;
-  background: radial-gradient(ellipse, rgba(34,197,94,0.15) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(255,255,255,0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 
 .ctaTitle {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #f0fdf4;
+  color: #ffffff;
   margin-bottom: 0.75rem;
   position: relative;
 }
 
 .ctaSubtitle {
   font-size: 1.1rem;
-  color: #9ca3af;
+  color: #dbeafe;
   max-width: 520px;
   margin: 0 auto 2rem;
   line-height: 1.6;
   position: relative;
+}
+
+/* Banner CTA needs a light button to stand out against the blue background */
+.ctaBanner .btnPrimary {
+  background: #ffffff;
+  color: #1e3a8a;
+}
+
+.ctaBanner .btnPrimary:hover {
+  background: #eff6ff;
 }
 
 /* ─────────────────────────────────────────
@@ -458,7 +464,7 @@
   .statItem {
     padding: 0.75rem 1.25rem;
     border-right: none;
-    border-bottom: 1px solid #bbf7d0;
+    border-bottom: 1px solid #dbeafe;
   }
 
   .statItem:last-child {

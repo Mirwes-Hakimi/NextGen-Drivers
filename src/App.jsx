@@ -48,8 +48,10 @@ function App() {
         <Route path="/new-drivers"  element={<NewDrivers />} />
         <Route path="/education"    element={<DriverEd />} />
 
+        {/* Booking is open to guests too — signing up is optional */}
+        <Route path="/booking"   element={<BookingPage />} />
+
         {/* ── Protected routes — must be logged in ── */}
-        <Route path="/booking"   element={<PrivateRoute><BookingPage /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Home /></PrivateRoute>} />
 
         {/* ── Admin-only route — redirects non-admins to /dashboard ── */}

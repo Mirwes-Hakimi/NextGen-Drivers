@@ -5,7 +5,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useAuth } from "../components/AuthContext";
 import styles from "../styles/Navbar.module.css";
-import AnimatedLogo from "../components/AnimatedLogo"; // same logo as landing page, small variant
+import Logo from "../components/Logo";
 
 // Links shown in the main nav row
 const NAV_LINKS = [
@@ -57,11 +57,7 @@ export default function Navbar() {
 
       {/* ── Brand ── */}
       <Link to="/" className={styles.brand} onClick={() => setMenuOpen(false)}>
-        <AnimatedLogo small />
-        <span className={styles.brandText}>
-          <span className={styles.brandMain}>NEXT GEN</span>
-          <span className={styles.brandSub}>DRIVING SCHOOL</span>
-        </span>
+        <Logo size="sm" />
       </Link>
 
       {/* ── Desktop navigation links ── */}

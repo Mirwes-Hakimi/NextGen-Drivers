@@ -14,7 +14,7 @@ export default function DmvInfo() {
         </h1>
         <p className={styles.heroSub}>
           Everything you need to know about the California DMV behind-the-wheel
-          road test — what to expect, what's tested, and how we can help you pass.
+          road test: what to expect, what's tested, and how we can help you pass.
         </p>
         <Link to="/packages" className={styles.heroBtn}>Book DMV Test Package</Link>
       </section>
@@ -29,7 +29,7 @@ export default function DmvInfo() {
             <span className={styles.cardIcon}>🔍</span>
             <p className={styles.cardTitle}>Pre-Drive Safety Check</p>
             <p className={styles.cardText}>
-              The examiner will ask you to demonstrate basic vehicle controls —
+              The examiner will ask you to demonstrate basic vehicle controls:
               horn, windshield wipers, defroster, and emergency brake.
             </p>
           </div>
@@ -48,7 +48,7 @@ export default function DmvInfo() {
             <p className={styles.cardTitle}>Lane Changes</p>
             <p className={styles.cardText}>
               Checking mirrors, blind-spot checks, signaling, and smooth
-              merging — all scored separately on the road test.
+              merging are all scored separately on the road test.
             </p>
           </div>
 
@@ -68,7 +68,7 @@ export default function DmvInfo() {
           <div className={styles.step}>
             <div className={styles.stepNumber}>1</div>
             <div className={styles.stepBody}>
-              <p className={styles.stepTitle}>45-Minute Warm-Up Practice</p>
+              <p className={styles.stepTitle}>50-Minute Warm-Up Practice</p>
               <p className={styles.stepText}>
                 Your instructor picks you up and drives you to the DMV, practicing
                 the exact route and maneuvers the examiner is likely to use.
@@ -81,8 +81,8 @@ export default function DmvInfo() {
             <div className={styles.stepBody}>
               <p className={styles.stepTitle}>DMV-Approved Vehicle Provided</p>
               <p className={styles.stepText}>
-                You take the test in our vehicle — no need to worry about
-                whether your own car meets DMV requirements.
+                You take the test in our vehicle, so you don't need to worry
+                about whether your own car meets DMV requirements.
               </p>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function DmvInfo() {
         <div className={styles.cta}>
           <p className={styles.ctaHeading}>Ready to pass your road test?</p>
           <p className={styles.ctaSub}>
-            Book our DMV Road Test package — we'll handle the car, the route
+            Book our DMV Road Test package, and we'll handle the car, the route
             practice, and the drop-off.
           </p>
           <Link to="/packages" className={styles.heroBtn}>Book DMV Package</Link>

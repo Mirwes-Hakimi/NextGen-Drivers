@@ -32,7 +32,6 @@ export default function Packages() {
         "✔️ Pick-up and drop-off included",
         "✔️ Start driving from a parking lot or quiet residential area",
         "✔️ Comprehensive explanation of primary driving rules",
-        '✔️ Free "Student Driver" sticker provided',
       ],
     },
     {
@@ -63,7 +62,6 @@ export default function Packages() {
         "✔️ Start driving from a parking lot or quiet residential area",
         "✔️ Comprehensive explanation of primary driving rules",
         "✔️ Practice stop signs, lane changing, traffic lights, and more",
-        '✔️ Free "Student Driver" sticker provided',
       ],
     },
     {
@@ -96,7 +94,6 @@ export default function Packages() {
         "✔️ Practice stop signs, lane changing, traffic lights, and more",
         "✔️ 15-minute freeway practice",
         "✔️ DMV-required certificate for teens",
-        '✔️ Free "Student Driver" sticker included',
       ],
     },
     {
@@ -122,7 +119,7 @@ export default function Packages() {
         "Oakland": 250,
       },
       features: [
-        "✔️ 45-minute warm-up practice before DMV test",
+        "✔️ 50-minute warm-up practice before DMV test",
         "✔️ DMV road test included",
         "✔️ Certified instructor guidance",
         "✔️ DMV-approved vehicle provided",
@@ -206,7 +203,7 @@ export default function Packages() {
             </label>
 
             <label className={styles.fieldLabel}>
-              — or choose your city
+              Or choose your city
               <select
                 className={styles.citySelect}
                 value={selectedCity}

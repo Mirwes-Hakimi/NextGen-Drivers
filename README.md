@@ -1,5 +1,5 @@
 # React + Vite
-# Next Gen Driving School
+# Wave Driving School
 
 A full-stack platform for driving lesson enrollment, scheduling, and payment.
 

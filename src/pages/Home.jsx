@@ -110,7 +110,7 @@ export default function Home() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        Welcome to Next Gen Driving School
+        Welcome to Wave Driving School
       </MotionH1>
 
       <p className={styles.subText}>

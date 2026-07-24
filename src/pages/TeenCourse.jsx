@@ -14,7 +14,7 @@ export default function TeenCourse() {
         </h1>
         <p className={styles.heroSub}>
           Build real confidence on the road with a certified instructor by your
-          side — from parking lots to freeways.
+          side, from parking lots to freeways.
         </p>
         <Link to="/packages" className={styles.heroBtn}>View Packages & Pricing</Link>
       </section>
@@ -48,7 +48,7 @@ export default function TeenCourse() {
             <span className={styles.cardIcon}>🔀</span>
             <p className={styles.cardTitle}>Lane Changing & Merging</p>
             <p className={styles.cardText}>
-              Learn to check mirrors, signal early, and merge smoothly — skills
+              Learn to check mirrors, signal early, and merge smoothly: skills
               that will be tested at your DMV road test.
             </p>
           </div>

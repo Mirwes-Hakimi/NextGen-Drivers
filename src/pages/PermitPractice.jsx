@@ -13,8 +13,8 @@ export default function PermitPractice() {
           Permit <span>Practice Tips</span>
         </h1>
         <p className={styles.heroSub}>
-          The California DMV written knowledge test has 46 questions — you need
-          38 correct to pass. Here's how to prepare.
+          The California DMV written knowledge test has 46 questions, and you
+          need 38 correct to pass. Here's how to prepare.
         </p>
         <Link to="/packages" className={styles.heroBtn}>Book a Driving Lesson</Link>
       </section>
@@ -116,7 +116,7 @@ export default function PermitPractice() {
           <p>
             <strong>Pro tip:</strong> Once you pass the written test and get your
             permit, you must hold it for at least 6 months before taking the road
-            test. Use that time to log your 50 hours of practice driving —
+            test. Use that time to log your 50 hours of practice driving,
             10 of which must be at night.
           </p>
         </div>

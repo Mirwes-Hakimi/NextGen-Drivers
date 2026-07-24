@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node \"C:\\\\Users\\\\mirwe\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-mirwe-programming-NextGen-Drivers\\\\15110495-b629-492d-9d04-5d92e5e1b090\\\\scratchpad\\\\shot.js\")",
+      "Bash(cp \"C:\\\\Users\\\\mirwe\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-mirwe-programming-NextGen-Drivers\\\\15110495-b629-492d-9d04-5d92e5e1b090\\\\scratchpad\\\\shot.js\" \"c:\\\\Users\\\\mirwe\\\\programming\\\\NextGen-Drivers\\\\.tmp-shot.js\")",
+      "Bash(node .tmp-shot.js)",
+      "Bash(mv \"c:\\\\Users\\\\mirwe\\\\programming\\\\NextGen-Drivers\\\\.tmp-shot.js\" \"c:\\\\Users\\\\mirwe\\\\programming\\\\NextGen-Drivers\\\\.tmp-shot.cjs\")",
+      "Bash(node .tmp-shot.cjs)",
+      "Bash(node .tmp-shot2.cjs)",
+      "Bash(taskkill //PID 34484 //F)",
+      "Bash(node .tmp-booking-test.cjs)",
+      "Bash(node .tmp-logo-check.cjs)"
+    ]
+  }
+}

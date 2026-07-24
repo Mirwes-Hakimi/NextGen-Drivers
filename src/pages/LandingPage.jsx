@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import styles from "../styles/LandingPage.module.css";
-import AnimatedLogo from "../components/AnimatedLogo";
+import Logo from "../components/Logo";
 
 // Reusable animation: fade up from below as element enters view
 const fadeUp = {
@@ -34,7 +34,7 @@ const features = [
   {
     icon: "📅",
     title: "Flexible Scheduling",
-    desc: "Book sessions on your schedule — weekdays, weekends, mornings, or afternoons.",
+    desc: "Book sessions on your schedule: weekdays, weekends, mornings, or afternoons.",
   },
   {
     icon: "📍",
@@ -48,7 +48,7 @@ const steps = [
   {
     number: "01",
     title: "Choose a Package",
-    desc: "Browse our 2, 4, or 6-hour training packages — or book a DMV road test.",
+    desc: "Browse our 2, 4, or 6-hour training packages, or book a DMV road test.",
   },
   {
     number: "02",
@@ -92,8 +92,7 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
           >
-            {/* Animated SVG car logo */}
-            <AnimatedLogo />
+            <Logo size="lg" />
 
             <h1 className={styles.heroTitle}>
               Drive with Confidence.<br />
@@ -101,7 +100,7 @@ export default function LandingPage() {
             </h1>
 
             <p className={styles.heroSubtitle}>
-              Bay Area's trusted driving school — certified instructors,
+              Bay Area's trusted driving school with certified instructors,
               flexible scheduling, and pick-up from your door.
             </p>
 
@@ -140,7 +139,7 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true }}        // animate only once as it scrolls into view
         >
-          <p className={styles.sectionLabel}>Why Next Gen</p>
+          <p className={styles.sectionLabel}>Why Wave</p>
           <h2 className={styles.sectionTitle}>Everything You Need to Pass</h2>
         </motion.div>
 
@@ -209,7 +208,7 @@ export default function LandingPage() {
         >
           <h2 className={styles.ctaTitle}>Ready to Get Behind the Wheel?</h2>
           <p className={styles.ctaSubtitle}>
-            Join hundreds of students who passed their test with Next Gen Driving School.
+            Join hundreds of students who passed their test with Wave Driving School.
           </p>
           <Link to="/packages" className={styles.btnPrimary}>
             Book a Session

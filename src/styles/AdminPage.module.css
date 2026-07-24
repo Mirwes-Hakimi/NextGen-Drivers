@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────
-   ADMIN PAGE — dark theme
+   ADMIN PAGE — light theme
 ───────────────────────────────────────── */
 
-/* Full-page dark background */
+/* Full-page light background */
 .page {
   min-height: 100vh;
-  background: #0a0f0d;
+  background: #f8fafc;
   padding: 2rem 1.25rem 4rem;
 }
 
@@ -19,14 +19,14 @@
 .heading {
   font-size: 1.8rem;
   font-weight: 900;
-  color: #f0fdf4;
+  color: #0f172a;
   margin-bottom: 0.25rem;
 }
 
 /* Subtitle under the heading */
 .subHeading {
   font-size: 0.9rem;
-  color: #6b7280;
+  color: #64748b;
   margin-bottom: 1.75rem;
 }
 
@@ -44,10 +44,10 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 1rem;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid #cbd5e1;
   border-radius: 9999px;
-  background: transparent;
-  color: #9ca3af;
+  background: #ffffff;
+  color: #64748b;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
@@ -55,20 +55,20 @@
 }
 
 .tab:hover {
-  background: rgba(255,255,255,0.05);
-  color: #f0fdf4;
+  background: #eff6ff;
+  color: #0f172a;
 }
 
-/* Active tab — green filled */
+/* Active tab — blue filled */
 .activeTab {
-  background: #16a34a;
+  background: #2563eb;
   color: #fff;
-  border-color: #16a34a;
+  border-color: #2563eb;
 }
 
 /* Small count bubble inside the tab */
 .tabCount {
-  background: rgba(255,255,255,0.15);
+  background: rgba(15,23,42,0.08);
   border-radius: 9999px;
   padding: 0 0.4rem;
   font-size: 0.75rem;
@@ -81,22 +81,23 @@
 
 /* ── State messages ── */
 .statusText {
-  color: #6b7280;
+  color: #64748b;
   font-size: 0.95rem;
 }
 
 .errorText {
-  color: #f87171;
+  color: #dc2626;
   font-size: 0.95rem;
 }
 
 /* ── Booking card ── */
 .card {
-  background: #0d1f16;
-  border: 1px solid rgba(34,197,94,0.15);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 1.5rem;
   margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(15,23,42,0.04);
   animation: fadeUp 250ms ease-out;
 }
 
@@ -117,14 +118,14 @@
 .name {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f0fdf4;
+  color: #0f172a;
   margin: 0 0 0.2rem;
 }
 
 /* Package name below the student name */
 .packageLabel {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #64748b;
   margin: 0;
 }
 
@@ -139,9 +140,9 @@
   flex-shrink: 0;
 }
 
-.pending   { background: rgba(251,191,36,0.15);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
-.confirmed { background: rgba(34,197,94,0.12);   color: #22c55e; border: 1px solid rgba(34,197,94,0.3);  }
-.cancelled { background: rgba(239,68,68,0.12);   color: #f87171; border: 1px solid rgba(239,68,68,0.3);  }
+.pending   { background: rgba(251,191,36,0.15);  color: #b45309; border: 1px solid rgba(251,191,36,0.4); }
+.confirmed { background: rgba(22,163,74,0.12);   color: #15803d; border: 1px solid rgba(22,163,74,0.3);  }
+.cancelled { background: rgba(239,68,68,0.1);    color: #dc2626; border: 1px solid rgba(239,68,68,0.3);  }
 
 /* ── Info grid: two columns ── */
 .infoGrid {
@@ -149,17 +150,17 @@
   grid-template-columns: 1fr 1fr;
   gap: 0.4rem 1rem;
   font-size: 0.875rem;
-  color: #d1d5db;
+  color: #334155;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 /* Small dim label before each value */
 .label {
   display: block;
   font-size: 0.72rem;
-  color: #6b7280;
+  color: #94a3b8;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -170,7 +171,7 @@
 .sessionsBlock {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 /* "Sessions" heading + edit button side by side */
@@ -184,7 +185,7 @@
 .sessionsTitle {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -200,14 +201,14 @@
 
 .sessionItem {
   font-size: 0.875rem;
-  color: #d1d5db;
+  color: #334155;
 }
 
-/* Green session number label */
+/* Blue session number label */
 .sessionNum {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #22c55e;
+  color: #2563eb;
   margin-right: 0.5rem;
 }
 
@@ -223,8 +224,8 @@
   grid-template-columns: auto 1fr 1fr 1fr;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(34,197,94,0.04);
-  border: 1px solid rgba(34,197,94,0.12);
+  background: rgba(37,99,235,0.03);
+  border: 1px solid rgba(37,99,235,0.15);
   border-radius: 10px;
   padding: 0.85rem 1rem;
 }
@@ -235,7 +236,7 @@
   gap: 0.3rem;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #6b7280;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -243,21 +244,20 @@
 /* Inputs in edit mode */
 .editInput {
   padding: 0.5rem 0.65rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(34,197,94,0.25);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  color: #f0fdf4;
+  color: #0f172a;
   font-size: 0.9rem;
   outline: none;
   transition: border-color 140ms, box-shadow 140ms;
-  color-scheme: dark;
   width: 100%;
   box-sizing: border-box;
 }
 
 .editInput:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
 }
 
 /* Read-only end-time input — slightly dimmer */
@@ -273,9 +273,9 @@
   justify-content: flex-end;
 }
 
-/* Green "Save Changes" button */
+/* Blue "Save Changes" button */
 .saveBtn {
-  background: linear-gradient(90deg, #16a34a, #22c55e);
+  background: linear-gradient(90deg, #1d4ed8, #2563eb);
   color: #fff;
   border: none;
   padding: 0.55rem 1.25rem;
@@ -299,9 +299,9 @@
 
 /* Pencil edit button */
 .editBtn {
-  background: rgba(34,197,94,0.1);
-  color: #22c55e;
-  border: 1px solid rgba(34,197,94,0.25);
+  background: rgba(37,99,235,0.08);
+  color: #2563eb;
+  border: 1px solid rgba(37,99,235,0.25);
   padding: 0.3rem 0.85rem;
   border-radius: 8px;
   font-size: 0.8rem;
@@ -311,14 +311,14 @@
 }
 
 .editBtn:hover {
-  background: rgba(34,197,94,0.18);
+  background: rgba(37,99,235,0.15);
 }
 
 /* ✕ Cancel edit button */
 .cancelEditBtn {
-  background: rgba(255,255,255,0.05);
-  color: #9ca3af;
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
   padding: 0.3rem 0.85rem;
   border-radius: 8px;
   font-size: 0.8rem;
@@ -328,9 +328,9 @@
 }
 
 .cancelEditBtn:hover {
-  background: rgba(239,68,68,0.1);
-  color: #f87171;
-  border-color: rgba(239,68,68,0.25);
+  background: rgba(239,68,68,0.08);
+  color: #dc2626;
+  border-color: rgba(239,68,68,0.3);
 }
 
 /* ── Status update row ── */
@@ -344,7 +344,7 @@
 .statusLabel {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #6b7280;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -371,9 +371,9 @@
 }
 
 /* Per-status colors */
-.pendingBtn   { background: rgba(251,191,36,0.12); color: #fbbf24; border-color: rgba(251,191,36,0.25); }
-.confirmedBtn { background: rgba(34,197,94,0.12);  color: #22c55e; border-color: rgba(34,197,94,0.25);  }
-.cancelledBtn { background: rgba(239,68,68,0.12);  color: #f87171; border-color: rgba(239,68,68,0.25);  }
+.pendingBtn   { background: rgba(251,191,36,0.15); color: #b45309; border-color: rgba(251,191,36,0.35); }
+.confirmedBtn { background: rgba(22,163,74,0.12);  color: #15803d; border-color: rgba(22,163,74,0.3);   }
+.cancelledBtn { background: rgba(239,68,68,0.1);   color: #dc2626; border-color: rgba(239,68,68,0.3);   }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {

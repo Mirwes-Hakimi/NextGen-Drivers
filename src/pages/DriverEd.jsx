@@ -30,8 +30,8 @@ export default function DriverEd() {
             <p className={styles.cardTitle}>Mirror & Blind Spot Checks</p>
             <p className={styles.cardText}>
               Check your rearview mirror every 5–8 seconds. Always do a
-              shoulder (blind spot) check before changing lanes — mirrors alone
-              don't show everything.
+              shoulder (blind spot) check before changing lanes, since mirrors
+              alone don't show everything.
             </p>
           </div>
 
@@ -49,8 +49,8 @@ export default function DriverEd() {
             <span className={styles.cardIcon}>🔦</span>
             <p className={styles.cardTitle}>Night Driving</p>
             <p className={styles.cardText}>
-              Reduce speed at night — your stopping distance often exceeds your
-              headlight range. Never overdrive your headlights.
+              Reduce speed at night, since your stopping distance often exceeds
+              your headlight range. Never overdrive your headlights.
             </p>
           </div>
 
@@ -76,7 +76,7 @@ export default function DriverEd() {
             <span className={styles.cardIcon}>🚨</span>
             <p className={styles.cardTitle}>Handling Emergencies</p>
             <p className={styles.cardText}>
-              If a tire blows, don't brake hard — grip the wheel firmly, ease
+              If a tire blows, don't brake hard. Grip the wheel firmly, ease
               off the gas, and steer straight while gradually slowing down.
             </p>
           </div>
@@ -101,7 +101,7 @@ export default function DriverEd() {
             <div className={styles.stepBody}>
               <p className={styles.stepTitle}>Pedestrians Always Have Right of Way</p>
               <p className={styles.stepText}>
-                Yield to pedestrians at all crosswalks — marked or unmarked. Stop
+                Yield to pedestrians at all crosswalks, marked or unmarked. Stop
                 at least one lane back so vehicles in other lanes can also see
                 the pedestrian.
               </p>
@@ -125,7 +125,7 @@ export default function DriverEd() {
         <div className={styles.cta}>
           <p className={styles.ctaHeading}>Put it all into practice</p>
           <p className={styles.ctaSub}>
-            Knowing the rules is step one — let one of our instructors help you
+            Knowing the rules is step one. Let one of our instructors help you
             apply them on real roads.
           </p>
           <Link to="/packages" className={styles.heroBtn}>Book a Driving Session</Link>

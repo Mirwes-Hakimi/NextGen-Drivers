@@ -23,15 +23,19 @@
 // EMAIL TEMPLATE VARIABLES
 // Use these in your EmailJS template exactly as written:
 //
-//   {{to_email}}       — the student/parent email address
+//   {{to_email}}       — the recipient (student/parent email, or the school for its copy)
 //   {{student_name}}   — student's first + last name
 //   {{package_title}}  — e.g. "Behind The Wheel Training Package: 2 Hours"
 //   {{city}}           — e.g. "Walnut Creek"
 //   {{price}}          — e.g. "180"
 //   {{sessions_text}}  — formatted list of session dates and times
 //
+// Every booking sends this template twice: once to the customer's
+// {{to_email}}, and once to SCHOOL_NOTIFY_EMAIL below so the school
+// gets a copy of every new booking too.
+//
 // SUGGESTED TEMPLATE SUBJECT:
-//   Booking Confirmation – Next Gen Driving School
+//   Booking Confirmation – Wave Driving School
 //
 // SUGGESTED TEMPLATE BODY:
 //   Hi {{student_name}},
@@ -47,9 +51,12 @@
 //
 //   We will follow up shortly to confirm your appointment.
 //
-//   – Next Gen Driving School
+//   – Wave Driving School
 // ─────────────────────────────────────────────────────────────
 
 export const EMAILJS_SERVICE_ID  = "service_05tn09g";   // paste your Service ID here
 export const EMAILJS_TEMPLATE_ID = "template_bwwmyyc";  // paste your Template ID here
 export const EMAILJS_PUBLIC_KEY  = "6LKuop0YHiirMBE0J";   // paste your Public Key here
+
+// Every new booking also gets emailed here so the school has a record of it
+export const SCHOOL_NOTIFY_EMAIL = "wavedrivingschool@gmail.com";

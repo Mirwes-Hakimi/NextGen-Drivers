@@ -13,7 +13,7 @@ export default function NewDrivers() {
           New to <span>Driving?</span>
         </h1>
         <p className={styles.heroSub}>
-          Here's the full roadmap — from getting your learner's permit to
+          Here's the full roadmap, from getting your learner's permit to
           holding your California driver's license.
         </p>
         <Link to="/packages" className={styles.heroBtn}>Start with a Lesson</Link>
@@ -53,9 +53,9 @@ export default function NewDrivers() {
             <div className={styles.stepBody}>
               <p className={styles.stepTitle}>Complete 50 Hours of Practice</p>
               <p className={styles.stepText}>
-                Log at least 50 hours of supervised driving — 10 must be at
-                night. A licensed driver 25 or older must be in the passenger
-                seat.
+                Log at least 50 hours of supervised driving, 10 of which must
+                be at night. A licensed driver 25 or older must be in the
+                passenger seat.
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function NewDrivers() {
             <span className={styles.cardIcon}>📱</span>
             <p className={styles.cardTitle}>No Phone Use</p>
             <p className={styles.cardText}>
-              California law prohibits all handheld phone use while driving —
+              California law prohibits all handheld phone use while driving,
               even with a full license. Hands-free only.
             </p>
           </div>

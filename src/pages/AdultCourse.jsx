@@ -29,9 +29,9 @@ export default function AdultCourse() {
             <span className={styles.cardIcon}>🆕</span>
             <p className={styles.cardTitle}>First-Time Drivers</p>
             <p className={styles.cardText}>
-              Never driven before? No problem. We start from zero — car
-              controls, mirrors, and basic maneuvers — in a calm, judgment-free
-              environment.
+              Never driven before? No problem. We start from the basics: car
+              controls, mirrors, and basic maneuvers, all in a calm,
+              judgment-free environment.
             </p>
           </div>
 
@@ -83,7 +83,7 @@ export default function AdultCourse() {
               <p className={styles.stepTitle}>We Pick You Up</p>
               <p className={styles.stepText}>
                 Your instructor picks you up from home, work, or anywhere
-                convenient — no need to arrange transportation.
+                convenient, so there's no need to arrange transportation.
               </p>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function AdultCourse() {
         <div className={styles.cta}>
           <p className={styles.ctaHeading}>Start driving with confidence</p>
           <p className={styles.ctaSub}>
-            Book a lesson today — pick-up and drop-off included in every session.
+            Book a lesson today. Pick-up and drop-off are included in every session.
           </p>
           <Link to="/packages" className={styles.heroBtn}>Book a Lesson</Link>
         </div>

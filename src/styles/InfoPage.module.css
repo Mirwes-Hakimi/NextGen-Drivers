@@ -1,14 +1,14 @@
 /* ─────────────────────────────────────────
-   INFO PAGE — shared dark theme styles
+   INFO PAGE — shared light theme styles
    Used by: TeenCourse, AdultCourse, DmvInfo,
             PermitPractice, NewDrivers, DriverEd
 ───────────────────────────────────────── */
 
-/* Full-page dark background */
+/* Full-page light background */
 .page {
   min-height: 100vh;
-  background: #0a0f0d;
-  color: #f0fdf4;
+  background: #ffffff;
+  color: #0f172a;
 }
 
 /* ── Hero banner at top of each page ── */
@@ -17,9 +17,10 @@
   text-align: center;
   padding: 5rem 1.5rem 3.5rem;
   overflow: hidden;
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
 }
 
-/* Subtle green radial glow behind the heading */
+/* Subtle blue radial glow behind the heading */
 .hero::before {
   content: "";
   position: absolute;
@@ -28,7 +29,7 @@
   transform: translateX(-50%);
   width: 600px;
   height: 380px;
-  background: radial-gradient(ellipse at center, rgba(34,197,94,0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(37,99,235,0.1) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -38,7 +39,7 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #22c55e;
+  color: #2563eb;
   margin-bottom: 0.75rem;
 }
 
@@ -47,19 +48,19 @@
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 900;
   line-height: 1.15;
-  color: #f0fdf4;
+  color: #0f172a;
   margin-bottom: 0.85rem;
 }
 
 /* Highlighted word in the heading */
 .heroHeading span {
-  color: #22c55e;
+  color: #2563eb;
 }
 
 /* One-line description below the heading */
 .heroSub {
   font-size: 1rem;
-  color: #9ca3af;
+  color: #64748b;
   max-width: 520px;
   margin: 0 auto 2rem;
   line-height: 1.6;
@@ -68,7 +69,7 @@
 /* CTA button in the hero */
 .heroBtn {
   display: inline-block;
-  background: linear-gradient(90deg, #16a34a, #22c55e);
+  background: linear-gradient(90deg, #1d4ed8, #2563eb);
   color: #fff;
   text-decoration: none;
   font-weight: 800;
@@ -76,13 +77,13 @@
   padding: 0.8rem 2rem;
   border-radius: 10px;
   transition: filter 150ms, transform 150ms, box-shadow 150ms;
-  box-shadow: 0 8px 20px rgba(34,197,94,0.28);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.25);
 }
 
 .heroBtn:hover {
   filter: brightness(1.08);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(34,197,94,0.38);
+  box-shadow: 0 12px 28px rgba(37,99,235,0.35);
 }
 
 /* ── Content area below hero ── */
@@ -96,7 +97,7 @@
 .sectionHeading {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #f0fdf4;
+  color: #0f172a;
   margin: 2.5rem 0 1.25rem;
 }
 
@@ -109,16 +110,18 @@
 
 /* ── Individual card ── */
 .card {
-  background: #0d1f16;
-  border: 1px solid rgba(34,197,94,0.15);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 1.5rem;
-  transition: transform 180ms, box-shadow 180ms;
+  box-shadow: 0 2px 10px rgba(15,23,42,0.04);
+  transition: transform 180ms, box-shadow 180ms, border-color 180ms;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(34,197,94,0.25);
+  box-shadow: 0 16px 36px rgba(37,99,235,0.1);
+  border-color: #bfdbfe;
 }
 
 /* Icon/emoji at top of a card */
@@ -132,14 +135,14 @@
 .cardTitle {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #f0fdf4;
+  color: #0f172a;
   margin-bottom: 0.5rem;
 }
 
 /* Card body text */
 .cardText {
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: #64748b;
   line-height: 1.6;
 }
 
@@ -153,26 +156,27 @@
   display: flex;
   gap: 1.25rem;
   align-items: flex-start;
-  background: #0d1f16;
-  border: 1px solid rgba(34,197,94,0.12);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 1.25rem;
+  box-shadow: 0 2px 10px rgba(15,23,42,0.04);
 }
 
-/* The big green number circle */
+/* The big blue number circle */
 .stepNumber {
   width: 40px;
   height: 40px;
   min-width: 40px;
-  background: rgba(34,197,94,0.12);
-  border: 1px solid rgba(34,197,94,0.3);
+  background: rgba(37,99,235,0.1);
+  border: 1px solid rgba(37,99,235,0.3);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
   font-weight: 900;
-  color: #22c55e;
+  color: #2563eb;
 }
 
 .stepBody {
@@ -184,19 +188,19 @@
 .stepTitle {
   font-size: 1rem;
   font-weight: 700;
-  color: #f0fdf4;
+  color: #0f172a;
 }
 
 .stepText {
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: #64748b;
   line-height: 1.6;
 }
 
 /* ── Info box (tip / requirement callout) ── */
 .infoBox {
-  background: rgba(34,197,94,0.06);
-  border: 1px solid rgba(34,197,94,0.2);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 14px;
   padding: 1.25rem 1.5rem;
   margin-top: 2rem;
@@ -204,13 +208,13 @@
 
 .infoBox p {
   font-size: 0.95rem;
-  color: #d1d5db;
+  color: #334155;
   line-height: 1.65;
   margin: 0;
 }
 
 .infoBox strong {
-  color: #22c55e;
+  color: #1d4ed8;
 }
 
 /* ── Bottom CTA banner ── */
@@ -218,22 +222,31 @@
   text-align: center;
   margin-top: 3rem;
   padding: 2.5rem 1.5rem;
-  background: #0d1f16;
-  border: 1px solid rgba(34,197,94,0.15);
+  background: linear-gradient(120deg, #1e3a8a, #2563eb);
   border-radius: 18px;
 }
 
 .ctaHeading {
   font-size: 1.5rem;
   font-weight: 900;
-  color: #f0fdf4;
+  color: #ffffff;
   margin-bottom: 0.5rem;
 }
 
 .ctaSub {
   font-size: 0.95rem;
-  color: #9ca3af;
+  color: #dbeafe;
   margin-bottom: 1.5rem;
+}
+
+.cta .heroBtn {
+  background: #ffffff;
+  color: #1e3a8a;
+  box-shadow: none;
+}
+
+.cta .heroBtn:hover {
+  background: #eff6ff;
 }
 
 /* ── Responsive ── */
