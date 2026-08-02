@@ -1,5 +1,5 @@
 # React + Vite
-# Wave Driving School
+# Best Driving School
 
 A full-stack platform for driving lesson enrollment, scheduling, and payment.
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import styles from "../styles/LandingPage.module.css";
@@ -29,7 +30,7 @@ const features = [
   {
     icon: "📋",
     title: "DMV Test Ready",
-    desc: "Our 6-hour package includes the DMV-required certificate for teen drivers.",
+    desc: "Our longer packages include the DMV-required certificate for teen drivers.",
   },
   {
     icon: "📅",
@@ -38,8 +39,8 @@ const features = [
   },
   {
     icon: "📍",
-    title: "15+ Cities Covered",
-    desc: "Serving the entire Bay Area from San Francisco to Brentwood.",
+    title: "20+ Cities Covered",
+    desc: "Serving the Bay Area and the Sacramento region, from San Francisco to Elk Grove.",
   },
 ];
 
@@ -48,7 +49,7 @@ const steps = [
   {
     number: "01",
     title: "Choose a Package",
-    desc: "Browse our 2, 4, or 6-hour training packages, or book a DMV road test.",
+    desc: "Browse our driving packages and mock/DMV tests, from 2 hours up to a full combo course.",
   },
   {
     number: "02",
@@ -65,12 +66,61 @@ const steps = [
 // ── Stats ──
 const stats = [
   { value: "500+", label: "Students Trained" },
-  { value: "15+",  label: "Cities Served" },
+  { value: "20+",  label: "Cities Served" },
   { value: "5★",   label: "Average Rating" },
   { value: "100%", label: "DMV Pass Rate" },
 ];
 
+// ── Featured packages (preview — full list + city pricing on /packages) ──
+const featuredPackages = [
+  { title: "Two-Hour Driving Lesson", price: 160, blurb: "A single focused session to build core skills." },
+  { title: "DMV Drive Test", price: 240, blurb: "Your behind-the-wheel road test, done with us." },
+  { title: "Mock Test", price: 210, blurb: "A simulated road test with feedback before the real thing." },
+  { title: "Eight-Hour Driving Lesson", price: 640, blurb: "Our most complete training package." },
+];
+
+// ── Testimonials ──
+const testimonials = [
+  {
+    quote: "My instructor was patient and made me feel confident behind the wheel within a couple sessions. Passed my DMV test on the first try!",
+    name: "Priya S.",
+    city: "Walnut Creek",
+  },
+  {
+    quote: "Pick-up and drop-off made this so easy to fit around school. Booking online took two minutes.",
+    name: "Marcus T.",
+    city: "Oakland",
+  },
+  {
+    quote: "I hadn't driven in over a decade. My instructor met me exactly where I was and never made me feel rushed.",
+    name: "Elena R.",
+    city: "Concord",
+  },
+];
+
+// ── FAQ ──
+const faqs = [
+  {
+    q: "Do I need my own car for lessons?",
+    a: "No. Every session and DMV road test uses our fully insured, DMV-approved training vehicle.",
+  },
+  {
+    q: "Can I reschedule a session?",
+    a: "Yes, just contact us at least 24 hours before your scheduled session and we'll help you find a new time.",
+  },
+  {
+    q: "Do I need to sign up to book a session?",
+    a: "No — booking is open to guests. Creating an account just lets you track your bookings in one place.",
+  },
+  {
+    q: "What areas do you serve?",
+    a: "We cover 20+ cities across the Bay Area and the Sacramento region, including Sacramento, Folsom, and Elk Grove. Enter your ZIP code on the Packages page to see pricing near you.",
+  },
+];
+
 export default function LandingPage() {
+  const [openFaq, setOpenFaq] = useState(0);
+
   return (
     <div className={styles.page}>
 
@@ -100,8 +150,9 @@ export default function LandingPage() {
             </h1>
 
             <p className={styles.heroSubtitle}>
-              Bay Area's trusted driving school with certified instructors,
-              flexible scheduling, and pick-up from your door.
+              The Bay Area and Sacramento region's trusted driving school,
+              with certified instructors, flexible scheduling, and
+              pick-up from your door.
             </p>
 
             {/* CTA buttons */}
@@ -130,16 +181,61 @@ export default function LandingPage() {
       </section>
 
       {/* ════════════════════════════════
-           WHY CHOOSE US
+           FEATURED PACKAGES
           ════════════════════════════════ */}
       <section className={styles.section}>
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <p className={styles.sectionLabel}>Pricing</p>
+          <h2 className={styles.sectionTitle}>Popular Packages</h2>
+        </motion.div>
+
+        <div className={styles.packagesGrid}>
+          {featuredPackages.map((p, i) => (
+            <motion.div
+              key={p.title}
+              className={styles.packageCard}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <h3 className={styles.packageTitle}>{p.title}</h3>
+              <p className={styles.packagePrice}>${p.price}</p>
+              <p className={styles.packageBlurb}>{p.blurb}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className={styles.packagesCtaWrap}
+        >
+          <Link to="/packages" className={styles.btnPrimary}>
+            See All Packages & Pricing
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* ════════════════════════════════
+           WHY CHOOSE US
+          ════════════════════════════════ */}
+      <section className={`${styles.section} ${styles.sectionGray}`}>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}        // animate only once as it scrolls into view
         >
-          <p className={styles.sectionLabel}>Why Wave</p>
+          <p className={styles.sectionLabel}>Why Choose Us</p>
           <h2 className={styles.sectionTitle}>Everything You Need to Pass</h2>
         </motion.div>
 
@@ -165,7 +261,7 @@ export default function LandingPage() {
       {/* ════════════════════════════════
            HOW IT WORKS
           ════════════════════════════════ */}
-      <section className={`${styles.section} ${styles.sectionGray}`}>
+      <section className={styles.section}>
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -197,6 +293,76 @@ export default function LandingPage() {
       </section>
 
       {/* ════════════════════════════════
+           TESTIMONIALS
+          ════════════════════════════════ */}
+      <section className={`${styles.section} ${styles.sectionGray}`}>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <p className={styles.sectionLabel}>Testimonials</p>
+          <h2 className={styles.sectionTitle}>What Our Students Say</h2>
+        </motion.div>
+
+        <div className={styles.testimonialsGrid}>
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={t.name}
+              className={styles.testimonialCard}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.12 }}
+            >
+              <p className={styles.testimonialStars}>★★★★★</p>
+              <p className={styles.testimonialQuote}>&ldquo;{t.quote}&rdquo;</p>
+              <p className={styles.testimonialName}>
+                {t.name} <span className={styles.testimonialCity}>· {t.city}</span>
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ════════════════════════════════
+           FAQ
+          ════════════════════════════════ */}
+      <section className={styles.section}>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <p className={styles.sectionLabel}>Questions</p>
+          <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
+        </motion.div>
+
+        <div className={styles.faqList}>
+          {faqs.map((item, i) => {
+            const isOpen = openFaq === i;
+            return (
+              <div key={item.q} className={styles.faqItem}>
+                <button
+                  type="button"
+                  className={styles.faqQuestion}
+                  onClick={() => setOpenFaq(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
+                >
+                  {item.q}
+                  <span className={styles.faqCaret}>{isOpen ? "−" : "+"}</span>
+                </button>
+                {isOpen && <p className={styles.faqAnswer}>{item.a}</p>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ════════════════════════════════
            FINAL CTA BANNER
           ════════════════════════════════ */}
       <section className={styles.ctaBanner}>
@@ -208,7 +374,7 @@ export default function LandingPage() {
         >
           <h2 className={styles.ctaTitle}>Ready to Get Behind the Wheel?</h2>
           <p className={styles.ctaSubtitle}>
-            Join hundreds of students who passed their test with Wave Driving School.
+            Join hundreds of students who passed their test with Best Driving School.
           </p>
           <Link to="/packages" className={styles.btnPrimary}>
             Book a Session

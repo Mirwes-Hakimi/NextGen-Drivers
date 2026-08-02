@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────
    NAVBAR BASE
-   White, translucent-on-scroll bar matching
-   the Wave logo's light, clean look.
+   Black, translucent-on-scroll bar matching
+   the Best Driving School logo's dark, bold look.
 ───────────────────────────────────────── */
 .navbar {
   position: sticky;
@@ -11,18 +11,18 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.7rem 1.5rem;
-  background: rgba(255, 255, 255, 0.85);   /* semi-transparent white */
+  background: rgba(0, 0, 0, 0.85);         /* semi-transparent black */
   backdrop-filter: blur(12px);             /* frosted glass effect */
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(30, 58, 138, 0.08); /* subtle navy underline */
+  border-bottom: 1px solid rgba(249, 115, 22, 0.15); /* subtle orange underline */
   transition: background 0.3s ease, box-shadow 0.3s ease;
   gap: 1rem;
 }
 
 /* Solid background after scrolling */
 .scrolled {
-  background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 2px 20px rgba(15, 23, 42, 0.08);
+  background: rgba(0, 0, 0, 0.97);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* ─────────────────────────────────────────
@@ -49,7 +49,7 @@
 
 /* Individual nav link */
 .link {
-  color: #475569;
+  color: #d1d5db;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -60,13 +60,13 @@
 }
 
 .link:hover {
-  color: #1e3a8a;
-  background: rgba(37, 99, 235, 0.07);
+  color: #ffffff;
+  background: rgba(249, 115, 22, 0.1);
 }
 
-/* Active page — blue underline dot */
+/* Active page — orange underline dot */
 .activeLink {
-  color: #2563eb !important;
+  color: #f97316 !important;
   position: relative;
 }
 
@@ -78,7 +78,7 @@
   transform: translateX(-50%);
   width: 18px;
   height: 2px;
-  background: #2563eb;
+  background: #f97316;
   border-radius: 2px;
 }
 
@@ -91,7 +91,7 @@
 
 .dropdownBtn {
   background: transparent;
-  color: #475569;
+  color: #d1d5db;
   border: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -103,8 +103,8 @@
 }
 
 .dropdownBtn:hover {
-  color: #1e3a8a;
-  background: rgba(37, 99, 235, 0.07);
+  color: #ffffff;
+  background: rgba(249, 115, 22, 0.1);
 }
 
 /* Animated caret arrow */
@@ -125,12 +125,12 @@
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
-  background: #ffffff;
-  border: 1px solid rgba(30, 58, 138, 0.12);
+  background: #111111;
+  border: 1px solid rgba(249, 115, 22, 0.2);
   border-radius: 0.6rem;
   padding: 0.5rem;
   min-width: 200px;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   flex-direction: column;
   gap: 0.1rem;
   z-index: 10;
@@ -141,7 +141,7 @@
 }
 
 .dropdownLink {
-  color: #475569;
+  color: #d1d5db;
   text-decoration: none;
   font-size: 0.875rem;
   padding: 0.45rem 0.75rem;
@@ -150,8 +150,8 @@
 }
 
 .dropdownLink:hover {
-  color: #2563eb;
-  background: rgba(37, 99, 235, 0.08);
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
 }
 
 /* ─────────────────────────────────────────
@@ -169,22 +169,22 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: #475569;
+  color: #d1d5db;
   text-decoration: none;
   font-size: 0.82rem;
   padding: 0.35rem 0.7rem;
   border-radius: 9999px;
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   transition: background 0.2s;
   max-width: 180px;
 }
 
 .userChip:hover {
-  background: rgba(37, 99, 235, 0.06);
+  background: rgba(249, 115, 22, 0.08);
 }
 
 .userIcon {
-  color: #2563eb;
+  color: #f97316;
   flex-shrink: 0;
 }
 
@@ -201,8 +201,8 @@
   align-items: center;
   gap: 0.35rem;
   background: transparent;
-  color: #64748b;
-  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.82rem;
   padding: 0.35rem 0.7rem;
   border-radius: 9999px;
@@ -220,35 +220,35 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  color: #475569;
+  color: #d1d5db;
   text-decoration: none;
   font-size: 0.875rem;
   padding: 0.4rem 0.8rem;
   border-radius: 9999px;
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   transition: color 0.2s, background 0.2s;
 }
 
 .loginBtn:hover {
-  color: #1e3a8a;
-  background: rgba(37, 99, 235, 0.06);
+  color: #ffffff;
+  background: rgba(249, 115, 22, 0.08);
 }
 
-/* Book Now — solid blue CTA, always visible */
+/* Book Now — solid orange CTA, always visible */
 .bookBtn {
-  background: #2563eb;
+  background: linear-gradient(90deg, #ea580c, #f97316);
   color: #fff;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 700;
   padding: 0.45rem 1.1rem;
   border-radius: 0.5rem;
-  transition: background 0.2s, transform 0.15s;
+  transition: filter 0.2s, transform 0.15s;
   white-space: nowrap;
 }
 
 .bookBtn:hover {
-  background: #1d4ed8;
+  filter: brightness(1.08);
   transform: translateY(-1px);
 }
 
@@ -258,7 +258,7 @@
 .hamburger {
   display: none;              /* hidden on desktop */
   background: none;
-  color: #1e3a8a;
+  color: #f97316;
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
@@ -274,15 +274,15 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+  background: #000000;
+  border-bottom: 1px solid rgba(249, 115, 22, 0.15);
   padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   z-index: 999;
   animation: slideDown 0.25s ease-out;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes slideDown {
@@ -292,7 +292,7 @@
 
 /* Mobile nav link */
 .mobileLink {
-  color: #475569;
+  color: #d1d5db;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
@@ -305,20 +305,20 @@
 }
 
 .mobileLink:hover {
-  color: #1e3a8a;
-  background: rgba(37, 99, 235, 0.06);
+  color: #ffffff;
+  background: rgba(249, 115, 22, 0.08);
 }
 
 /* Active mobile link */
 .activeMobileLink {
-  color: #2563eb !important;
-  background: rgba(37, 99, 235, 0.08);
+  color: #f97316 !important;
+  background: rgba(249, 115, 22, 0.1);
 }
 
 /* Thin divider line */
 .mobileDivider {
   height: 1px;
-  background: rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.08);
   margin: 0.4rem 0;
 }
 
@@ -329,7 +329,7 @@
   gap: 0.5rem;
   background: none;
   border: none;
-  color: #64748b;
+  color: #9ca3af;
   font-size: 0.95rem;
   padding: 0.6rem 0.5rem;
   cursor: pointer;
@@ -346,7 +346,7 @@
 /* Mobile Book Now button */
 .mobileBookBtn {
   display: block;
-  background: #2563eb;
+  background: linear-gradient(90deg, #ea580c, #f97316);
   color: #fff;
   text-align: center;
   text-decoration: none;
@@ -354,11 +354,11 @@
   padding: 0.7rem;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
-  transition: background 0.2s;
+  transition: filter 0.2s;
 }
 
 .mobileBookBtn:hover {
-  background: #1d4ed8;
+  filter: brightness(1.08);
 }
 
 /* ─────────────────────────────────────────

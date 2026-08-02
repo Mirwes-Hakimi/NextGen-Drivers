@@ -35,7 +35,7 @@
 // gets a copy of every new booking too.
 //
 // SUGGESTED TEMPLATE SUBJECT:
-//   Booking Confirmation – Wave Driving School
+//   Booking Confirmation – Best Driving School
 //
 // SUGGESTED TEMPLATE BODY:
 //   Hi {{student_name}},
@@ -51,7 +51,7 @@
 //
 //   We will follow up shortly to confirm your appointment.
 //
-//   – Wave Driving School
+//   – Best Driving School
 // ─────────────────────────────────────────────────────────────
 
 export const EMAILJS_SERVICE_ID  = "service_05tn09g";   // paste your Service ID here

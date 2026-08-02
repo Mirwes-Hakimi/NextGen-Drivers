@@ -1,0 +1,78 @@
+/* ─────────────────────────────────────────
+   CONTACT PAGE — form-specific styles
+   (hero/cards come from InfoPage.module.css)
+───────────────────────────────────────── */
+
+.formWrap {
+  max-width: 600px;
+  margin: 2.5rem auto 0;
+  background: #0a0a0a;
+  border: 1px solid rgba(249,115,22,0.2);
+  border-radius: 18px;
+  padding: 2rem;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.fieldLabel {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: #111111;
+  border: 1px solid rgba(249,115,22,0.25);
+  border-radius: 10px;
+  color: #f5f5f5;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 140ms, box-shadow 140ms;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  color: #6b7280;
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.18);
+}
+
+.submitBtn {
+  border: 0;
+  background: linear-gradient(90deg, #ea580c, #f97316);
+  color: #fff;
+  padding: 0.8rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 140ms, filter 140ms, box-shadow 140ms;
+  box-shadow: 0 8px 20px rgba(249,115,22,0.3);
+}
+
+.submitBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.note {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.75rem;
+  text-align: center;
+}

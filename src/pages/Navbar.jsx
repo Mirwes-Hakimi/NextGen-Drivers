@@ -7,20 +7,23 @@ import { useAuth } from "../components/AuthContext";
 import styles from "../styles/Navbar.module.css";
 import Logo from "../components/Logo";
 
-// Links shown in the main nav row
+// Links shown in the main nav row, before the "Services" dropdown
 const NAV_LINKS = [
-  { label: "Home",          to: "/"            },
-  { label: "Teen Course",   to: "/teen-course" },
-  { label: "Packages",      to: "/packages"    },
-  { label: "Adult Permit",  to: "/adult-course"},
+  { label: "Home",      to: "/"         },
+  { label: "Packages",  to: "/packages" },
 ];
 
-// Links inside the "More ▾" dropdown
-const MORE_LINKS = [
-  { label: "DMV Info",               to: "/dmv"          },
-  { label: "Permit Practice",        to: "/practice"     },
-  { label: "New Drivers",            to: "/new-drivers"  },
-  { label: "Driver Ed Videos",       to: "/education"    },
+// Link shown after the "Services" dropdown
+const CONTACT_LINK = { label: "Contact", to: "/contact" };
+
+// Links inside the "Services ▾" dropdown
+const SERVICES_LINKS = [
+  { label: "Teen Course",       to: "/teen-course" },
+  { label: "Adult Permit",      to: "/adult-course"},
+  { label: "DMV Info",          to: "/dmv"          },
+  { label: "Permit Practice",   to: "/practice"     },
+  { label: "New Drivers",       to: "/new-drivers"  },
+  { label: "Driver Ed Videos",  to: "/education"    },
 ];
 
 export default function Navbar() {
@@ -72,19 +75,26 @@ export default function Navbar() {
           </Link>
         ))}
 
-        {/* "More" dropdown */}
+        {/* "Services" dropdown */}
         <div className={styles.dropdown}>
           <button className={styles.dropdownBtn} type="button">
-            More <span className={styles.caret}>▾</span>
+            Services <span className={styles.caret}>▾</span>
           </button>
           <div className={styles.dropdownPanel}>
-            {MORE_LINKS.map((link) => (
+            {SERVICES_LINKS.map((link) => (
               <Link key={link.to} to={link.to} className={styles.dropdownLink}>
                 {link.label}
               </Link>
             ))}
           </div>
         </div>
+
+        <Link
+          to={CONTACT_LINK.to}
+          className={`${styles.link} ${isActive(CONTACT_LINK.to) ? styles.activeLink : ""}`}
+        >
+          {CONTACT_LINK.label}
+        </Link>
       </div>
 
       {/* ── Desktop right side: auth + Book Now ── */}
@@ -126,7 +136,7 @@ export default function Navbar() {
       {menuOpen && (
         <div className={styles.mobileMenu}>
           {/* All nav links */}
-          {[...NAV_LINKS, ...MORE_LINKS].map((link) => (
+          {[...NAV_LINKS, ...SERVICES_LINKS, CONTACT_LINK].map((link) => (
             <Link
               key={link.to}
               to={link.to}

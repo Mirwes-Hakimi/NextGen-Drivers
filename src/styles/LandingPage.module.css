@@ -3,16 +3,15 @@
 ───────────────────────────────────────── */
 .page {
   font-family: 'Segoe UI', sans-serif;
-  color: #1f2937;
-  background: #ffffff;
+  color: #e5e7eb;
+  background: #000000;
 }
 
 /* ─────────────────────────────────────────
    HERO
 ───────────────────────────────────────── */
 .hero {
-  /* Soft light-blue-to-white gradient — echoes the logo's white background */
-  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 70%);
+  background: #000000;
   min-height: 88vh;
   display: flex;
   align-items: center;
@@ -21,7 +20,7 @@
   overflow: hidden;
 }
 
-/* Large soft blue radial glow behind the content */
+/* Large orange radial glow behind the content */
 .hero::before {
   content: "";
   position: absolute;
@@ -30,7 +29,7 @@
   transform: translateX(-50%);
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, rgba(56,189,248,0.06) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, rgba(234,88,12,0.08) 40%, transparent 70%);
   pointer-events: none;
 }
 
@@ -42,7 +41,7 @@
   left: -80px;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -58,36 +57,36 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);            /* heavy blur = soft glowing look */
-  opacity: 0.4;
+  opacity: 0.35;
   pointer-events: none;          /* don't block clicks */
   z-index: 0;
 }
 
-/* Top-left — large navy, drifts diagonally */
+/* Top-left — deep orange, drifts diagonally */
 .orb1 {
   width: 420px;
   height: 420px;
-  background: radial-gradient(circle, #1e3a8a, #2563eb);
+  background: radial-gradient(circle, #ea580c, #9a3412);
   top: -100px;
   left: -100px;
   animation: floatA 12s ease-in-out infinite;
 }
 
-/* Top-right — sky blue, drifts in a slow oval */
+/* Top-right — amber, drifts in a slow oval */
 .orb2 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, #38bdf8, #0ea5e9);
+  background: radial-gradient(circle, #f97316, #c2410c);
   top: 20px;
   right: -60px;
   animation: floatB 15s ease-in-out infinite;
 }
 
-/* Bottom-center — bright blue, pulses and drifts upward */
+/* Bottom-center — bright orange, pulses and drifts upward */
 .orb3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(circle, #60a5fa, #2563eb);
+  background: radial-gradient(circle, #fb923c, #ea580c);
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
@@ -98,7 +97,7 @@
 .orb4 {
   width: 180px;
   height: 180px;
-  background: radial-gradient(circle, #93c5fd, #60a5fa);
+  background: radial-gradient(circle, #fdba74, #fb923c);
   bottom: -40px;
   right: 80px;
   animation: floatD 8s ease-in-out infinite;
@@ -153,19 +152,22 @@
 .heroTitle {
   font-size: 3.25rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #ffffff;
   line-height: 1.2;
   margin: 0;
 }
 
-/* Blue accent on second line */
+/* Orange accent on second line */
 .heroAccent {
-  color: #2563eb;
+  background: linear-gradient(90deg, #f97316, #fb923c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .heroSubtitle {
   font-size: 1.15rem;
-  color: #64748b;                /* muted slate — readable on light bg */
+  color: #9ca3af;                /* muted gray — readable on dark bg */
   max-width: 560px;
   line-height: 1.6;
   margin: 0;
@@ -180,41 +182,42 @@
   margin-top: 0.5rem;
 }
 
-/* Primary blue button */
+/* Primary orange button */
 .btnPrimary {
-  background: #2563eb;
+  background: linear-gradient(90deg, #ea580c, #f97316);
   color: #fff;
   padding: 0.85rem 2rem;
   border-radius: 0.6rem;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.25s, transform 0.2s;
+  transition: filter 0.25s, transform 0.2s;
   display: inline-block;
+  box-shadow: 0 8px 20px rgba(249,115,22,0.25);
 }
 
 .btnPrimary:hover {
-  background: #1d4ed8;
+  filter: brightness(1.08);
   transform: translateY(-2px);
 }
 
 /* Secondary ghost button */
 .btnSecondary {
   background: transparent;
-  color: #1e3a8a;
+  color: #fdba74;
   padding: 0.85rem 2rem;
   border-radius: 0.6rem;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
-  border: 2px solid #93c5fd;
+  border: 2px solid rgba(249,115,22,0.4);
   transition: background 0.25s, color 0.25s, transform 0.2s;
   display: inline-block;
 }
 
 .btnSecondary:hover {
-  background: #eff6ff;
-  color: #1e3a8a;
+  background: rgba(249,115,22,0.12);
+  color: #fed7aa;
   transform: translateY(-2px);
 }
 
@@ -226,9 +229,9 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 0;
-  background: #eff6ff;
-  border-top: 1px solid #dbeafe;
-  border-bottom: 1px solid #dbeafe;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(249,115,22,0.15);
+  border-bottom: 1px solid rgba(249,115,22,0.15);
   padding: 1.5rem 1rem;
 }
 
@@ -237,7 +240,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0.75rem 2.5rem;
-  border-right: 1px solid #dbeafe;
+  border-right: 1px solid rgba(249,115,22,0.15);
 }
 
 /* Remove right border from last stat */
@@ -248,13 +251,13 @@
 .statValue {
   font-size: 2rem;
   font-weight: 800;
-  color: #1d4ed8;
+  color: #f97316;
   line-height: 1;
 }
 
 .statLabel {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #9ca3af;
   margin-top: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -270,27 +273,27 @@
   text-align: center;
 }
 
-/* Gray background variant — used for How It Works */
+/* Slightly-elevated dark variant — alternates with the pure-black sections */
 .sectionGray {
-  background: #f8fafc;
+  background: #0a0a0a;
   max-width: 100%;
   padding: 5rem 1.5rem;
 }
 
-/* Small blue label above the section title */
+/* Small orange label above the section title */
 .sectionLabel {
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #2563eb;
+  color: #f97316;
   margin-bottom: 0.5rem;
 }
 
 .sectionTitle {
   font-size: 2rem;
   font-weight: 800;
-  color: #111827;
+  color: #ffffff;
   margin-bottom: 2.5rem;
 }
 
@@ -305,16 +308,16 @@
 }
 
 .featureCard {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: #111111;
+  border: 1px solid rgba(249,115,22,0.15);
   border-radius: 1rem;
   padding: 1.5rem;
   transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
 }
 
 .featureCard:hover {
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
-  border-color: #bfdbfe;
+  box-shadow: 0 8px 24px rgba(249,115,22,0.15);
+  border-color: rgba(249,115,22,0.4);
   transform: translateY(-4px);
 }
 
@@ -327,15 +330,64 @@
 .featureTitle {
   font-size: 1rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
   margin-bottom: 0.4rem;
 }
 
 .featureDesc {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #9ca3af;
   line-height: 1.6;
   margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   FEATURED PACKAGES
+───────────────────────────────────────── */
+.packagesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.packageCard {
+  background: #141414;
+  border: 1px solid rgba(249,115,22,0.18);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+}
+
+.packageCard:hover {
+  box-shadow: 0 8px 24px rgba(249,115,22,0.18);
+  border-color: rgba(249,115,22,0.45);
+  transform: translateY(-4px);
+}
+
+.packageTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.packagePrice {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #f97316;
+  margin: 0 0 0.5rem;
+}
+
+.packageBlurb {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.packagesCtaWrap {
+  margin-top: 2.5rem;
 }
 
 /* ─────────────────────────────────────────
@@ -351,19 +403,19 @@
 }
 
 .stepCard {
-  background: #ffffff;
+  background: #111111;
+  border: 1px solid rgba(249,115,22,0.12);
   border-radius: 1rem;
   padding: 2rem 1.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
 }
 
 /* Giant step number watermark in the background */
 .stepNumber {
   font-size: 5rem;
   font-weight: 900;
-  color: #dbeafe;
+  color: rgba(249,115,22,0.12);
   position: absolute;
   top: -0.5rem;
   right: 0.75rem;
@@ -374,24 +426,115 @@
 .stepTitle {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
   margin-bottom: 0.5rem;
   position: relative;  /* sit above the watermark number */
 }
 
 .stepDesc {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #9ca3af;
   line-height: 1.6;
   margin: 0;
   position: relative;
 }
 
 /* ─────────────────────────────────────────
+   TESTIMONIALS
+───────────────────────────────────────── */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.testimonialCard {
+  background: #141414;
+  border: 1px solid rgba(249,115,22,0.15);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.testimonialStars {
+  color: #f97316;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.testimonialQuote {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.testimonialName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.testimonialCity {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+/* ─────────────────────────────────────────
+   FAQ
+───────────────────────────────────────── */
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.faqItem {
+  background: #111111;
+  border: 1px solid rgba(249,115,22,0.15);
+  border-radius: 0.75rem;
+  padding: 0.25rem 1.25rem;
+}
+
+.faqQuestion {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  padding: 1rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.faqCaret {
+  color: #f97316;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.faqAnswer {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1.1rem;
+}
+
+/* ─────────────────────────────────────────
    FINAL CTA BANNER
 ───────────────────────────────────────── */
 .ctaBanner {
-  background: linear-gradient(120deg, #1e3a8a, #2563eb);
+  background: linear-gradient(120deg, #7c2d12, #ea580c);
   text-align: center;
   padding: 5rem 1.5rem;
   position: relative;
@@ -421,21 +564,22 @@
 
 .ctaSubtitle {
   font-size: 1.1rem;
-  color: #dbeafe;
+  color: #ffedd5;
   max-width: 520px;
   margin: 0 auto 2rem;
   line-height: 1.6;
   position: relative;
 }
 
-/* Banner CTA needs a light button to stand out against the blue background */
+/* Banner CTA needs a light button to stand out against the orange background */
 .ctaBanner .btnPrimary {
   background: #ffffff;
-  color: #1e3a8a;
+  color: #9a3412;
+  box-shadow: none;
 }
 
 .ctaBanner .btnPrimary:hover {
-  background: #eff6ff;
+  background: #ffedd5;
 }
 
 /* ─────────────────────────────────────────
@@ -444,6 +588,14 @@
 @media (max-width: 900px) {
   .featuresGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .packagesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -457,14 +609,15 @@
   }
 
   .featuresGrid,
-  .stepsRow {
+  .stepsRow,
+  .packagesGrid {
     grid-template-columns: 1fr;
   }
 
   .statItem {
     padding: 0.75rem 1.25rem;
     border-right: none;
-    border-bottom: 1px solid #dbeafe;
+    border-bottom: 1px solid rgba(249,115,22,0.15);
   }
 
   .statItem:last-child {

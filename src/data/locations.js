@@ -42,4 +42,25 @@ export const zipToCity = {
   94509: "Antioch",
   94531: "Antioch",
   94513: "Brentwood",
+
+  // --- Sacramento region ---
+  95814: "Sacramento", 95815: "Sacramento", 95816: "Sacramento",
+  95817: "Sacramento", 95818: "Sacramento", 95819: "Sacramento",
+  95820: "Sacramento", 95821: "Sacramento", 95822: "Sacramento",
+  95823: "Sacramento", 95824: "Sacramento", 95825: "Sacramento",
+  95826: "Sacramento", 95827: "Sacramento", 95828: "Sacramento",
+  95831: "Sacramento", 95833: "Sacramento", 95834: "Sacramento",
+  95835: "Sacramento", 95864: "Sacramento",
+
+  95630: "Folsom", 95763: "Folsom",
+
+  95624: "Elk Grove", 95757: "Elk Grove", 95758: "Elk Grove",
+
+  95661: "Roseville", 95678: "Roseville", 95747: "Roseville",
+
+  95670: "Rancho Cordova", 95742: "Rancho Cordova",
+
+  95610: "Citrus Heights", 95621: "Citrus Heights",
+
+  95677: "Rocklin", 95765: "Rocklin",
 };

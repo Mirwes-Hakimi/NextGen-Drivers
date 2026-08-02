@@ -3,6 +3,19 @@ import styles from "../styles/Packages.module.css";
 import { useNavigate } from "react-router-dom";
 import { zipToCity } from "../data/locations";
 
+// Cities we serve — used to build a flat (same price everywhere) pricing
+// table for packages that don't have per-city pricing data yet.
+const SERVED_CITIES = [
+  "San Francisco", "Daly City", "Livermore", "Pleasanton", "Dublin",
+  "San Ramon", "Danville", "Alamo", "Walnut Creek", "Pleasant Hill",
+  "Concord", "Pittsburg", "Antioch", "Brentwood", "Oakland",
+  "Sacramento", "Folsom", "Elk Grove", "Roseville", "Rancho Cordova",
+  "Citrus Heights", "Rocklin",
+];
+
+const flatCities = (price) =>
+  Object.fromEntries(SERVED_CITIES.map((city) => [city, price]));
+
 export default function Packages() {
 
   const packages = [
@@ -27,6 +40,13 @@ export default function Packages() {
         "Antioch": 180,
         "Brentwood": 185,
         "Oakland": 180,
+        "Sacramento": 200,
+        "Folsom": 180,
+        "Elk Grove": 180,
+        "Roseville": 180,
+        "Rancho Cordova": 180,
+        "Citrus Heights": 180,
+        "Rocklin": 180,
       },
       features: [
         "✔️ Pick-up and drop-off included",
@@ -55,6 +75,13 @@ export default function Packages() {
         "Antioch": 360,
         "Brentwood": 365,
         "Oakland": 360,
+        "Sacramento": 380,
+        "Folsom": 360,
+        "Elk Grove": 360,
+        "Roseville": 360,
+        "Rancho Cordova": 360,
+        "Citrus Heights": 360,
+        "Rocklin": 360,
       },
       features: [
         "✔️ Split into two sessions on different days",
@@ -85,6 +112,13 @@ export default function Packages() {
         "Antioch": 540,
         "Brentwood": 545,
         "Oakland": 540,
+        "Sacramento": 550,
+        "Folsom": 540,
+        "Elk Grove": 540,
+        "Roseville": 540,
+        "Rancho Cordova": 540,
+        "Citrus Heights": 540,
+        "Rocklin": 540,
       },
       features: [
         "✔️ Split into three sessions on different days",
@@ -117,9 +151,59 @@ export default function Packages() {
         "Antioch": 250,
         "Brentwood": 250,
         "Oakland": 250,
+        "Sacramento": 300,
+        "Folsom": 250,
+        "Elk Grove": 250,
+        "Roseville": 250,
+        "Rancho Cordova": 250,
+        "Citrus Heights": 250,
+        "Rocklin": 250,
       },
       features: [
         "✔️ 50-minute warm-up practice before DMV test",
+        "✔️ DMV road test included",
+        "✔️ Certified instructor guidance",
+        "✔️ DMV-approved vehicle provided",
+        "✔️ Pick-up and drop-off included",
+      ],
+    },
+    {
+      title: "Mock Test (2 Hours)",
+      type: "MOCK TEST",
+      sessions: 1,
+      popular: false,
+      cities: flatCities(210),
+      features: [
+        "✔️ Simulated DMV road test conditions",
+        "✔️ Detailed feedback after your mock test",
+        "✔️ Certified instructor guidance",
+        "✔️ Pick-up and drop-off included",
+      ],
+    },
+    {
+      title: "Behind The Wheel Training Package: 8 Hours",
+      type: "TRAINING",
+      sessions: 4,
+      popular: false,
+      cities: flatCities(640),
+      features: [
+        "✔️ Split into four sessions on different days",
+        "✔️ Pick-up and drop-off included",
+        "✔️ Comprehensive explanation of primary driving rules",
+        "✔️ Practice stop signs, lane changing, traffic lights, and more",
+        "✔️ Extended freeway and highway practice",
+        "✔️ DMV-required certificate for teens",
+      ],
+    },
+    {
+      title: "3-Hour Combo Package",
+      type: "COMBO",
+      sessions: 1,
+      popular: false,
+      sessionDurationMinutes: 180,
+      cities: flatCities(350),
+      features: [
+        "✔️ 2 hours of warm-up practice before your test",
         "✔️ DMV road test included",
         "✔️ Certified instructor guidance",
         "✔️ DMV-approved vehicle provided",
@@ -179,7 +263,7 @@ export default function Packages() {
 
       {/* ── Hero ── */}
       <section className={styles.hero}>
-        <p className={styles.heroEyebrow}>Bay Area Driving School</p>
+        <p className={styles.heroEyebrow}>Bay Area &amp; Sacramento Driving School</p>
         <h1 className={styles.heroHeading}>
           Choose the Package <span>Right for You</span>
         </h1>

@@ -25,7 +25,7 @@ body {
   margin: 0;                                 /* remove default margin */
   overflow-y: auto;                          /* enable vertical scrolling */
   -webkit-overflow-scrolling: touch;         /* smooth iOS scroll */
-  background: #f5f7fb;                       /* subtle app background */
+  background: #000000;                       /* dark app background */
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
            env(safe-area-inset-bottom) env(safe-area-inset-left); /* iPhone notch */
 }

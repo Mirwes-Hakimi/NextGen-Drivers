@@ -16,6 +16,7 @@ import DmvInfo        from "./pages/DmvInfo";        // /dmv
 import PermitPractice from "./pages/PermitPractice"; // /practice
 import NewDrivers     from "./pages/NewDrivers";     // /new-drivers
 import DriverEd       from "./pages/DriverEd";       // /education
+import ContactPage    from "./pages/ContactPage";    // /contact
 
 // ── Utility pages ──
 import NotFound       from "./pages/NotFound";       // 404
@@ -47,6 +48,7 @@ function App() {
         <Route path="/practice"     element={<PermitPractice />} />
         <Route path="/new-drivers"  element={<NewDrivers />} />
         <Route path="/education"    element={<DriverEd />} />
+        <Route path="/contact"      element={<ContactPage />} />
 
         {/* Booking is open to guests too — signing up is optional */}
         <Route path="/booking"   element={<BookingPage />} />
