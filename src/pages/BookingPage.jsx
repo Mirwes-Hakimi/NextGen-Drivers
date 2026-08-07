@@ -310,7 +310,7 @@ const endTime = addMinutesToTime(startTime, duration);
       <h2 className={styles.heading}>Book: {selectedPackage.title}</h2>
       <p className={styles.summary}>
         City: <strong>{selectedCity}</strong> &nbsp;·&nbsp; Price:{" "}
-        <strong>${price}</strong>
+        <strong>${price}</strong> &nbsp;·&nbsp; $20 discount applied
       </p>
 
       {/* Main booking form */}

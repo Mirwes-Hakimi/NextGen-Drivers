@@ -72,6 +72,9 @@ const stats = [
 ];
 
 // ── Featured packages (preview — full list + city pricing on /packages) ──
+// Matches the promo on the Packages page — $20 off every package
+const DISCOUNT = 20;
+
 const featuredPackages = [
   { title: "Two-Hour Driving Lesson", price: 160, blurb: "A single focused session to build core skills." },
   { title: "DMV Drive Test", price: 240, blurb: "Your behind-the-wheel road test, done with us." },
@@ -206,7 +209,10 @@ export default function LandingPage() {
               transition={{ delay: i * 0.1 }}
             >
               <h3 className={styles.packageTitle}>{p.title}</h3>
-              <p className={styles.packagePrice}>${p.price}</p>
+              <p className={styles.packagePrice}>
+                <span className={styles.packagePriceOriginal}>${p.price}</span>
+                ${p.price - DISCOUNT}
+              </p>
               <p className={styles.packageBlurb}>{p.blurb}</p>
             </motion.div>
           ))}

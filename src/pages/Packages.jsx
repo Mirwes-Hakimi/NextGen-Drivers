@@ -16,6 +16,9 @@ const SERVED_CITIES = [
 const flatCities = (price) =>
   Object.fromEntries(SERVED_CITIES.map((city) => [city, price]));
 
+// Current promo — $20 off every package, applied at checkout too (not just display)
+const DISCOUNT = 20;
+
 export default function Packages() {
 
   const packages = [
@@ -254,7 +257,7 @@ export default function Packages() {
       return;
     }
     navigate("/booking", {
-      state: { selectedPackage, selectedCity, price: cityPrice },
+      state: { selectedPackage, selectedCity, price: cityPrice - DISCOUNT },
     });
   };
 
@@ -267,6 +270,7 @@ export default function Packages() {
         <h1 className={styles.heroHeading}>
           Choose the Package <span>Right for You</span>
         </h1>
+        <p className={styles.promoBanner}>🎉 Limited time: $20 off every package</p>
         <p className={styles.heroSub}>
           All packages include pick-up &amp; drop-off. Select your city or enter
           your ZIP to see pricing in your area.
@@ -319,6 +323,7 @@ export default function Packages() {
             {packages.map((pkg, index) => {
               const cityPrice = pkg.cities[selectedCity];
               if (cityPrice == null) return null;
+              const discountedPrice = cityPrice - DISCOUNT;
 
               return (
                 <div
@@ -334,10 +339,12 @@ export default function Packages() {
                   <h2 className={styles.title}>{pkg.title}</h2>
 
                   <div className={styles.priceRow}>
+                    <span className={styles.priceOriginal}>${cityPrice}</span>
                     <span className={styles.priceDollar}>$</span>
-                    <span className={styles.priceAmount}>{cityPrice}</span>
+                    <span className={styles.priceAmount}>{discountedPrice}</span>
                     <span className={styles.priceSub}>/ package</span>
                   </div>
+                  <span className={styles.saveTag}>Save ${DISCOUNT}</span>
 
                   <div className={styles.divider} />
 
