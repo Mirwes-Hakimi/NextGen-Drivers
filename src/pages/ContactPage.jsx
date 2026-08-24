@@ -4,6 +4,10 @@ import infoStyles from "../styles/InfoPage.module.css";
 import styles from "../styles/Contact.module.css";
 import { SCHOOL_NOTIFY_EMAIL } from "../emailjs.config";
 
+// School contact phone number — shown on this page and in the site's SEO metadata
+const SCHOOL_PHONE = "(925) 334-8542";
+const SCHOOL_PHONE_TEL = "+19253348542";
+
 // Contact page — shown at /contact
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -48,6 +52,15 @@ export default function ContactPage() {
             <p className={infoStyles.cardText}>
               <a href={`mailto:${SCHOOL_NOTIFY_EMAIL}`}>{SCHOOL_NOTIFY_EMAIL}</a>
               <br />We typically respond within one business day.
+            </p>
+          </div>
+
+          <div className={infoStyles.card}>
+            <span className={infoStyles.cardIcon}>📞</span>
+            <p className={infoStyles.cardTitle}>Call Us</p>
+            <p className={infoStyles.cardText}>
+              <a href={`tel:${SCHOOL_PHONE_TEL}`}>{SCHOOL_PHONE}</a>
+              <br />Call or text with any questions.
             </p>
           </div>
 

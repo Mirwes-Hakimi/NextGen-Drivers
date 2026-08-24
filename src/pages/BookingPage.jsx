@@ -27,12 +27,20 @@ export default function BookingPage() {
     firstName: "",                                        // student first name
     lastName: "",                                         /// student last name
     email: "",                                            // parent / student email
-    phone: "+1",                                        
-    dob: "",                                             
-    address: "",                                          // home address
+    phone: "+1",
+    dob: "",
+    address: "",                                          // home address (street)
+    zip: "",                                              // ZIP code — needed for the calendar invite's address
+    parentName: "",                                       // optional — shown on the calendar invite if provided
     agreedToTerms: false,                                 // terms checkbox
     sessions: [],                                         // array to store session data
   });
+
+  // This business only operates in California — not collected as form
+  // fields since every booking has the same values.
+  const STUDENT_STATE = "California";
+  const STUDENT_COUNTRY = "United States";
+  const PAYMENT_METHOD_LABEL = "Pay at session (no payment collected at booking)";
 
   // Signing up is optional — if the customer happens to be logged in,
   // save them a step by pre-filling their email.
@@ -149,6 +157,11 @@ const endTime = addMinutesToTime(startTime, duration);
 
   const [submitting, setSubmitting] = useState(false);
 
+  // Set once the booking is saved — swaps the form out for a confirmation
+  // panel. `sessions` holds one entry per session, each tracking its own
+  // Google Calendar sync status (pending -> success | error) as it resolves.
+  const [bookingResult, setBookingResult] = useState(null);
+
   // Rejects with `message` if `promise` hasn't settled within `ms` —
   // so a slow/stuck network call can never leave the button stuck on "Saving..." forever.
   const withTimeout = (promise, ms, message) =>
@@ -157,11 +170,75 @@ const endTime = addMinutesToTime(startTime, duration);
       new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms)),
     ]);
 
+  // Creates one Google Calendar event (via the createBooking Cloud Function)
+  // for a single session. Best effort — a failure here never blocks the
+  // booking itself, since Firestore is already the source of truth by the
+  // time this runs. Returns enough info to update that session's row in
+  // the confirmation panel.
+  const syncSessionToCalendar = async (session, sessionNumber) => {
+    const functionUrl = import.meta.env.VITE_CALENDAR_FUNCTION_URL;
+    if (!functionUrl) {
+      console.error("VITE_CALENDAR_FUNCTION_URL is not set — skipping calendar sync.");
+      return { status: "error" };
+    }
+
+    const payload = {
+      sessionNumber,
+      studentName: `${formData.firstName} ${formData.lastName}`,
+      studentEmail: formData.email,
+      parentName: formData.parentName || undefined,
+      dob: formData.dob,
+      address: formData.address,
+      city: selectedCity,
+      state: STUDENT_STATE,
+      zip: formData.zip,
+      country: STUDENT_COUNTRY,
+      phone: formData.phone,
+      packageTitle: selectedPackage.title,
+      price,
+      appointmentDate: session.date,
+      appointmentTime: formatTime12(session.startTime),
+      paymentMethod: PAYMENT_METHOD_LABEL,
+      // Local datetime, no offset — the function pairs this with an IANA
+      // timeZone so Google resolves PDT/PST correctly for this exact date.
+      startDateTime: `${session.date}T${session.startTime}:00`,
+      endDateTime: `${session.date}T${session.endTime}:00`,
+    };
+
+    try {
+      const response = await withTimeout(
+        fetch(functionUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+        15000,
+        "Calendar sync timed out"
+      );
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error || `Calendar sync failed (${response.status})`);
+      }
+
+      const { htmlLink } = await response.json();
+      return { status: "success", htmlLink };
+    } catch (err) {
+      console.error(`Calendar sync failed for session ${sessionNumber}:`, err);
+      return { status: "error" };
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.dob) {
       alert("Please enter date of birth.");
+      return;
+    }
+
+    if (!formData.zip.trim()) {
+      alert("Please enter your ZIP code.");
       return;
     }
 
@@ -221,21 +298,46 @@ const endTime = addMinutesToTime(startTime, duration);
           phone: formData.phone,
           dob: formData.dob,
           address: formData.address,
+          zip: formData.zip,
+          parentName: formData.parentName || null,
           sessions: formData.sessions,
           status: "pending",
+          paymentStatus: "due_at_session", // no payment collected at booking time
           createdAt: serverTimestamp(),
         }),
         20000,
         "Saving your booking is taking longer than expected. Please check your connection and try again."
       );
 
-      // The booking is safely saved — unblock the UI right away.
-      // Email delivery happens next, but it shouldn't hold up the confirmation.
+      // The booking is safely saved — unblock the UI and show the
+      // confirmation panel right away. Email delivery and calendar sync
+      // both happen next, but neither should hold up the confirmation —
+      // they update the panel in place as they resolve.
       setSubmitting(false);
-      alert(`Booking confirmed! A confirmation email is on its way to ${formData.email}.`);
-      navigate(user ? "/dashboard" : "/");
+      setBookingResult({
+        sessions: formData.sessions.map((s, i) => ({
+          sessionNumber: i + 1,
+          date: s.date,
+          time: formatTime12(s.startTime),
+          status: "pending",
+        })),
+      });
 
-      // ── Step 2: Build a readable sessions summary for the email ──
+      // ── Step 2: Sync each session to Google Calendar — best effort ──
+      // Runs in the background; updates bookingResult as each resolves so
+      // the confirmation panel can show a live success/error state per session.
+      formData.sessions.forEach((session, i) => {
+        syncSessionToCalendar(session, i + 1).then((result) => {
+          setBookingResult((prev) => {
+            if (!prev) return prev; // user already navigated away
+            const sessions = [...prev.sessions];
+            sessions[i] = { ...sessions[i], status: result.status, htmlLink: result.htmlLink };
+            return { ...prev, sessions };
+          });
+        });
+      });
+
+      // ── Step 3: Build a readable sessions summary for the email ──
       // Turns each session into "Session 1: Mon Apr 14 — 10:00 AM to 12:00 PM"
       const sessionsText = formData.sessions
         .map((s, i) => {
@@ -261,7 +363,7 @@ const endTime = addMinutesToTime(startTime, duration);
         })
         .join("\n");                               // one session per line in the email
 
-      // ── Step 3: Email the customer AND the school — best effort ──
+      // ── Step 4: Email the customer AND the school — best effort ──
       // Neither of these can re-stick the button; failures are just logged.
       const emailFields = {
         student_name:  `${formData.firstName} ${formData.lastName}`,// full name
@@ -303,6 +405,64 @@ const endTime = addMinutesToTime(startTime, duration);
   /// Get todays date in
   const todayStr = new Date().toISOString().split("T")[0];
 
+  // ── Confirmation panel — shown once the booking is saved, replacing the form ──
+  if (bookingResult) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <h2 className={styles.heading}>Booking Request Received!</h2>
+          <p className={styles.summary}>
+            {selectedPackage.title} in <strong>{selectedCity}</strong> &nbsp;·&nbsp; $
+            {price} &nbsp;·&nbsp; a confirmation email is on its way to {formData.email}
+          </p>
+          <p className={styles.payLaterNote}>
+            No payment is due now — you'll pay at your first session.
+          </p>
+
+          <div className={styles.confirmSessions}>
+            {bookingResult.sessions.map((s) => (
+              <div key={s.sessionNumber} className={styles.confirmSessionRow}>
+                <div>
+                  <strong>Session {s.sessionNumber}</strong>
+                  <span className={styles.confirmSessionWhen}>
+                    {" "}— {s.date} at {s.time}
+                  </span>
+                </div>
+
+                {s.status === "pending" && (
+                  <span className={styles.confirmStatusPending}>Adding to calendar…</span>
+                )}
+                {s.status === "success" && (
+                  <a
+                    href={s.htmlLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.confirmStatusSuccess}
+                  >
+                    ✓ Added to calendar
+                  </a>
+                )}
+                {s.status === "error" && (
+                  <span className={styles.confirmStatusError}>
+                    Couldn't auto-add to calendar — we'll confirm this manually
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={styles.primaryBtn}
+            onClick={() => navigate(user ? "/dashboard" : "/")}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
     <div className={styles.container}>
@@ -311,6 +471,9 @@ const endTime = addMinutesToTime(startTime, duration);
       <p className={styles.summary}>
         City: <strong>{selectedCity}</strong> &nbsp;·&nbsp; Price:{" "}
         <strong>${price}</strong> &nbsp;·&nbsp; $20 discount applied
+      </p>
+      <p className={styles.payLaterNote}>
+        No payment required to book — you'll pay at your first session.
       </p>
 
       {/* Main booking form */}
@@ -376,6 +539,26 @@ const endTime = addMinutesToTime(startTime, duration);
               value={formData.address}
               onChange={handleFieldChange}
               required
+            />
+          </label>
+
+          <label className={styles.fieldLabel}>
+            ZIP Code:
+            <input
+              name="zip"
+              value={formData.zip}
+              onChange={handleFieldChange}
+              maxLength={5}
+              required
+            />
+          </label>
+
+          <label className={styles.fieldLabel}>
+            Parent/Guardian Name (optional):
+            <input
+              name="parentName"
+              value={formData.parentName}
+              onChange={handleFieldChange}
             />
           </label>
         </div>
@@ -444,17 +627,10 @@ const endTime = addMinutesToTime(startTime, duration);
           </span>
         </label>
 
-        {/* Buttons row */}
+        {/* Submit — no payment collected here, it's due at the first session */}
         <div className={styles.buttonRow}>
           <button type="submit" className={styles.primaryBtn} disabled={submitting}>
-            {submitting ? "Saving..." : "Pay Now (Stripe later)"}
-          </button>
-          <button
-            type="button"
-            className={styles.secondaryBtn}
-            onClick={() => alert("Pay Later flow coming soon")}
-          >
-            Pay Later
+            {submitting ? "Submitting..." : "Submit Booking Request"}
           </button>
         </div>
       </form>

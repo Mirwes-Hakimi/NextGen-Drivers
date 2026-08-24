@@ -3,13 +3,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDAZ3Z--CKixXAYOpO9e9etAEur3_7Q4SU",
-  authDomain: "drivingschoolsite-3dfe8.firebaseapp.com",
-  projectId: "drivingschoolsite-3dfe8",
-  storageBucket: "drivingschoolsite-3dfe8.firebasestorage.app",
-  messagingSenderId: "883566072406",
-  appId: "1:883566072406:web:b890c8d29cb177931621f7",
-  measurementId: "G-MCVZ4HBBR5"
+  apiKey: "AIzaSyBJN8O9ytaBwJbSuMplH5S_MxmgdrEt_xE",
+  authDomain: "best-driving-school-e6149.firebaseapp.com",
+  projectId: "best-driving-school-e6149",
+  storageBucket: "best-driving-school-e6149.firebasestorage.app",
+  messagingSenderId: "125616069253",
+  appId: "1:125616069253:web:cfce4095eb827167dde7ec",
 };
 
 const app = initializeApp(firebaseConfig);

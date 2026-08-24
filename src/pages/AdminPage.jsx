@@ -202,6 +202,7 @@ export default function AdminPage() {
               <span><span className={styles.label}>Phone</span>{booking.phone}</span>
               <span><span className={styles.label}>City</span>{booking.city}</span>
               <span><span className={styles.label}>Price</span>${booking.price}</span>
+              <span><span className={styles.label}>Payment</span>{booking.paymentStatus === "paid" ? "Paid" : "Due at session"}</span>
               <span><span className={styles.label}>DOB</span>{booking.dob}</span>
               <span><span className={styles.label}>Address</span>{booking.address}</span>
             </div>

@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth"; // Firebase creates a new account
 import { auth } from "../firebase";                             // Firebase auth instance
 import { Link, useNavigate } from "react-router-dom";          // routing helpers
+import emailjs from "@emailjs/browser";                         // email sending library
+import {
+  EMAILJS_SERVICE_ID,
+  EMAILJS_WELCOME_TEMPLATE_ID,
+  EMAILJS_PUBLIC_KEY,
+  SCHOOL_NOTIFY_EMAIL,
+} from "../emailjs.config";
 import styles from "../styles/Signup.module.css";
 
 function Signup() {
@@ -18,11 +25,37 @@ function Signup() {
       await createUserWithEmailAndPassword(auth, email, password);
 
       // Clear the inputs after successful account creation
+      const newUserEmail = email;
       setEmail("");
       setPassword("");
 
-      // Send the new user to the home page
+      // Send the new user to the home page — don't make them wait on email delivery
       navigate("/");
+
+      // ── Welcome email to the new user AND a heads-up to the school — best effort ──
+      // Failures here shouldn't block signup; just log them.
+      const welcomeFields = { user_email: newUserEmail };
+      const [userResult, schoolResult] = await Promise.allSettled([
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_WELCOME_TEMPLATE_ID,
+          { ...welcomeFields, to_email: newUserEmail },      // welcome email to the new user
+          EMAILJS_PUBLIC_KEY
+        ),
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_WELCOME_TEMPLATE_ID,
+          { ...welcomeFields, to_email: SCHOOL_NOTIFY_EMAIL }, // heads-up to the school
+          EMAILJS_PUBLIC_KEY
+        ),
+      ]);
+
+      if (userResult.status === "rejected") {
+        console.error("Welcome email failed:", userResult.reason);
+      }
+      if (schoolResult.status === "rejected") {
+        console.error("School signup notification failed:", schoolResult.reason);
+      }
     } catch (err) {
       // Firebase returns specific error codes, e.g. "email already in use"
       alert("Signup failed: " + err.message);

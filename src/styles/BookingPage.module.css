@@ -35,11 +35,66 @@
   text-align: center;
   font-size: 0.9rem;
   color: #9ca3af;
-  margin-bottom: 1.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .summary strong {
   color: #f97316;
+}
+
+.payLaterNote {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4ade80;
+  margin: 0 0 1.75rem;
+}
+
+/* ── Confirmation panel — sessions list with live calendar-sync status ── */
+.confirmSessions {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.confirmSessionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(249,115,22,0.04);
+  border: 1px solid rgba(249,115,22,0.18);
+  border-radius: 12px;
+  color: #f5f5f5;
+  font-size: 0.9rem;
+}
+
+.confirmSessionWhen {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.confirmStatusPending {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.confirmStatusSuccess {
+  color: #4ade80;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.confirmStatusSuccess:hover {
+  text-decoration: underline;
+}
+
+.confirmStatusError {
+  color: #fbbf24;
+  font-size: 0.85rem;
 }
 
 /* ── Form layout ── */
@@ -202,23 +257,6 @@
   transform: none;
 }
 
-.secondaryBtn {
-  border: 1px solid rgba(255,255,255,0.15);
-  background: #141414;
-  color: #d1d5db;
-  padding: 0.8rem 1.25rem;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 140ms, transform 140ms;
-}
-
-.secondaryBtn:hover {
-  background: #1c1c1c;
-  transform: translateY(-1px);
-}
-
 /* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -257,8 +295,7 @@
   .buttonRow {
     flex-direction: column;
   }
-  .primaryBtn,
-  .secondaryBtn {
+  .primaryBtn {
     width: 100%;
   }
 }

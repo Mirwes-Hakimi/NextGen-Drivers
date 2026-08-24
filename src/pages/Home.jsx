@@ -169,7 +169,9 @@ export default function Home() {
                 {/* City and price summary */}
                 <p className={styles.cardMeta}>
                   <strong>City:</strong> {booking.city} &nbsp;|&nbsp;
-                  <strong>Price:</strong> ${booking.price}
+                  <strong>Price:</strong> ${booking.price} &nbsp;|&nbsp;
+                  <strong>Payment:</strong>{" "}
+                  {booking.paymentStatus === "paid" ? "Paid" : "Due at session"}
                 </p>
 
                 {/* Sessions list */}
