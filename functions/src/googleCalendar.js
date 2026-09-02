@@ -10,7 +10,16 @@
 // by the `secrets: [...]` option on the function in index.js.
 // ─────────────────────────────────────────────────────────────
 
-import { google } from "googleapis";
+// Using the dedicated @googleapis/calendar + google-auth-library packages
+// instead of the full `googleapis` mega-package — that package bundles
+// every Google API's type definitions and is large enough on its own to
+// risk blowing past Firebase's 10-second "analyze the function file"
+// timeout during `firebase deploy` ("Cannot determine backend
+// specification. Timeout after 10000."). On top of that, both packages
+// are imported dynamically (below, inside the functions that use them)
+// instead of statically at the top of the file — that way Firebase's
+// deploy-time analysis of index.js never has to load them at all, and
+// only pays that cost on the first real booking request.
 import {
   CANCELLATION_POLICY,
   EVENT_TYPE_DESCRIPTION,
@@ -31,14 +40,15 @@ function requireEnv(name) {
 // Builds the domain-wide-delegation JWT client. `subject` is the Workspace
 // user the service account impersonates — this is what lets a service
 // account (which normally can't invite attendees) send real invites.
-function buildJwtClient() {
+async function buildJwtClient() {
   const email = requireEnv("GOOGLE_CLIENT_EMAIL");
   // .env files / secret managers can't store literal newlines, so private
   // keys are stored with escaped "\n" sequences that need to be restored.
   const key = requireEnv("GOOGLE_PRIVATE_KEY").replace(/\\n/g, "\n");
   const subject = requireEnv("GOOGLE_IMPERSONATE_EMAIL");
 
-  return new google.auth.JWT({ email, key, scopes: SCOPES, subject });
+  const { JWT } = await import("google-auth-library");
+  return new JWT({ email, key, scopes: SCOPES, subject });
 }
 
 function buildDescription(booking) {
@@ -88,8 +98,9 @@ function buildDescription(booking) {
 // instead of a fixed offset that would be wrong half the year.
 export async function createBookingEvent(booking) {
   const calendarId = requireEnv("GOOGLE_CALENDAR_ID");
-  const auth = buildJwtClient();
-  const calendar = google.calendar({ version: "v3", auth });
+  const auth = await buildJwtClient();
+  const { calendar } = await import("@googleapis/calendar");
+  const calendarClient = calendar({ version: "v3", auth });
 
   const requestBody = {
     summary: `Session ${booking.sessionNumber}: ${booking.studentName} & Best Driving School`,
@@ -104,7 +115,7 @@ export async function createBookingEvent(booking) {
     },
   };
 
-  const response = await calendar.events.insert({
+  const response = await calendarClient.events.insert({
     calendarId,
     sendUpdates: "all", // emails the student the invite
     requestBody,

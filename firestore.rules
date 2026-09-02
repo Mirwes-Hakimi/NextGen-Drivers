@@ -8,7 +8,7 @@ service cloud.firestore {
     // instead of just in the UI.
     function isAdmin() {
       return request.auth != null &&
-        request.auth.token.email in ["mirwes215@gmail.com"];
+        request.auth.token.email in ["info@yourbds.com"];
     }
 
     match /bookings/{bookingId} {

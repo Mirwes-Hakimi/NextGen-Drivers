@@ -7,7 +7,7 @@ import { useAuth } from "./AuthContext";
 // Anyone not in this list will be redirected to /dashboard.
 // ─────────────────────────────────────────────────────────────
 const ADMIN_EMAILS = [
-  "mirwes215@gmail.com", // owner — replace or add emails here
+  "info@yourbds.com", // owner — replace or add emails here
 ];
 
 export default function AdminRoute({ children }) {
