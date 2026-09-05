@@ -55,9 +55,9 @@
 //   – Best Driving School
 // ─────────────────────────────────────────────────────────────
 
-export const EMAILJS_SERVICE_ID  = "service_05tn09g";   // paste your Service ID here
-export const EMAILJS_TEMPLATE_ID = "template_bwwmyyc";  // paste your Template ID here
-export const EMAILJS_PUBLIC_KEY  = "6LKuop0YHiirMBE0J";   // paste your Public Key here
+export const EMAILJS_SERVICE_ID  = "service_akrkjkt";   // Gmail service connected to info@yourbds.com
+export const EMAILJS_TEMPLATE_ID = "template_jhdxkmg";  // booking confirmation
+export const EMAILJS_PUBLIC_KEY  = "jmZWc1iPmxNhS5-bw";
 
 // Every new booking also gets emailed here so the school has a record of it
 export const SCHOOL_NOTIFY_EMAIL = "info@yourbds.com";
@@ -94,4 +94,4 @@ export const SCHOOL_NOTIFY_EMAIL = "info@yourbds.com";
 //   – Best Driving School
 // ─────────────────────────────────────────────────────────────
 
-export const EMAILJS_WELCOME_TEMPLATE_ID = "REPLACE_WITH_YOUR_WELCOME_TEMPLATE_ID";
+export const EMAILJS_WELCOME_TEMPLATE_ID = "template_1i9xqia";

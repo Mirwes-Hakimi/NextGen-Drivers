@@ -11,6 +11,11 @@ import { defineSecret } from "firebase-functions/params";
 import cors from "cors";
 import { z } from "zod";
 import { createBookingEvent } from "./src/googleCalendar.js";
+import {
+  createCheckoutSession as createStripeCheckoutSession,
+  constructWebhookEvent,
+} from "./src/stripe.js";
+import { getAdminFirestore } from "./src/adminFirestore.js";
 import { isRateLimited } from "./src/rateLimit.js";
 
 const corsHandler = cors({ origin: true });
@@ -21,10 +26,14 @@ const corsHandler = cors({ origin: true });
 //   firebase functions:secrets:set GOOGLE_PRIVATE_KEY
 //   firebase functions:secrets:set GOOGLE_CALENDAR_ID
 //   firebase functions:secrets:set GOOGLE_IMPERSONATE_EMAIL
+//   firebase functions:secrets:set STRIPE_SECRET_KEY
+//   firebase functions:secrets:set STRIPE_WEBHOOK_SECRET
 const GOOGLE_CLIENT_EMAIL = defineSecret("GOOGLE_CLIENT_EMAIL");
 const GOOGLE_PRIVATE_KEY = defineSecret("GOOGLE_PRIVATE_KEY");
 const GOOGLE_CALENDAR_ID = defineSecret("GOOGLE_CALENDAR_ID");
 const GOOGLE_IMPERSONATE_EMAIL = defineSecret("GOOGLE_IMPERSONATE_EMAIL");
+const STRIPE_SECRET_KEY = defineSecret("STRIPE_SECRET_KEY");
+const STRIPE_WEBHOOK_SECRET = defineSecret("STRIPE_WEBHOOK_SECRET");
 
 // One request = one calendar event = one session of a booking. A 4-hour
 // package (2 sessions) means the frontend calls this route twice.
@@ -97,5 +106,109 @@ export const createBooking = onRequest(
         res.status(500).json({ error: "Could not create the calendar event." });
       }
     });
+  }
+);
+
+// ─────────────────────────────────────────────────────────────
+// Stripe: "Pay Now" online payment
+//
+// createCheckoutSession — called from the booking form when the
+// customer picks "Pay Now". Creates a Stripe-hosted Checkout page for
+// the booking's total price and returns its URL; the browser redirects
+// there directly. No card details ever touch our own servers.
+//
+// stripeWebhook — called by Stripe itself (never the browser) once a
+// Checkout Session actually completes. This is the source of truth for
+// "did the customer really pay" — the browser redirect back to our
+// success page is not trusted on its own, since a user could reload or
+// share that URL without having paid. On a verified
+// `checkout.session.completed` event, marks the matching Firestore
+// booking as paid.
+// ─────────────────────────────────────────────────────────────
+
+const checkoutSessionSchema = z.object({
+  bookingId: z.string().min(1),
+  packageTitle: z.string().min(1),
+  priceUsd: z.number().positive(),
+  studentEmail: z.string().email(),
+  successUrl: z.string().url(),
+  cancelUrl: z.string().url(),
+});
+
+export const createCheckoutSession = onRequest(
+  { secrets: [STRIPE_SECRET_KEY] },
+  (req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method !== "POST") {
+        res.status(405).json({ error: "Method not allowed" });
+        return;
+      }
+
+      const ip = req.headers["x-forwarded-for"] || req.ip || "unknown";
+      if (isRateLimited(String(ip))) {
+        res.status(429).json({ error: "Too many requests. Please try again later." });
+        return;
+      }
+
+      const parsed = checkoutSessionSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.status(400).json({ error: "Invalid checkout data", details: parsed.error.flatten() });
+        return;
+      }
+
+      try {
+        const { url } = await createStripeCheckoutSession(parsed.data);
+        res.status(200).json({ url });
+      } catch (err) {
+        console.error("Stripe checkout session creation failed", {
+          message: err?.message,
+          bookingId: parsed.data.bookingId,
+        });
+        res.status(500).json({ error: "Could not start checkout." });
+      }
+    });
+  }
+);
+
+// No `corsHandler` here on purpose — this endpoint is only ever called
+// server-to-server by Stripe, never by a browser.
+export const stripeWebhook = onRequest(
+  { secrets: [STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET] },
+  async (req, res) => {
+    if (req.method !== "POST") {
+      res.status(405).send("Method not allowed");
+      return;
+    }
+
+    let event;
+    try {
+      event = await constructWebhookEvent(req.rawBody, req.headers["stripe-signature"]);
+    } catch (err) {
+      console.error("Stripe webhook signature verification failed", { message: err?.message });
+      res.status(400).send("Invalid signature");
+      return;
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const bookingId = event.data.object.metadata?.bookingId;
+      if (bookingId) {
+        try {
+          const db = await getAdminFirestore();
+          await db.collection("bookings").doc(bookingId).update({
+            paymentStatus: "paid",
+            paidAt: new Date(),
+          });
+        } catch (err) {
+          console.error("Failed to mark booking paid after Stripe webhook", {
+            message: err?.message,
+            bookingId,
+          });
+          // Still 200 below — Stripe would otherwise retry indefinitely for
+          // an error that's on our side, not something retrying fixes.
+        }
+      }
+    }
+
+    res.status(200).send();
   }
 );

@@ -16,10 +16,31 @@ service cloud.firestore {
       // create one — but not read, update, or delete other people's bookings.
       allow create: if true;
 
-      // A logged-in user can read/update only their own bookings; the admin
-      // can read/update any booking (AdminPage.jsx status + session edits).
-      allow read, update: if isAdmin() ||
+      // Fetching ONE booking by its exact ID is allowed for anyone — needed
+      // by guests landing on the post-Stripe-payment success page
+      // (BookingSuccess.jsx), which has no login of its own. This is safe
+      // because Firestore's auto-generated IDs are effectively unguessable;
+      // nobody can browse/enumerate bookings this way. Querying/listing the
+      // whole collection stays restricted to the admin or the owning user.
+      allow get: if true;
+      allow list: if isAdmin() ||
         (request.auth != null && request.auth.uid == resource.data.userId);
+
+      // The admin can update anything (status changes, session edits in
+      // AdminPage.jsx); a logged-in user can update their own booking.
+      //
+      // Anyone — including guests — may flip `postPaymentProcessed` to
+      // true, but ONLY once `paymentStatus` is already "paid", and ONLY
+      // that one field. `paymentStatus` itself can only ever be set to
+      // "paid" by the Stripe webhook (functions/index.js — uses the Admin
+      // SDK, which bypasses these rules entirely), never by a client. That
+      // keeps this one client-writable field from ever being used to fake
+      // a payment.
+      allow update: if isAdmin() ||
+        (request.auth != null && request.auth.uid == resource.data.userId) ||
+        (resource.data.paymentStatus == "paid" &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(["postPaymentProcessed"]) &&
+          request.resource.data.postPaymentProcessed == true);
 
       // Nobody deletes bookings through the app today.
       allow delete: if false;

@@ -4,17 +4,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../components/AuthContext";
-import emailjs from "@emailjs/browser";                    // email sending library
 import {
-  EMAILJS_SERVICE_ID,
-  EMAILJS_TEMPLATE_ID,
-  EMAILJS_PUBLIC_KEY,
-  SCHOOL_NOTIFY_EMAIL,
-} from "../emailjs.config";                               // your EmailJS credentials
+  STUDENT_STATE,
+  STUDENT_COUNTRY,
+  PAYMENT_METHOD_LABEL_LATER,
+  withTimeout,
+  formatTime12,
+  buildSessionsText,
+  syncSessionToCalendar,
+  sendBookingEmails,
+} from "../lib/booking";
 import styles from "../styles/BookingPage.module.css";
 
 export default function BookingPage() {
-  const { state } = useLocation();
+  const { state, search } = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const selectedPackage = state?.selectedPackage || {};
@@ -36,11 +39,10 @@ export default function BookingPage() {
     sessions: [],                                         // array to store session data
   });
 
-  // This business only operates in California — not collected as form
-  // fields since every booking has the same values.
-  const STUDENT_STATE = "California";
-  const STUDENT_COUNTRY = "United States";
-  const PAYMENT_METHOD_LABEL = "Pay at session (no payment collected at booking)";
+  // "later" (pay at session, today's default) or "now" (Stripe Checkout)
+  const [paymentChoice, setPaymentChoice] = useState("later");
+  const [creatingCheckout, setCreatingCheckout] = useState(false);
+  const paymentCanceled = new URLSearchParams(search).get("canceled") === "1";
 
   // Signing up is optional — if the customer happens to be logged in,
   // save them a step by pre-filling their email.
@@ -66,15 +68,6 @@ export default function BookingPage() {
     const newH = String(date.getHours()).padStart(2, "0");// format hours 2 digits
     const newM = String(date.getMinutes()).padStart(2, "0");// format minutes 2 digits
     return `${newH}:${newM}`;                             // return "HH:MM" string
-  };
-
-  // Format a "HH:MM" 24-hour string as "8:00 AM" for display
-  const formatTime12 = (timeStr) => {
-    const [hh, mm] = timeStr.split(":");
-    const d = new Date();
-    d.setHours(parseInt(hh, 10));
-    d.setMinutes(parseInt(mm, 10));
-    return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
   };
 
   // Pre-built list of selectable "start – end" slots, stepped every 30 minutes,
@@ -162,72 +155,22 @@ const endTime = addMinutesToTime(startTime, duration);
   // Google Calendar sync status (pending -> success | error) as it resolves.
   const [bookingResult, setBookingResult] = useState(null);
 
-  // Rejects with `message` if `promise` hasn't settled within `ms` —
-  // so a slow/stuck network call can never leave the button stuck on "Saving..." forever.
-  const withTimeout = (promise, ms, message) =>
-    Promise.race([
-      promise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms)),
-    ]);
-
-  // Creates one Google Calendar event (via the createBooking Cloud Function)
-  // for a single session. Best effort — a failure here never blocks the
-  // booking itself, since Firestore is already the source of truth by the
-  // time this runs. Returns enough info to update that session's row in
-  // the confirmation panel.
-  const syncSessionToCalendar = async (session, sessionNumber) => {
-    const functionUrl = import.meta.env.VITE_CALENDAR_FUNCTION_URL;
-    if (!functionUrl) {
-      console.error("VITE_CALENDAR_FUNCTION_URL is not set — skipping calendar sync.");
-      return { status: "error" };
-    }
-
-    const payload = {
-      sessionNumber,
-      studentName: `${formData.firstName} ${formData.lastName}`,
-      studentEmail: formData.email,
-      parentName: formData.parentName || undefined,
-      dob: formData.dob,
-      address: formData.address,
-      city: selectedCity,
-      state: STUDENT_STATE,
-      zip: formData.zip,
-      country: STUDENT_COUNTRY,
-      phone: formData.phone,
-      packageTitle: selectedPackage.title,
-      price,
-      appointmentDate: session.date,
-      appointmentTime: formatTime12(session.startTime),
-      paymentMethod: PAYMENT_METHOD_LABEL,
-      // Local datetime, no offset — the function pairs this with an IANA
-      // timeZone so Google resolves PDT/PST correctly for this exact date.
-      startDateTime: `${session.date}T${session.startTime}:00`,
-      endDateTime: `${session.date}T${session.endTime}:00`,
-    };
-
-    try {
-      const response = await withTimeout(
-        fetch(functionUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }),
-        15000,
-        "Calendar sync timed out"
-      );
-
-      if (!response.ok) {
-        const body = await response.json().catch(() => ({}));
-        throw new Error(body.error || `Calendar sync failed (${response.status})`);
-      }
-
-      const { htmlLink } = await response.json();
-      return { status: "success", htmlLink };
-    } catch (err) {
-      console.error(`Calendar sync failed for session ${sessionNumber}:`, err);
-      return { status: "error" };
-    }
-  };
+  // Builds the fields syncSessionToCalendar (from ../lib/booking) needs —
+  // shared shape so BookingSuccess.jsx can build the same object from a
+  // Firestore doc after online payment completes.
+  const buildBookingInfo = (paymentMethodLabel) => ({
+    studentName: `${formData.firstName} ${formData.lastName}`,
+    studentEmail: formData.email,
+    parentName: formData.parentName,
+    dob: formData.dob,
+    address: formData.address,
+    city: selectedCity,
+    zip: formData.zip,
+    phone: formData.phone,
+    packageTitle: selectedPackage.title,
+    price,
+    paymentMethod: paymentMethodLabel,
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -276,6 +219,8 @@ const endTime = addMinutesToTime(startTime, duration);
       return;
     }
 
+    const isPayNow = paymentChoice === "now";
+
     try {
       setSubmitting(true);
 
@@ -284,7 +229,13 @@ const endTime = addMinutesToTime(startTime, duration);
       // userId is just null for them instead of crashing on user.uid.
       // Wrapped in a timeout so a stalled connection can't leave the
       // button stuck on "Saving..." forever.
-      await withTimeout(
+      //
+      // For "pay now", the booking is saved as pending_payment and the
+      // browser immediately redirects to Stripe Checkout — calendar sync
+      // and confirmation emails are deferred to BookingSuccess.jsx, which
+      // only runs them once Stripe's webhook has confirmed the payment
+      // really went through (never trust the redirect alone for that).
+      const docRef = await withTimeout(
         addDoc(collection(db, "bookings"), {
           userId: user?.uid || null,
           userEmail: user?.email || formData.email,
@@ -302,19 +253,55 @@ const endTime = addMinutesToTime(startTime, duration);
           parentName: formData.parentName || null,
           sessions: formData.sessions,
           status: "pending",
-          paymentStatus: "due_at_session", // no payment collected at booking time
+          paymentStatus: isPayNow ? "pending_payment" : "due_at_session",
           createdAt: serverTimestamp(),
         }),
         20000,
         "Saving your booking is taking longer than expected. Please check your connection and try again."
       );
 
+      if (isPayNow) {
+        const checkoutUrl = import.meta.env.VITE_STRIPE_CHECKOUT_FUNCTION_URL;
+        if (!checkoutUrl) {
+          throw new Error("Online payment isn't set up yet — please choose \"Pay Later\" instead.");
+        }
+
+        setCreatingCheckout(true);
+        const response = await withTimeout(
+          fetch(checkoutUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              bookingId: docRef.id,
+              packageTitle: selectedPackage.title,
+              priceUsd: Number(price),
+              studentEmail: formData.email,
+              successUrl: `${window.location.origin}/booking-success?bookingId=${docRef.id}`,
+              cancelUrl: `${window.location.origin}/booking?canceled=1`,
+            }),
+          }),
+          15000,
+          "Starting checkout is taking longer than expected. Please try again."
+        );
+
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}));
+          throw new Error(body.error || "Could not start checkout.");
+        }
+
+        const { url } = await response.json();
+        window.location.href = url; // full-page redirect to Stripe's hosted checkout
+        return; // leaving the page — nothing below this matters
+      }
+
+      // ── "Pay later" flow — unchanged from before ──
       // The booking is safely saved — unblock the UI and show the
       // confirmation panel right away. Email delivery and calendar sync
       // both happen next, but neither should hold up the confirmation —
       // they update the panel in place as they resolve.
       setSubmitting(false);
       setBookingResult({
+        paymentStatus: "due_at_session",
         sessions: formData.sessions.map((s, i) => ({
           sessionNumber: i + 1,
           date: s.date,
@@ -323,11 +310,12 @@ const endTime = addMinutesToTime(startTime, duration);
         })),
       });
 
-      // ── Step 2: Sync each session to Google Calendar — best effort ──
-      // Runs in the background; updates bookingResult as each resolves so
-      // the confirmation panel can show a live success/error state per session.
+      // Sync each session to Google Calendar — best effort, in the
+      // background; updates bookingResult as each resolves so the
+      // confirmation panel can show a live success/error state per session.
+      const bookingInfo = buildBookingInfo(PAYMENT_METHOD_LABEL_LATER);
       formData.sessions.forEach((session, i) => {
-        syncSessionToCalendar(session, i + 1).then((result) => {
+        syncSessionToCalendar(session, i + 1, bookingInfo).then((result) => {
           setBookingResult((prev) => {
             if (!prev) return prev; // user already navigated away
             const sessions = [...prev.sessions];
@@ -337,68 +325,22 @@ const endTime = addMinutesToTime(startTime, duration);
         });
       });
 
-      // ── Step 3: Build a readable sessions summary for the email ──
-      // Turns each session into "Session 1: Mon Apr 14 — 10:00 AM to 12:00 PM"
-      const sessionsText = formData.sessions
-        .map((s, i) => {
-          // Format the date from "YYYY-MM-DD" to a readable string
-          const dateLabel = s.date
-            ? new Date(s.date + "T00:00:00").toDateString()
-            : "TBD";
-
-          // Format start/end times from "HH:MM" to "12:30 PM" style
-          const fmt = (t) => {
-            if (!t) return "TBD";
-            const [hh, mm] = t.split(":");
-            const d = new Date();
-            d.setHours(parseInt(hh, 10));
-            d.setMinutes(parseInt(mm, 10));
-            return d.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-            });
-          };
-
-          return `Session ${i + 1}: ${dateLabel}, ${fmt(s.startTime)} to ${fmt(s.endTime)}`;
-        })
-        .join("\n");                               // one session per line in the email
-
-      // ── Step 4: Email the customer AND the school — best effort ──
-      // Neither of these can re-stick the button; failures are just logged.
-      const emailFields = {
-        student_name:  `${formData.firstName} ${formData.lastName}`,// full name
-        package_title: selectedPackage.title,                       // package name
-        city:          selectedCity,                                 // city
-        price:         price,                                        // price (no $)
-        sessions_text: sessionsText,                                 // session list
-      };
-
-      const [customerResult, schoolResult] = await Promise.allSettled([
-        emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          { ...emailFields, to_email: formData.email },     // confirmation to the customer
-          EMAILJS_PUBLIC_KEY
-        ),
-        emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          { ...emailFields, to_email: SCHOOL_NOTIFY_EMAIL }, // copy to the school
-          EMAILJS_PUBLIC_KEY
-        ),
-      ]);
-
-      if (customerResult.status === "rejected") {
-        console.error("Customer confirmation email failed:", customerResult.reason);
-      }
-      if (schoolResult.status === "rejected") {
-        console.error("School notification email failed:", schoolResult.reason);
-      }
+      // Email the customer AND the school — best effort.
+      await sendBookingEmails({
+        toEmail: formData.email,
+        student_name: `${formData.firstName} ${formData.lastName}`,
+        package_title: selectedPackage.title,
+        city: selectedCity,
+        price,
+        sessions_text: buildSessionsText(formData.sessions),
+        payment_status_text: "Due at your session",
+      });
     } catch (err) {
       console.error("Booking failed:", err);
       alert(err.message || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
+      setCreatingCheckout(false);
     }
   };
 
@@ -473,8 +415,15 @@ const endTime = addMinutesToTime(startTime, duration);
         <strong>${price}</strong> &nbsp;·&nbsp; $20 discount applied
       </p>
       <p className={styles.payLaterNote}>
-        No payment required to book — you'll pay at your first session.
+        No payment required to book — you'll pay at your first session, or pay online below.
       </p>
+
+      {paymentCanceled && (
+        <p className={styles.cancelNotice}>
+          Payment was canceled — no confirmation was sent. Fill out the form again and choose
+          "Pay Later" or try "Pay Now" once more.
+        </p>
+      )}
 
       {/* Main booking form */}
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -613,6 +562,42 @@ const endTime = addMinutesToTime(startTime, duration);
           );
         })}
 
+        {/* Payment choice */}
+        <h3 className={styles.subHeading}>Payment</h3>
+        <div className={styles.paymentChoiceGroup}>
+          <label
+            className={`${styles.paymentChoiceCard} ${paymentChoice === "later" ? styles.paymentChoiceCardSelected : ""}`}
+          >
+            <input
+              type="radio"
+              name="paymentChoice"
+              value="later"
+              checked={paymentChoice === "later"}
+              onChange={() => setPaymentChoice("later")}
+            />
+            <div>
+              <strong>Pay Later</strong>
+              <span>No payment now — pay at your first session.</span>
+            </div>
+          </label>
+
+          <label
+            className={`${styles.paymentChoiceCard} ${paymentChoice === "now" ? styles.paymentChoiceCardSelected : ""}`}
+          >
+            <input
+              type="radio"
+              name="paymentChoice"
+              value="now"
+              checked={paymentChoice === "now"}
+              onChange={() => setPaymentChoice("now")}
+            />
+            <div>
+              <strong>Pay Now</strong>
+              <span>Pay ${price} online by card — you'll be redirected to a secure checkout page.</span>
+            </div>
+          </label>
+        </div>
+
         {/* Terms and conditions */}
         <label className={styles.termsRow}>
           <input
@@ -627,10 +612,16 @@ const endTime = addMinutesToTime(startTime, duration);
           </span>
         </label>
 
-        {/* Submit — no payment collected here, it's due at the first session */}
+        {/* Submit — "Pay Later" saves the booking; "Pay Now" redirects to Stripe */}
         <div className={styles.buttonRow}>
           <button type="submit" className={styles.primaryBtn} disabled={submitting}>
-            {submitting ? "Submitting..." : "Submit Booking Request"}
+            {creatingCheckout
+              ? "Redirecting to checkout..."
+              : submitting
+              ? "Submitting..."
+              : paymentChoice === "now"
+              ? "Continue to Payment"
+              : "Submit Booking Request"}
           </button>
         </div>
       </form>

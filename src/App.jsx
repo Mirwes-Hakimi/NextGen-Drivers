@@ -6,6 +6,7 @@ import Login          from "./pages/Login";
 import Signup         from "./pages/Signup";
 import Packages       from "./pages/Packages";
 import BookingPage    from "./pages/BookingPage";
+import BookingSuccess from "./pages/BookingSuccess"; // /booking-success — after Stripe "Pay Now" checkout
 import Home           from "./pages/Home";           // user dashboard
 import AdminPage      from "./pages/AdminPage";      // admin dashboard
 
@@ -51,7 +52,8 @@ function App() {
         <Route path="/contact"      element={<ContactPage />} />
 
         {/* Booking is open to guests too — signing up is optional */}
-        <Route path="/booking"   element={<BookingPage />} />
+        <Route path="/booking"         element={<BookingPage />} />
+        <Route path="/booking-success" element={<BookingSuccess />} />
 
         {/* ── Protected routes — must be logged in ── */}
         <Route path="/dashboard" element={<PrivateRoute><Home /></PrivateRoute>} />
