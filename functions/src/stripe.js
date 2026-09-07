@@ -38,7 +38,12 @@ export async function createCheckoutSession({
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
-    payment_method_types: ["card"],
+    // No `payment_method_types` here — this Stripe account has "Managed
+    // Payments" enabled, which picks payment methods automatically and
+    // rejects an explicit list. Managed Payments also requires every
+    // product to carry a Stripe tax code unless it's turned off for the
+    // session — we don't need Stripe's automatic tax handling, so opt out.
+    managed_payments: { enabled: false },
     customer_email: studentEmail,
     line_items: [
       {
