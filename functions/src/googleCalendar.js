@@ -44,7 +44,13 @@ async function buildJwtClient() {
   const email = requireEnv("GOOGLE_CLIENT_EMAIL");
   // .env files / secret managers can't store literal newlines, so private
   // keys are stored with escaped "\n" sequences that need to be restored.
-  const key = requireEnv("GOOGLE_PRIVATE_KEY").replace(/\\n/g, "\n");
+  // Also strip a leading UTF-8 BOM and surrounding whitespace — invisible
+  // in any editor, but enough to make OpenSSL reject an otherwise-valid
+  // PEM key with a cryptic "DECODER routines::unsupported" error.
+  const key = requireEnv("GOOGLE_PRIVATE_KEY")
+    .trim()
+    .replace(/^\uFEFF/, "")
+    .replace(/\\n/g, "\n");
   const subject = requireEnv("GOOGLE_IMPERSONATE_EMAIL");
 
   const { JWT } = await import("google-auth-library");
