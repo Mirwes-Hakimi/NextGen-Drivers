@@ -49,6 +49,7 @@ const bookingSchema = z.object({
   zip: z.string().min(1),
   country: z.string().min(1),
   phone: z.string().min(1),
+  parentPhone: z.string().optional(),
   packageTitle: z.string().min(1),
   price: z.number().nonnegative(),
   appointmentDate: z.string().min(1), // human-readable, for the description text

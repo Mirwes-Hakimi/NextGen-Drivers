@@ -68,6 +68,7 @@ export const syncSessionToCalendar = async (session, sessionNumber, bookingInfo)
     zip: bookingInfo.zip,
     country: STUDENT_COUNTRY,
     phone: bookingInfo.phone,
+    parentPhone: bookingInfo.parentPhone || undefined,
     packageTitle: bookingInfo.packageTitle,
     price: bookingInfo.price,
     appointmentDate: session.date,

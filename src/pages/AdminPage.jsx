@@ -200,6 +200,9 @@ export default function AdminPage() {
             <div className={styles.infoGrid}>
               <span><span className={styles.label}>Email</span>{booking.email}</span>
               <span><span className={styles.label}>Phone</span>{booking.phone}</span>
+              {booking.parentPhone && (
+                <span><span className={styles.label}>Parent/Guardian Phone</span>{booking.parentPhone}</span>
+              )}
               <span><span className={styles.label}>City</span>{booking.city}</span>
               <span><span className={styles.label}>Price</span>${booking.price}</span>
               <span><span className={styles.label}>Payment</span>{

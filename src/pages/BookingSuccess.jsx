@@ -47,6 +47,7 @@ export default function BookingSuccess() {
         city: data.city,
         zip: data.zip,
         phone: data.phone,
+        parentPhone: data.parentPhone,
         packageTitle: data.package,
         price: data.price,
         paymentMethod: PAYMENT_METHOD_LABEL_ONLINE,

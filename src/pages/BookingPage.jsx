@@ -30,7 +30,8 @@ export default function BookingPage() {
     firstName: "",                                        // student first name
     lastName: "",                                         /// student last name
     email: "",                                            // parent / student email
-    phone: "+1",
+    phone: "+1",                                          // student's own number
+    parentPhone: "",                                      // optional — parent/guardian's number
     dob: "",
     address: "",                                          // home address (street)
     zip: "",                                              // ZIP code — needed for the calendar invite's address
@@ -178,6 +179,7 @@ const endTime = addMinutesToTime(startTime, duration);
     city: selectedCity,
     zip: formData.zip,
     phone: formData.phone,
+    parentPhone: formData.parentPhone,
     packageTitle: selectedPackage.title,
     price,
     paymentMethod: paymentMethodLabel,
@@ -258,6 +260,7 @@ const endTime = addMinutesToTime(startTime, duration);
           lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone,
+          parentPhone: formData.parentPhone || null,
           dob: formData.dob,
           address: formData.address,
           zip: formData.zip,
@@ -472,7 +475,7 @@ const endTime = addMinutesToTime(startTime, duration);
           </label>
 
           <label className={styles.fieldLabel}>
-            Phone Number:
+            Student Phone Number:
             <input
               name="phone"
               value={formData.phone}
@@ -518,6 +521,15 @@ const endTime = addMinutesToTime(startTime, duration);
             <input
               name="parentName"
               value={formData.parentName}
+              onChange={handleFieldChange}
+            />
+          </label>
+
+          <label className={styles.fieldLabel}>
+            Parent/Guardian Phone Number (optional):
+            <input
+              name="parentPhone"
+              value={formData.parentPhone}
               onChange={handleFieldChange}
             />
           </label>
