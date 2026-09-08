@@ -44,6 +44,17 @@ export default function BookingPage() {
   const [creatingCheckout, setCreatingCheckout] = useState(false);
   const paymentCanceled = new URLSearchParams(search).get("canceled") === "1";
 
+  // This page only works with a package/city/price carried in via
+  // navigation state (set when clicking "Book Now" on a package card).
+  // Landing here directly — a reload, a bookmark, "Back to Booking" from
+  // an error screen — has none of that, and would otherwise fail later
+  // with a confusing Firestore error instead of a clear one now.
+  useEffect(() => {
+    if (!selectedPackage.title) {
+      navigate("/packages");
+    }
+  }, [selectedPackage.title, navigate]);
+
   // Signing up is optional — if the customer happens to be logged in,
   // save them a step by pre-filling their email.
   useEffect(() => {

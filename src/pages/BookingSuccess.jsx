@@ -178,8 +178,8 @@ export default function BookingSuccess() {
           <h2 className={styles.heading}>Something went wrong</h2>
           <p className={styles.summary}>{view.message}</p>
           <div className={styles.buttonRow}>
-            <button type="button" className={styles.primaryBtn} onClick={() => navigate("/booking")}>
-              Back to Booking
+            <button type="button" className={styles.primaryBtn} onClick={() => navigate("/packages")}>
+              Back to Packages
             </button>
           </div>
         </div>
