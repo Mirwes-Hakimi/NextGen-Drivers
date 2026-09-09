@@ -6,8 +6,14 @@ import { useAuth } from "./AuthContext"; // get the currently logged-in user
 // It saves the current location (including any navigation state like selected package)
 // so the login page can send them back to exactly where they were after signing in.
 export default function PrivateRoute({ children }) {
-  const { user } = useAuth();         // null if not logged in, object if logged in
-  const location = useLocation();     // current URL + any state (e.g. selected package)
+  const { user, loading } = useAuth(); // null if not logged in, object if logged in
+  const location = useLocation();      // current URL + any state (e.g. selected package)
+
+  // Firebase hasn't confirmed the session yet (e.g. a fresh page load) —
+  // wait rather than redirecting on a false "not logged in" read.
+  if (loading) {
+    return null;
+  }
 
   if (!user) {
     // Redirect to login and pass the full current location as { from }

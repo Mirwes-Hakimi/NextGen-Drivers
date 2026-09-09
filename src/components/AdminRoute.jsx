@@ -11,7 +11,13 @@ const ADMIN_EMAILS = [
 ];
 
 export default function AdminRoute({ children }) {
-  const { user } = useAuth(); // get the currently logged-in user
+  const { user, loading } = useAuth(); // get the currently logged-in user
+
+  // Firebase hasn't confirmed the session yet (e.g. a fresh page load) —
+  // wait rather than redirecting on a false "not logged in" read.
+  if (loading) {
+    return null;
+  }
 
   // If not logged in at all, send to login page
   if (!user) {
