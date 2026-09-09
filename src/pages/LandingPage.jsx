@@ -2,9 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import styles from "../styles/LandingPage.module.css";
-import Logo from "../components/Logo";
 import { useAuth } from "../components/AuthContext";
 import { SCHOOL_PHONE, SCHOOL_PHONE_TEL } from "../siteConfig";
+import { FaCarSide, FaArrowRight } from "react-icons/fa";
 
 // Reusable animation: fade up from below as element enters view
 const fadeUp = {
@@ -175,6 +175,12 @@ export default function LandingPage() {
 
             {/* Social proof badge */}
             <div className={styles.socialProof}>
+              <div className={styles.socialProofAvatars} aria-hidden="true">
+                <span className={styles.avatar} style={{ background: "#ea580c" }}>J</span>
+                <span className={styles.avatar} style={{ background: "#0891b2" }}>M</span>
+                <span className={styles.avatar} style={{ background: "#7c3aed" }}>A</span>
+                <span className={styles.avatar} style={{ background: "#16a34a" }}>S</span>
+              </div>
               <span className={styles.socialProofStars} aria-hidden="true">★★★★★</span>
               <span>5.0 Rating &nbsp;|&nbsp; 500+ Students Trained in the Bay Area & Sacramento</span>
             </div>
@@ -188,7 +194,7 @@ export default function LandingPage() {
           >
             <div className={styles.heroCard}>
               <div className={styles.heroCardBadge}>
-                <Logo size="sm" />
+                <FaCarSide />
               </div>
               <h3 className={styles.heroCardTitle}>Your First Lesson</h3>
               <ul className={styles.heroCardList}>
@@ -209,10 +215,9 @@ export default function LandingPage() {
                   Pay later or online, your choice
                 </li>
               </ul>
-              <div className={styles.heroCardFooter}>
-                <span className={styles.heroCardStars} aria-hidden="true">★★★★★</span>
-                <span className={styles.heroCardFooterText}>Rated 5.0 by our students</span>
-              </div>
+              <Link to="/packages" className={styles.heroCardCta}>
+                Quick Book, Save $20 <FaArrowRight aria-hidden="true" />
+              </Link>
             </div>
           </motion.div>
         </div>

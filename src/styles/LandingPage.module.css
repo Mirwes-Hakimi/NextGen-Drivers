@@ -193,6 +193,29 @@
   font-size: 0.9rem;
 }
 
+.socialProofAvatars {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #0b0c10;
+  margin-left: -8px;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.avatar:first-child {
+  margin-left: 0;
+}
+
 /* ─────────────────────────────────────────
    HERO RIGHT — preview card
 ───────────────────────────────────────── */
@@ -211,15 +234,26 @@
   padding: 2rem 1.75rem;
   backdrop-filter: blur(6px);
   box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 40px rgba(255,102,0,0.08);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.heroCard:hover {
+  border-color: rgba(255,102,0,0.5);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 60px rgba(255,102,0,0.22);
 }
 
 .heroCardBadge {
   display: inline-flex;
-  padding: 0.6rem;
-  background: rgba(255,102,0,0.12);
-  border: 1px solid rgba(255,102,0,0.25);
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #ff6600, #ff9933);
   border-radius: 0.85rem;
   margin-bottom: 1.25rem;
+  color: #ffffff;
+  font-size: 1.5rem;
+  box-shadow: 0 8px 20px rgba(255,102,0,0.35);
 }
 
 .heroCardTitle {
@@ -259,22 +293,32 @@
   font-weight: 800;
 }
 
-.heroCardFooter {
+.heroCardCta {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+  background: linear-gradient(90deg, #ff6600, #ff7700);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 20px rgba(255,102,0,0.28);
+  transition: filter 0.2s, transform 0.15s, box-shadow 0.25s;
 }
 
-.heroCardStars {
-  color: #ff9933;
-  letter-spacing: 1px;
+.heroCardCta:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255,102,0,0.4);
 }
 
-.heroCardFooterText {
-  color: #9ca3af;
-  font-size: 0.85rem;
+.heroCardCta:active {
+  transform: translateY(0);
+  filter: brightness(0.97);
 }
 
 /* ─────────────────────────────────────────
