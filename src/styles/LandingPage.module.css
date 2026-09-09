@@ -11,155 +11,76 @@
    HERO
 ───────────────────────────────────────── */
 .hero {
-  background: #000000;
+  background: #0b0c10;
   min-height: 88vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  padding: 2rem 1.5rem;
 }
 
-/* Large orange radial glow behind the content */
-.hero::before {
-  content: "";
+/* Subtle dot-grid texture — replaces the old muddy multi-orb glow */
+.heroGridTexture {
   position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, rgba(234,88,12,0.08) 40%, transparent 70%);
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 40%, transparent 90%);
   pointer-events: none;
 }
 
-/* Bottom-left decorative blurred circle */
-.hero::after {
-  content: "";
+/* One clean, contained gradient glow instead of four blurred orbs */
+.heroGlow {
   position: absolute;
-  bottom: -80px;
-  left: -80px;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
-  border-radius: 50%;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(255,102,0,0.16) 0%, rgba(255,119,0,0.06) 45%, transparent 75%);
   pointer-events: none;
 }
 
 /* ─────────────────────────────────────────
-   ANIMATED ORBS
-   Each orb is a blurred circle that floats
-   slowly around the hero background.
+   HERO LAYOUT — 2 columns on desktop
 ───────────────────────────────────────── */
-
-/* Base orb style — all orbs share these */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);            /* heavy blur = soft glowing look */
-  opacity: 0.35;
-  pointer-events: none;          /* don't block clicks */
-  z-index: 0;
-}
-
-/* Top-left — deep orange, drifts diagonally */
-.orb1 {
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle, #ea580c, #9a3412);
-  top: -100px;
-  left: -100px;
-  animation: floatA 12s ease-in-out infinite;
-}
-
-/* Top-right — amber, drifts in a slow oval */
-.orb2 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, #f97316, #c2410c);
-  top: 20px;
-  right: -60px;
-  animation: floatB 15s ease-in-out infinite;
-}
-
-/* Bottom-center — bright orange, pulses and drifts upward */
-.orb3 {
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, #fb923c, #ea580c);
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: floatC 10s ease-in-out infinite;
-}
-
-/* Bottom-right — small accent orb, fast movement */
-.orb4 {
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, #fdba74, #fb923c);
-  bottom: -40px;
-  right: 80px;
-  animation: floatD 8s ease-in-out infinite;
-}
-
-/* Float animations — each moves in a unique path */
-@keyframes floatA {
-  0%   { transform: translate(0px, 0px);    }
-  33%  { transform: translate(60px, 40px);  }
-  66%  { transform: translate(-30px, 70px); }
-  100% { transform: translate(0px, 0px);    }
-}
-
-@keyframes floatB {
-  0%   { transform: translate(0px, 0px);    }
-  33%  { transform: translate(-50px, 60px); }
-  66%  { transform: translate(40px, 30px);  }
-  100% { transform: translate(0px, 0px);    }
-}
-
-@keyframes floatC {
-  0%   { transform: translateX(-50%) translateY(0px);   }
-  50%  { transform: translateX(-50%) translateY(-50px); }
-  100% { transform: translateX(-50%) translateY(0px);   }
-}
-
-@keyframes floatD {
-  0%   { transform: translate(0px, 0px);    }
-  50%  { transform: translate(-40px, -35px);}
-  100% { transform: translate(0px, 0px);    }
-}
-
-/* ─────────────────────────────────────────
-   HERO OVERLAY (sits above the orbs)
-───────────────────────────────────────── */
-.heroOverlay {
+.heroInner {
   position: relative;
-  z-index: 1;                    /* above the orbs */
+  z-index: 1;
   width: 100%;
-  max-width: 800px;
-  padding: 3rem 1.5rem;
-  text-align: center;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 3.5rem;
+  padding: 3rem 0;
 }
 
-.heroContent {
+.heroLeft {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.25rem;
+  text-align: left;
 }
 
 .heroTitle {
-  font-size: 3.25rem;
+  font-size: clamp(2.5rem, 4.6vw, 4rem);
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.2;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
 /* Orange accent on second line */
 .heroAccent {
-  background: linear-gradient(90deg, #f97316, #fb923c);
+  background: linear-gradient(90deg, #ff6600, #ff9933);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -168,7 +89,7 @@
 .heroSubtitle {
   font-size: 1.15rem;
   color: #9ca3af;                /* muted gray — readable on dark bg */
-  max-width: 560px;
+  max-width: 520px;
   line-height: 1.6;
   margin: 0;
 }
@@ -178,47 +99,205 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 0.5rem;
 }
 
 /* Primary orange button */
 .btnPrimary {
-  background: linear-gradient(90deg, #ea580c, #f97316);
+  background: linear-gradient(90deg, #ff6600, #ff7700);
   color: #fff;
-  padding: 0.85rem 2rem;
-  border-radius: 0.6rem;
+  padding: 0.9rem 2.1rem;
+  border-radius: 0.75rem;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
-  transition: filter 0.25s, transform 0.2s;
+  transition: filter 0.2s, transform 0.15s, box-shadow 0.25s;
   display: inline-block;
-  box-shadow: 0 8px 20px rgba(249,115,22,0.25);
+  box-shadow: 0 8px 20px rgba(255,102,0,0.25);
 }
 
 .btnPrimary:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.06);
   transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255,102,0,0.4);
+}
+
+.btnPrimary:active {
+  transform: translateY(0);
+  filter: brightness(0.97);
+  box-shadow: 0 4px 12px rgba(255,102,0,0.3);
 }
 
 /* Secondary ghost button */
 .btnSecondary {
   background: transparent;
-  color: #fdba74;
-  padding: 0.85rem 2rem;
-  border-radius: 0.6rem;
+  color: #ffb27a;
+  padding: 0.9rem 2.1rem;
+  border-radius: 0.75rem;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
-  border: 2px solid rgba(249,115,22,0.4);
-  transition: background 0.25s, color 0.25s, transform 0.2s;
+  border: 2px solid rgba(255,119,0,0.45);
+  transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.25s;
   display: inline-block;
 }
 
 .btnSecondary:hover {
-  background: rgba(249,115,22,0.12);
-  color: #fed7aa;
+  background: rgba(255,102,0,0.1);
+  color: #ffd0ab;
   transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(255,102,0,0.22);
+}
+
+.btnSecondary:active {
+  transform: translateY(0);
+  background: rgba(255,102,0,0.16);
+}
+
+/* Social proof badge */
+.socialProof {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #d1d5db;
+}
+
+.socialProofStars {
+  color: #ff9933;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+/* ─────────────────────────────────────────
+   HERO RIGHT — preview card
+───────────────────────────────────────── */
+.heroRight {
+  display: flex;
+  justify-content: center;
+}
+
+.heroCard {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1.25rem;
+  padding: 2rem 1.75rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 40px rgba(255,102,0,0.08);
+}
+
+.heroCardBadge {
+  display: inline-flex;
+  padding: 0.6rem;
+  background: rgba(255,102,0,0.12);
+  border: 1px solid rgba(255,102,0,0.25);
+  border-radius: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.heroCardTitle {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1.1rem;
+}
+
+.heroCardList {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.heroCardList li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #d1d5db;
+  font-size: 0.92rem;
+}
+
+.heroCardCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.18);
+  color: #ff9933;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.heroCardFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.heroCardStars {
+  color: #ff9933;
+  letter-spacing: 1px;
+}
+
+.heroCardFooterText {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+/* ─────────────────────────────────────────
+   HERO — RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+
+  .heroLeft {
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroBtns {
+    justify-content: center;
+  }
+
+  .heroSubtitle {
+    max-width: 100%;
+  }
+
+  .heroRight {
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroBtns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* ─────────────────────────────────────────

@@ -133,22 +133,17 @@ export default function LandingPage() {
            HERO SECTION
           ════════════════════════════════ */}
       <section className={styles.hero}>
+        {/* Subtle grid texture + gradient backdrop — purely decorative */}
+        <div className={styles.heroGridTexture} />
+        <div className={styles.heroGlow} />
 
-        {/* Animated background orbs — purely decorative, CSS-animated */}
-        <div className={`${styles.orb} ${styles.orb1}`} />
-        <div className={`${styles.orb} ${styles.orb2}`} />
-        <div className={`${styles.orb} ${styles.orb3}`} />
-        <div className={`${styles.orb} ${styles.orb4}`} />
-
-        <div className={styles.heroOverlay}>
+        <div className={styles.heroInner}>
           <motion.div
-            className={styles.heroContent}
+            className={styles.heroLeft}
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
           >
-            <Logo size="lg" />
-
             <h1 className={styles.heroTitle}>
               Drive with Confidence.<br />
               <span className={styles.heroAccent}>Learn the Right Way.</span>
@@ -170,6 +165,48 @@ export default function LandingPage() {
                   Create Account
                 </Link>
               )}
+            </div>
+
+            {/* Social proof badge */}
+            <div className={styles.socialProof}>
+              <span className={styles.socialProofStars} aria-hidden="true">★★★★★</span>
+              <span>5.0 Rating &nbsp;|&nbsp; 500+ Students Trained in the Bay Area & Sacramento</span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className={styles.heroRight}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15 }}
+          >
+            <div className={styles.heroCard}>
+              <div className={styles.heroCardBadge}>
+                <Logo size="sm" />
+              </div>
+              <h3 className={styles.heroCardTitle}>Your First Lesson</h3>
+              <ul className={styles.heroCardList}>
+                <li>
+                  <span className={styles.heroCardCheck}>✓</span>
+                  Certified, DMV-approved instructors
+                </li>
+                <li>
+                  <span className={styles.heroCardCheck}>✓</span>
+                  Pick-up &amp; drop-off included
+                </li>
+                <li>
+                  <span className={styles.heroCardCheck}>✓</span>
+                  Flexible scheduling, 7 days a week
+                </li>
+                <li>
+                  <span className={styles.heroCardCheck}>✓</span>
+                  Pay later or online — your choice
+                </li>
+              </ul>
+              <div className={styles.heroCardFooter}>
+                <span className={styles.heroCardStars} aria-hidden="true">★★★★★</span>
+                <span className={styles.heroCardFooterText}>Rated 5.0 by our students</span>
+              </div>
             </div>
           </motion.div>
         </div>
