@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import styles from "../styles/LandingPage.module.css";
 import Logo from "../components/Logo";
+import { useAuth } from "../components/AuthContext";
 
 // Reusable animation: fade up from below as element enters view
 const fadeUp = {
@@ -123,6 +124,7 @@ const faqs = [
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(0);
+  const { user } = useAuth();
 
   return (
     <div className={styles.page}>
@@ -163,9 +165,11 @@ export default function LandingPage() {
               <Link to="/packages" className={styles.btnPrimary}>
                 Explore Packages
               </Link>
-              <Link to="/signup" className={styles.btnSecondary}>
-                Create Account
-              </Link>
+              {!user && (
+                <Link to="/signup" className={styles.btnSecondary}>
+                  Create Account
+                </Link>
+              )}
             </div>
           </motion.div>
         </div>
