@@ -97,6 +97,20 @@ export default function AdminPage() {
     });
   };
 
+  // Remove one session from the booking being edited. Requires confirmation
+  // since it's destructive, and refuses to remove the last remaining
+  // session — a booking should always have at least one.
+  const handleRemoveSession = (idx) => {
+    if (editSessions.length <= 1) {
+      alert("A booking must have at least one session. Cancel the booking instead of removing its last session.");
+      return;
+    }
+    if (!window.confirm(`Remove Session ${idx + 1}? This can't be undone.`)) {
+      return;
+    }
+    setEditSessions((prev) => prev.filter((_, i) => i !== idx));
+  };
+
   // Save the edited sessions back to Firestore
   const handleSaveSessions = async (bookingId) => {
     setSaving(true);
@@ -292,6 +306,15 @@ export default function AdminPage() {
                           readOnly
                         />
                       </label>
+
+                      <button
+                        type="button"
+                        className={styles.removeSessionBtn}
+                        onClick={() => handleRemoveSession(i)}
+                        title="Remove this session"
+                      >
+                        ✕ Remove
+                      </button>
                     </div>
                   ))}
 

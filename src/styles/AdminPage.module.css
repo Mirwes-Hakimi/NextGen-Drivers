@@ -220,13 +220,32 @@
 /* One row per session in edit mode */
 .editSessionRow {
   display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr;
+  grid-template-columns: auto 1fr 1fr 1fr auto;
   align-items: center;
   gap: 0.75rem;
   background: rgba(249,115,22,0.04);
   border: 1px solid rgba(249,115,22,0.18);
   border-radius: 10px;
   padding: 0.85rem 1rem;
+}
+
+.removeSessionBtn {
+  align-self: end;
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.3);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.removeSessionBtn:hover {
+  background: rgba(239,68,68,0.2);
+  color: #fca5a5;
 }
 
 /* Label above each input in edit mode */
@@ -387,5 +406,10 @@
 
   .editSessionRow .sessionNum {
     grid-column: 1 / -1;
+  }
+
+  .removeSessionBtn {
+    grid-column: 1 / -1;
+    width: 100%;
   }
 }

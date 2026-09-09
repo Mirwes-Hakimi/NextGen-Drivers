@@ -58,6 +58,57 @@
   box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.18);
 }
 
+/* Wraps the password input + show/hide toggle */
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordWrapper .input {
+  padding-right: 2.75rem; /* room for the toggle button */
+}
+
+.togglePasswordBtn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -0.5rem; /* offsets the input's margin-bottom so it centers on the field */
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  font-size: 1rem;
+}
+
+.togglePasswordBtn:hover {
+  color: #f97316;
+}
+
+/* "Forgot password?" link, right-aligned above the submit button */
+.forgotPasswordBtn {
+  display: block;
+  margin: -0.5rem 0 1.25rem auto;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #f97316;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.forgotPasswordBtn:hover {
+  text-decoration: underline;
+}
+
+.forgotPasswordBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Submit button */
 .button {
   width: 100%;
