@@ -4,6 +4,7 @@ import {
   getDocs,     // fetch all documents at once
   doc,         // reference to a single document by ID
   updateDoc,   // update specific fields on a document
+  deleteDoc,   // permanently delete a document
   orderBy,     // sort query results
   query,       // build a Firestore query
 } from "firebase/firestore";
@@ -19,6 +20,7 @@ export default function AdminPage() {
   const [error,       setError]       = useState("");   // error message if fetch fails
   const [filter,      setFilter]      = useState("all");// current status tab filter
   const [updating,    setUpdating]    = useState(null); // id of booking whose status is being saved
+  const [deletingId,  setDeletingId]  = useState(null); // id of booking currently being deleted
 
   // ── Edit-session state ──
   const [editingId,   setEditingId]   = useState(null); // id of the booking open in edit mode
@@ -58,6 +60,27 @@ export default function AdminPage() {
       alert("Could not update status. Please try again.");
     } finally {
       setUpdating(null);
+    }
+  };
+
+  // ── Delete booking ──
+  // Permanently removes the booking from Firestore. Destructive and
+  // irreversible, so it requires typed confirmation, not just a click.
+  const handleDeleteBooking = async (booking) => {
+    const confirmed = window.prompt(
+      `This permanently deletes the booking for ${booking.firstName} ${booking.lastName} — this cannot be undone.\n\nType DELETE to confirm.`
+    );
+    if (confirmed !== "DELETE") return;
+
+    setDeletingId(booking.id);
+    try {
+      await deleteDoc(doc(db, "bookings", booking.id));
+      setBookings((prev) => prev.filter((b) => b.id !== booking.id));
+    } catch (err) {
+      console.error("Failed to delete booking:", err);
+      alert("Could not delete this booking. Please try again.");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -349,6 +372,15 @@ export default function AdminPage() {
                   {updating === booking.id ? "Saving..." : option}
                 </button>
               ))}
+
+              <button
+                onClick={() => handleDeleteBooking(booking)}
+                disabled={deletingId === booking.id}
+                className={styles.deleteBtn}
+                title="Permanently delete this booking"
+              >
+                {deletingId === booking.id ? "Deleting..." : "🗑 Delete Permanently"}
+              </button>
             </div>
 
           </div>

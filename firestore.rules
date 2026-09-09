@@ -42,8 +42,9 @@ service cloud.firestore {
           request.resource.data.diff(resource.data).affectedKeys().hasOnly(["postPaymentProcessed"]) &&
           request.resource.data.postPaymentProcessed == true);
 
-      // Nobody deletes bookings through the app today.
-      allow delete: if false;
+      // Only the admin can permanently delete a booking (AdminPage.jsx's
+      // "Delete Permanently" button, gated behind a typed confirmation).
+      allow delete: if isAdmin();
     }
 
     // Everything else stays locked down by default.
