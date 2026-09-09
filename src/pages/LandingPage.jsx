@@ -78,7 +78,7 @@ const stats = [
 const DISCOUNT = 20;
 
 const featuredPackages = [
-  { title: "Two-Hour Driving Lesson", price: 160, blurb: "A single focused session to build core skills." },
+  { title: "Two-Hour Driving Lesson", price: 180, blurb: "A single focused session to build core skills." },
   { title: "DMV Drive Test", price: 240, blurb: "Your behind-the-wheel road test, done with us." },
   { title: "Mock Test", price: 210, blurb: "A simulated road test with feedback before the real thing." },
   { title: "Eight-Hour Driving Lesson", price: 640, blurb: "Our most complete training package." },
