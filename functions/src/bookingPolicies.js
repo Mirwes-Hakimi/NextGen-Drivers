@@ -5,16 +5,17 @@
 // ─────────────────────────────────────────────────────────────
 
 export const CANCELLATION_POLICY =
-  "Cancellations or reschedules must be made at least 24 hours before the " +
-  "scheduled session. Cancellations within 24 hours, or no-shows, may be " +
-  "subject to a fee. Contact us as soon as possible if you need to change " +
-  "your appointment.";
+  "Cancellation or rescheduling requests made at least 24 hours prior to " +
+  "the scheduled appointment will not incur any penalties, but cancellation " +
+  "requests made less than 24 hours before the scheduled appointment will " +
+  "result in a cancellation fee of $75.00.";
 
 export const EVENT_TYPE_DESCRIPTION =
-  "This is a behind-the-wheel driving lesson or DMV road test with a " +
-  "certified Best Driving School instructor. Pick-up and drop-off are " +
-  "included at the address listed above.";
+  "The training sessions will be conducted by our experienced instructors " +
+  "who are committed to providing a safe and supportive learning " +
+  "environment. Whether you are a beginner or looking to enhance your " +
+  "driving skills, this program will cater to all levels of expertise.";
 
 export const SESSION_BREAK_POLICY =
-  "Sessions longer than 2 hours include a short break between segments. " +
-  "Your instructor will let you know when it's time to pause.";
+  "All training sessions include a scheduled 5-minute break to ensure " +
+  "comfort, focus, and optimal learning throughout the session.";
