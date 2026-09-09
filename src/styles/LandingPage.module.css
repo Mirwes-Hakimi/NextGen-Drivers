@@ -155,6 +155,24 @@
   background: rgba(255,102,0,0.16);
 }
 
+/* Click-to-call link */
+.heroCallLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ff9933;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  margin-top: -0.25rem;
+  transition: color 0.2s;
+}
+
+.heroCallLink:hover {
+  color: #ffb266;
+  text-decoration: underline;
+}
+
 /* Social proof badge */
 .socialProof {
   display: flex;

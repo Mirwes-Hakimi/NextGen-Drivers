@@ -277,7 +277,7 @@ const endTime = addMinutesToTime(startTime, duration);
       if (isPayNow) {
         const checkoutUrl = import.meta.env.VITE_STRIPE_CHECKOUT_FUNCTION_URL;
         if (!checkoutUrl) {
-          throw new Error("Online payment isn't set up yet — please choose \"Pay Later\" instead.");
+          throw new Error("Online payment isn't set up yet, please choose \"Pay Later\" instead.");
         }
 
         setCreatingCheckout(true);
@@ -372,7 +372,7 @@ const endTime = addMinutesToTime(startTime, duration);
             {price} &nbsp;·&nbsp; a confirmation email is on its way to {formData.email}
           </p>
           <p className={styles.payLaterNote}>
-            No payment is due now — you'll pay at your first session.
+            No payment is due now, you'll pay at your first session.
           </p>
 
           <div className={styles.confirmSessions}>
@@ -400,7 +400,7 @@ const endTime = addMinutesToTime(startTime, duration);
                 )}
                 {s.status === "error" && (
                   <span className={styles.confirmStatusError}>
-                    Couldn't auto-add to calendar — we'll confirm this manually
+                    Couldn't auto-add to calendar, we'll confirm this manually
                   </span>
                 )}
               </div>
@@ -429,12 +429,12 @@ const endTime = addMinutesToTime(startTime, duration);
         <strong>${price}</strong> &nbsp;·&nbsp; $20 discount applied
       </p>
       <p className={styles.payLaterNote}>
-        No payment required to book — you'll pay at your first session, or pay online below.
+        No payment required to book, you'll pay at your first session, or pay online below.
       </p>
 
       {paymentCanceled && (
         <p className={styles.cancelNotice}>
-          Payment was canceled — no confirmation was sent. Fill out the form again and choose
+          Payment was canceled. No confirmation was sent. Fill out the form again and choose
           "Pay Later" or try "Pay Now" once more.
         </p>
       )}
@@ -600,7 +600,7 @@ const endTime = addMinutesToTime(startTime, duration);
             />
             <div>
               <strong>Pay Later</strong>
-              <span>No payment now — pay at your first session.</span>
+              <span>No payment now, pay at your first session.</span>
             </div>
           </label>
 
@@ -616,7 +616,7 @@ const endTime = addMinutesToTime(startTime, duration);
             />
             <div>
               <strong>Pay Now</strong>
-              <span>Pay ${price} online by card — you'll be redirected to a secure checkout page.</span>
+              <span>Pay ${price} online by card, you'll be redirected to a secure checkout page.</span>
             </div>
           </label>
         </div>

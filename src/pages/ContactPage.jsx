@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import infoStyles from "../styles/InfoPage.module.css";
 import styles from "../styles/Contact.module.css";
 import { SCHOOL_NOTIFY_EMAIL } from "../emailjs.config";
-
-// School contact phone number — shown on this page and in the site's SEO metadata
-const SCHOOL_PHONE = "(925) 334-8542";
-const SCHOOL_PHONE_TEL = "+19253348542";
+import { SCHOOL_PHONE, SCHOOL_PHONE_TEL } from "../siteConfig";
 
 // Contact page — shown at /contact
 export default function ContactPage() {

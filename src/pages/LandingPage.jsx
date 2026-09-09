@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/LandingPage.module.css";
 import Logo from "../components/Logo";
 import { useAuth } from "../components/AuthContext";
+import { SCHOOL_PHONE, SCHOOL_PHONE_TEL } from "../siteConfig";
 
 // Reusable animation: fade up from below as element enters view
 const fadeUp = {
@@ -114,7 +115,7 @@ const faqs = [
   },
   {
     q: "Do I need to sign up to book a session?",
-    a: "No — booking is open to guests. Creating an account just lets you track your bookings in one place.",
+    a: "No, booking is open to guests. Creating an account just lets you track your bookings in one place.",
   },
   {
     q: "What areas do you serve?",
@@ -167,6 +168,11 @@ export default function LandingPage() {
               )}
             </div>
 
+            {/* Click-to-call — easy to spot for anyone who'd rather just phone in */}
+            <a href={`tel:${SCHOOL_PHONE_TEL}`} className={styles.heroCallLink}>
+              <span aria-hidden="true">📞</span> Call us: {SCHOOL_PHONE}
+            </a>
+
             {/* Social proof badge */}
             <div className={styles.socialProof}>
               <span className={styles.socialProofStars} aria-hidden="true">★★★★★</span>
@@ -200,7 +206,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <span className={styles.heroCardCheck}>✓</span>
-                  Pay later or online — your choice
+                  Pay later or online, your choice
                 </li>
               </ul>
               <div className={styles.heroCardFooter}>

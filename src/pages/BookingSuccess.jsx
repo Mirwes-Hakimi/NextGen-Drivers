@@ -156,7 +156,7 @@ export default function BookingSuccess() {
           <h2 className={styles.heading}>Still confirming your payment…</h2>
           <p className={styles.summary}>
             Stripe is taking a bit longer than usual to confirm this. If you completed payment,
-            it will finish automatically — try refreshing this page in a moment.
+            it will finish automatically. Try refreshing this page in a moment.
           </p>
           <div className={styles.buttonRow}>
             <button
@@ -202,8 +202,8 @@ export default function BookingSuccess() {
 
         {finalizeError && (
           <p className={styles.cancelNotice}>
-            Your payment succeeded, but we hit a snag confirming the calendar/email details —
-            we'll follow up shortly to confirm your appointment.
+            Your payment succeeded, but we hit a snag confirming the calendar/email details.
+            We'll follow up shortly to confirm your appointment.
           </p>
         )}
 
@@ -233,7 +233,7 @@ export default function BookingSuccess() {
                 )}
                 {sessions && s.status === "error" && (
                   <span className={styles.confirmStatusError}>
-                    Couldn't auto-add to calendar — we'll confirm this manually
+                    Couldn't auto-add to calendar, we'll confirm this manually
                   </span>
                 )}
               </div>
