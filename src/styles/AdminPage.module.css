@@ -395,7 +395,7 @@
 .cancelledBtn { background: rgba(239,68,68,0.15);  color: #f87171; border-color: rgba(239,68,68,0.35);  }
 
 .deleteBtn {
-  margin-left: auto;
+  margin-left: 0.5rem;
   padding: 0.3rem 0.85rem;
   background: transparent;
   color: #f87171;
