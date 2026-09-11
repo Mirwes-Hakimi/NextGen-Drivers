@@ -84,22 +84,27 @@ const featuredPackages = [
   { title: "Eight-Hour Driving Lesson", price: 640, blurb: "Our most complete training package." },
 ];
 
-// ── Testimonials ──
+// ── Testimonials — real reviews from our Google Business listing ──
 const testimonials = [
   {
-    quote: "My instructor was patient and made me feel confident behind the wheel within a couple sessions. Passed my DMV test on the first try!",
-    name: "Priya S.",
-    city: "Walnut Creek",
+    quote: "My instructor was very calm and understood the areas I had to learn. I got my license and definitely recommend Best Driving School.",
+    name: "Niranjan T.",
+    source: "Google review",
   },
   {
-    quote: "Pick-up and drop-off made this so easy to fit around school. Booking online took two minutes.",
-    name: "Marcus T.",
-    city: "Oakland",
+    quote: "Thanks to Hakimi, I passed my drive test at Oakland DMV. He was great and patient. Totally recommend this school and also the service to rent the car for the drive test.",
+    name: "Andres Baez",
+    source: "Google review",
   },
   {
-    quote: "I hadn't driven in over a decade. My instructor met me exactly where I was and never made me feel rushed.",
-    name: "Elena R.",
-    city: "Concord",
+    quote: "Passed first time at SF DMV thanks to Hakimi's preparation. Thank you!",
+    name: "Ian McGregor",
+    source: "Google review",
+  },
+  {
+    quote: "I passed my driving test at the Petaluma DMV! A huge thank you to Hakimi for being so patient, supportive, and for helping me build my confidence behind the wheel. I'm so grateful we found him!",
+    name: "Lucia Fiss",
+    source: "Google review",
   },
 ];
 
@@ -378,7 +383,7 @@ export default function LandingPage() {
               <p className={styles.testimonialStars}>★★★★★</p>
               <p className={styles.testimonialQuote}>&ldquo;{t.quote}&rdquo;</p>
               <p className={styles.testimonialName}>
-                {t.name} <span className={styles.testimonialCity}>· {t.city}</span>
+                {t.name} <span className={styles.testimonialCity}>· {t.source}</span>
               </p>
             </motion.div>
           ))}
