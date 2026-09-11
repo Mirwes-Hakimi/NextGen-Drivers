@@ -1,26 +1,53 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 import infoStyles from "../styles/InfoPage.module.css";
 import styles from "../styles/Contact.module.css";
-import { SCHOOL_NOTIFY_EMAIL } from "../emailjs.config";
+import {
+  EMAILJS_SERVICE_ID,
+  EMAILJS_CONTACT_TEMPLATE_ID,
+  EMAILJS_PUBLIC_KEY,
+  SCHOOL_NOTIFY_EMAIL,
+} from "../emailjs.config";
 import { SCHOOL_PHONE, SCHOOL_PHONE_TEL } from "../siteConfig";
 
 // Contact page — shown at /contact
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Opens the visitor's email client with the message pre-filled —
-  // works with no backend or extra EmailJS template to set up.
-  const handleSubmit = (e) => {
+  // Sends the message directly via EmailJS — no email app required on
+  // the visitor's end. Reply-To is set on the template itself so the
+  // school can just hit "reply" to respond to the visitor directly.
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = `Message from ${formData.name} via Best Driving School website`;
-    const body = `${formData.message}\n\n— ${formData.name} (${formData.email})`;
-    window.location.href = `mailto:${SCHOOL_NOTIFY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSending(true);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_CONTACT_TEMPLATE_ID,
+        {
+          to_email: SCHOOL_NOTIFY_EMAIL,
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      setSent(true);
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("Contact form send failed:", err);
+      alert("Could not send your message. Please try again, or email us directly at " + SCHOOL_NOTIFY_EMAIL);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -107,12 +134,18 @@ export default function ContactPage() {
               />
             </label>
 
-            <button type="submit" className={styles.submitBtn}>
-              Send Message
+            <button type="submit" className={styles.submitBtn} disabled={sending}>
+              {sending ? "Sending..." : "Send Message"}
             </button>
-            <p className={styles.note}>
-              Opens your email app with this message ready to send.
-            </p>
+            {sent ? (
+              <p className={styles.note}>
+                Message sent! We'll get back to you within one business day.
+              </p>
+            ) : (
+              <p className={styles.note}>
+                Sends directly to us, no email app needed.
+              </p>
+            )}
           </form>
         </div>
       </div>

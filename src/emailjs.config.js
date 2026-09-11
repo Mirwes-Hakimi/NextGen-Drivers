@@ -95,3 +95,33 @@ export const SCHOOL_NOTIFY_EMAIL = "info@yourbds.com";
 // ─────────────────────────────────────────────────────────────
 
 export const EMAILJS_WELCOME_TEMPLATE_ID = "template_1i9xqia";
+
+// ─────────────────────────────────────────────────────────────
+// CONTACT FORM TEMPLATE — sent when a visitor submits the Contact
+// page's form (src/pages/ContactPage.jsx). Goes only to the school —
+// there's no confirmation copy to the visitor for this one.
+//
+// TO SET THIS UP:
+// 1. Dashboard → Email Templates → Create New Template
+// 2. Copy its Template ID below (looks like "template_xxxxxxx")
+//
+// TEMPLATE VARIABLES:
+//   {{to_email}}        — always SCHOOL_NOTIFY_EMAIL (below)
+//   {{from_name}}        — the visitor's name
+//   {{from_email}}       — the visitor's email (also set as Reply-To
+//                          in the template's settings, so hitting
+//                          "reply" goes straight to them)
+//   {{message}}           — what they typed
+//
+// SUGGESTED TEMPLATE SUBJECT:
+//   New contact form message from {{from_name}}
+//
+// SUGGESTED TEMPLATE BODY:
+//   You've got a new message from the Contact page:
+//
+//   From: {{from_name}} ({{from_email}})
+//
+//   {{message}}
+// ─────────────────────────────────────────────────────────────
+
+export const EMAILJS_CONTACT_TEMPLATE_ID = "REPLACE_WITH_YOUR_CONTACT_TEMPLATE_ID";

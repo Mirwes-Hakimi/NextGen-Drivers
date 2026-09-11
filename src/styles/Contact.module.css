@@ -70,6 +70,12 @@
   filter: brightness(1.05);
 }
 
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .note {
   font-size: 0.8rem;
   color: #6b7280;
