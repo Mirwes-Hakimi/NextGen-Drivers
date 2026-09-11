@@ -3,3 +3,5 @@
 
 export const SCHOOL_PHONE = "(510) 362-0808";
 export const SCHOOL_PHONE_TEL = "+15103620808";
+
+export const SCHOOL_ADDRESS = "966 W Winton Ave Ste B, Hayward, CA 94545";

@@ -9,7 +9,7 @@ import {
   EMAILJS_PUBLIC_KEY,
   SCHOOL_NOTIFY_EMAIL,
 } from "../emailjs.config";
-import { SCHOOL_PHONE, SCHOOL_PHONE_TEL } from "../siteConfig";
+import { SCHOOL_PHONE, SCHOOL_PHONE_TEL, SCHOOL_ADDRESS } from "../siteConfig";
 
 // Contact page — shown at /contact
 export default function ContactPage() {
@@ -85,6 +85,20 @@ export default function ContactPage() {
             <p className={infoStyles.cardText}>
               <a href={`tel:${SCHOOL_PHONE_TEL}`}>{SCHOOL_PHONE}</a>
               <br />Call or text with any questions.
+            </p>
+          </div>
+
+          <div className={infoStyles.card}>
+            <span className={infoStyles.cardIcon}>🏢</span>
+            <p className={infoStyles.cardTitle}>Visit Us</p>
+            <p className={infoStyles.cardText}>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SCHOOL_ADDRESS)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {SCHOOL_ADDRESS}
+              </a>
             </p>
           </div>
 
