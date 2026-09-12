@@ -15,6 +15,7 @@ import {
   sendBookingEmails,
 } from "../lib/booking";
 import { getAttribution } from "../lib/attribution";
+import { trackAppointmentScheduled } from "../lib/adPixel";
 import styles from "../styles/BookingPage.module.css";
 
 export default function BookingPage() {
@@ -327,6 +328,7 @@ const endTime = addMinutesToTime(startTime, duration);
           status: "pending",
         })),
       });
+      trackAppointmentScheduled(); // OpenAI Ads Manager conversion
 
       // Sync each session to Google Calendar — best effort, in the
       // background; updates bookingResult as each resolves so the

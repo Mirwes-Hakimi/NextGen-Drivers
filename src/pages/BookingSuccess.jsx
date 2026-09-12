@@ -10,6 +10,7 @@ import {
   syncSessionToCalendar,
   sendBookingEmails,
 } from "../lib/booking";
+import { trackAppointmentScheduled } from "../lib/adPixel";
 import styles from "../styles/BookingPage.module.css";
 
 // Reached only via Stripe's success_url redirect after "Pay Now" checkout.
@@ -108,6 +109,10 @@ export default function BookingSuccess() {
         setView({ phase: "finalizing" });
         try {
           const sessions = await finalizeBooking(data);
+          // Fires exactly once per booking — this branch only runs the
+          // first time payment is confirmed (see postPaymentProcessed
+          // check above), never on a page refresh revisit.
+          trackAppointmentScheduled(); // OpenAI Ads Manager conversion
           if (!cancelled) setView({ phase: "ready", booking: data, sessions });
         } catch (err) {
           console.error("Failed to finalize booking after payment:", err);
