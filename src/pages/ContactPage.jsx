@@ -161,6 +161,9 @@ export default function ContactPage() {
               </p>
             )}
           </form>
+          <p className={styles.legalLink}>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+          </p>
         </div>
       </div>
     </div>

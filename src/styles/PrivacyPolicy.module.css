@@ -1,0 +1,37 @@
+/* ─────────────────────────────────────────
+   PRIVACY POLICY — long-form legal text styles
+   (hero/section headings come from InfoPage.module.css)
+───────────────────────────────────────── */
+
+.text {
+  font-size: 0.95rem;
+  color: #d1d5db;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+
+.textStrong {
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: 700;
+  margin: 1.5rem 0 0;
+}
+
+.subHeading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f97316;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.list {
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+  color: #d1d5db;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.list li {
+  margin-bottom: 0.35rem;
+}

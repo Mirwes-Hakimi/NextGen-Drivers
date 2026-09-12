@@ -82,3 +82,20 @@
   margin-top: 0.75rem;
   text-align: center;
 }
+
+.legalLink {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(249,115,22,0.15);
+}
+
+.legalLink a {
+  color: #f97316;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.legalLink a:hover {
+  text-decoration: underline;
+}
