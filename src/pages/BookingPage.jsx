@@ -14,6 +14,7 @@ import {
   syncSessionToCalendar,
   sendBookingEmails,
 } from "../lib/booking";
+import { getAttribution } from "../lib/attribution";
 import styles from "../styles/BookingPage.module.css";
 
 export default function BookingPage() {
@@ -268,6 +269,9 @@ const endTime = addMinutesToTime(startTime, duration);
           sessions: formData.sessions,
           status: "pending",
           paymentStatus: isPayNow ? "pending_payment" : "due_at_session",
+          // Where this customer came from (Google Ads, ChatGPT ads, etc.) —
+          // captured from the landing URL, see src/lib/attribution.js.
+          ...getAttribution(),
           createdAt: serverTimestamp(),
         }),
         20000,

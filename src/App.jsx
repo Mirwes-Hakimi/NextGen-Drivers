@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { captureAttributionFromUrl } from "./lib/attribution";
 
 // ── Core pages ──
 import LandingPage    from "./pages/LandingPage";
@@ -30,6 +32,13 @@ import AdminRoute     from "./components/AdminRoute";   // requires admin email
 import Navbar         from "./pages/Navbar";
 
 function App() {
+  // Captures utm_source/medium/campaign/oppref from the landing URL, if
+  // present, so it can be attached to a booking later even if the visitor
+  // browses several pages first. See src/lib/attribution.js.
+  useEffect(() => {
+    captureAttributionFromUrl();
+  }, []);
+
   return (
     <Router>
       {/* Navbar is always visible on every page */}

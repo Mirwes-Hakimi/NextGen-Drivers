@@ -128,6 +128,19 @@
   margin: 0;
 }
 
+.sourceTag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ff9933;
+  background: rgba(255,102,0,0.1);
+  border: 1px solid rgba(255,102,0,0.25);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  margin: 0.4rem 0 0;
+  text-transform: capitalize;
+}
+
 /* ── Status badge (top-right corner) ── */
 .badge {
   font-size: 0.72rem;

@@ -227,6 +227,13 @@ export default function AdminPage() {
                   {booking.firstName} {booking.lastName}
                 </h2>
                 <p className={styles.packageLabel}>{booking.package}</p>
+                {booking.source && (
+                  <p className={styles.sourceTag}>
+                    Source: {booking.source}
+                    {booking.medium ? ` / ${booking.medium}` : ""}
+                    {booking.campaign ? ` / ${booking.campaign}` : ""}
+                  </p>
+                )}
               </div>
               <span className={`${styles.badge} ${styles[booking.status]}`}>
                 {booking.status}
