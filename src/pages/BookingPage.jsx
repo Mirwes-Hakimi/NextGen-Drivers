@@ -16,6 +16,7 @@ import {
 } from "../lib/booking";
 import { getAttribution } from "../lib/attribution";
 import { trackAppointmentScheduled } from "../lib/adPixel";
+import { trackGoogleAdsConversion } from "../lib/googleAdsPixel";
 import styles from "../styles/BookingPage.module.css";
 
 export default function BookingPage() {
@@ -329,6 +330,7 @@ const endTime = addMinutesToTime(startTime, duration);
         })),
       });
       trackAppointmentScheduled(); // OpenAI Ads Manager conversion
+      trackGoogleAdsConversion(Number(price)); // Google Ads conversion
 
       // Sync each session to Google Calendar — best effort, in the
       // background; updates bookingResult as each resolves so the
