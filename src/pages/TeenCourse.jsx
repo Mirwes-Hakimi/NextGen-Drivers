@@ -10,12 +10,13 @@ export default function TeenCourse() {
       <SEOHead
         title="Teen Driving Lessons | Best Driving School"
         description="Behind-the-wheel driving lessons for teens ages 15½ and up, with certified instructors, in the Bay Area and Sacramento region."
-        path="/teen-course"
+        path="/services/teen-driving-lessons"
         structuredData={[
           buildLocalBusinessSchema(),
           buildBreadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Teen Driving Lessons", path: "/teen-course" },
+            { name: "Services", path: "/services" },
+            { name: "Teen Driving Lessons", path: "/services/teen-driving-lessons" },
           ]),
         ]}
       />

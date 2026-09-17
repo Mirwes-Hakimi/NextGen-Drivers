@@ -11,19 +11,25 @@ import Logo from "../components/Logo";
 const NAV_LINKS = [
   { label: "Home",      to: "/"         },
   { label: "Packages",  to: "/packages" },
+  { label: "About",     to: "/about"    },
+  { label: "FAQ",       to: "/faq"      },
 ];
 
 // Link shown after the "Services" dropdown
 const CONTACT_LINK = { label: "Contact", to: "/contact" };
 
-// Links inside the "Services ▾" dropdown
+// Links inside the "Services ▾" dropdown. Teen/Adult/DMV prep/DMV rental
+// live under /services/* (see App.jsx) — old URLs like /teen-course
+// still work via redirect, so no external link breaks.
 const SERVICES_LINKS = [
-  { label: "Teen Course",       to: "/teen-course" },
-  { label: "Adult Permit",      to: "/adult-course"},
-  { label: "DMV Info",          to: "/dmv"          },
-  { label: "Permit Practice",   to: "/practice"     },
-  { label: "New Drivers",       to: "/new-drivers"  },
-  { label: "Driver Ed Videos",  to: "/education"    },
+  { label: "Teen Driving Lessons",   to: "/services/teen-driving-lessons"  },
+  { label: "Adult Driving Lessons",  to: "/services/adult-driving-lessons" },
+  { label: "DMV Test Preparation",   to: "/services/dmv-test-preparation"  },
+  { label: "DMV Test Car Rental",    to: "/services/dmv-test-car-rental"   },
+  { label: "Service Areas",          to: "/locations"    },
+  { label: "Permit Practice Tips",   to: "/practice"     },
+  { label: "New Driver's Guide",     to: "/new-drivers"  },
+  { label: "Driver Ed Tips",         to: "/education"    },
 ];
 
 export default function Navbar() {

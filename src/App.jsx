@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { captureAttributionFromUrl } from "./lib/attribution";
 
 // ── Core pages ──
@@ -13,14 +13,19 @@ import Home           from "./pages/Home";           // user dashboard
 import AdminPage      from "./pages/AdminPage";      // admin dashboard
 
 // ── Info / content pages (navbar links) ──
-import TeenCourse     from "./pages/TeenCourse";     // /teen-course
-import AdultCourse    from "./pages/AdultCourse";    // /adult-course
-import DmvInfo        from "./pages/DmvInfo";        // /dmv
-import PermitPractice from "./pages/PermitPractice"; // /practice
-import NewDrivers     from "./pages/NewDrivers";     // /new-drivers
-import DriverEd       from "./pages/DriverEd";       // /education
-import ContactPage    from "./pages/ContactPage";    // /contact
-import PrivacyPolicy  from "./pages/PrivacyPolicy";  // /privacy-policy
+import ServicesPage     from "./pages/ServicesPage";     // /services (hub)
+import TeenCourse       from "./pages/TeenCourse";       // /services/teen-driving-lessons
+import AdultCourse      from "./pages/AdultCourse";      // /services/adult-driving-lessons
+import DmvInfo          from "./pages/DmvInfo";          // /services/dmv-test-preparation
+import DmvCarRentalPage from "./pages/DmvCarRentalPage"; // /services/dmv-test-car-rental
+import LocationsPage    from "./pages/LocationsPage";    // /locations
+import AboutPage        from "./pages/AboutPage";        // /about
+import FaqPage          from "./pages/FaqPage";          // /faq
+import PermitPractice   from "./pages/PermitPractice";   // /practice
+import NewDrivers       from "./pages/NewDrivers";       // /new-drivers
+import DriverEd         from "./pages/DriverEd";         // /education
+import ContactPage      from "./pages/ContactPage";      // /contact
+import PrivacyPolicy    from "./pages/PrivacyPolicy";    // /privacy-policy
 
 // ── Utility pages ──
 import NotFound       from "./pages/NotFound";       // 404
@@ -52,10 +57,22 @@ function App() {
         <Route path="/signup"       element={<Signup />} />
         <Route path="/packages"     element={<Packages />} />
 
-        {/* ── Info pages (linked from navbar More dropdown) ── */}
-        <Route path="/teen-course"  element={<TeenCourse />} />
-        <Route path="/adult-course" element={<AdultCourse />} />
-        <Route path="/dmv"          element={<DmvInfo />} />
+        {/* ── Services (linked from navbar Services dropdown) ── */}
+        <Route path="/services"                             element={<ServicesPage />} />
+        <Route path="/services/teen-driving-lessons"        element={<TeenCourse />} />
+        <Route path="/services/adult-driving-lessons"       element={<AdultCourse />} />
+        <Route path="/services/dmv-test-preparation"        element={<DmvInfo />} />
+        <Route path="/services/dmv-test-car-rental"         element={<DmvCarRentalPage />} />
+
+        {/* Old URLs redirect to their new /services/* home — keeps any
+            existing bookmarks/links working instead of 404ing. */}
+        <Route path="/teen-course"  element={<Navigate to="/services/teen-driving-lessons" replace />} />
+        <Route path="/adult-course" element={<Navigate to="/services/adult-driving-lessons" replace />} />
+        <Route path="/dmv"          element={<Navigate to="/services/dmv-test-preparation" replace />} />
+
+        <Route path="/locations"    element={<LocationsPage />} />
+        <Route path="/about"        element={<AboutPage />} />
+        <Route path="/faq"          element={<FaqPage />} />
         <Route path="/practice"     element={<PermitPractice />} />
         <Route path="/new-drivers"  element={<NewDrivers />} />
         <Route path="/education"    element={<DriverEd />} />

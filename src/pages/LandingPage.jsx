@@ -11,6 +11,7 @@ import {
   buildOrganizationSchema,
   buildWebSiteSchema,
 } from "../lib/structuredData";
+import { faqs } from "../data/faq";
 
 // Reusable animation: fade up from below as element enters view
 const fadeUp = {
@@ -114,25 +115,7 @@ const testimonials = [
   },
 ];
 
-// ── FAQ ──
-const faqs = [
-  {
-    q: "Do I need my own car for lessons?",
-    a: "No. Every session and DMV road test uses our fully insured, DMV-approved training vehicle.",
-  },
-  {
-    q: "Can I reschedule a session?",
-    a: "Yes, just contact us at least 24 hours before your scheduled session and we'll help you find a new time.",
-  },
-  {
-    q: "Do I need to sign up to book a session?",
-    a: "No, booking is open to guests. Creating an account just lets you track your bookings in one place.",
-  },
-  {
-    q: "What areas do you serve?",
-    a: "We cover 20+ cities across the Bay Area and the Sacramento region, including Sacramento, Folsom, and Elk Grove. Enter your ZIP code on the Packages page to see pricing near you.",
-  },
-];
+// FAQ content now lives in src/data/faq.js, shared with the full /faq page
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(0);
@@ -418,7 +401,8 @@ export default function LandingPage() {
         </motion.div>
 
         <div className={styles.faqList}>
-          {faqs.map((item, i) => {
+          {/* Teaser — just the first few; the full list lives at /faq */}
+          {faqs.slice(0, 5).map((item, i) => {
             const isOpen = openFaq === i;
             return (
               <div key={item.q} className={styles.faqItem}>
@@ -436,6 +420,9 @@ export default function LandingPage() {
             );
           })}
         </div>
+        <p className={styles.faqMoreLink}>
+          <Link to="/faq">View all FAQs →</Link>
+        </p>
       </section>
 
       {/* ════════════════════════════════

@@ -10,12 +10,13 @@ export default function DmvInfo() {
       <SEOHead
         title="DMV Behind-the-Wheel Road Test Prep | Best Driving School"
         description="What the California DMV road test covers, how our DMV package helps you prepare, and how to book a certified vehicle and instructor for test day."
-        path="/dmv"
+        path="/services/dmv-test-preparation"
         structuredData={[
           buildLocalBusinessSchema(),
           buildBreadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "DMV Road Test Information", path: "/dmv" },
+            { name: "Services", path: "/services" },
+            { name: "DMV Test Preparation", path: "/services/dmv-test-preparation" },
           ]),
         ]}
       />

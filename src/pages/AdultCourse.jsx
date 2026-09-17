@@ -10,12 +10,13 @@ export default function AdultCourse() {
       <SEOHead
         title="Adult Driving Lessons | Best Driving School"
         description="Behind-the-wheel driving lessons for adult beginners and drivers returning to the road, with certified instructors, in the Bay Area and Sacramento region."
-        path="/adult-course"
+        path="/services/adult-driving-lessons"
         structuredData={[
           buildLocalBusinessSchema(),
           buildBreadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Adult Driving Lessons", path: "/adult-course" },
+            { name: "Services", path: "/services" },
+            { name: "Adult Driving Lessons", path: "/services/adult-driving-lessons" },
           ]),
         ]}
       />

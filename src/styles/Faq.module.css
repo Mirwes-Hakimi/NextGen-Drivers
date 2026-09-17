@@ -1,0 +1,49 @@
+/* ─────────────────────────────────────────
+   FAQ PAGE — accordion styles
+   (page/hero/content wrapper come from InfoPage.module.css)
+───────────────────────────────────────── */
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.faqItem {
+  background: #0a0a0a;
+  border: 1px solid rgba(249,115,22,0.2);
+  border-radius: 0.75rem;
+  padding: 0.25rem 1.25rem;
+}
+
+.faqQuestion {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  padding: 1rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.faqCaret {
+  color: #f97316;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.faqAnswer {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1.1rem;
+}

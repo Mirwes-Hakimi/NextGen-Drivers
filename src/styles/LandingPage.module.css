@@ -679,6 +679,22 @@
   margin: 0 0 1.1rem;
 }
 
+.faqMoreLink {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.faqMoreLink a {
+  color: #f97316;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.faqMoreLink a:hover {
+  text-decoration: underline;
+}
+
 /* ─────────────────────────────────────────
    FINAL CTA BANNER
 ───────────────────────────────────────── */
