@@ -10,6 +10,7 @@ import {
   SCHOOL_NOTIFY_EMAIL,
 } from "../emailjs.config";
 import styles from "../styles/Signup.module.css";
+import SEOHead from "../components/SEOHead";
 
 function Signup() {
   const [email,    setEmail]    = useState(""); // controlled email input value
@@ -64,6 +65,8 @@ function Signup() {
 
   return (
     <div className={styles.container}>
+      {/* Account pages have no unique search-relevant content — keep them out of search results */}
+      <SEOHead title="Sign Up | Best Driving School" description="Create a Best Driving School account to track your bookings." path="/signup" noindex />
       <form onSubmit={handleSignup} className={styles.form}>
         <h2>Sign Up</h2>
 

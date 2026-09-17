@@ -4,6 +4,7 @@ import { auth } from "../firebase";                         // Firebase auth ins
 import { Link, useNavigate, useLocation } from "react-router-dom"; // routing helpers
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from '../styles/Login.module.css';
+import SEOHead from "../components/SEOHead";
 
 function Login() {
   const [email,    setEmail]    = useState(""); // controlled email input
@@ -66,6 +67,8 @@ function Login() {
 
   return (
     <div className={styles.container}>
+      {/* Account pages have no unique search-relevant content — keep them out of search results */}
+      <SEOHead title="Login | Best Driving School" description="Log in to your Best Driving School account." path="/login" noindex />
       <form onSubmit={handleLogin} className={styles.form}>
         <h2>Login</h2>
 

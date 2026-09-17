@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 const MotionH1 = motion.h1;
 import CallbackButton from "../components/CallbackButton";
 import styles from "../styles/Home.module.css";
+import SEOHead from "../components/SEOHead";
 import { Link } from "react-router-dom";
 import {
   collection,   // reference to a firestore collection
@@ -91,6 +92,8 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      {/* Logged-in dashboard has no unique search-relevant content — keep it out of search results */}
+      <SEOHead title="My Bookings | Best Driving School" description="View and manage your driving lesson bookings." path="/dashboard" noindex />
       {/* Top-right logout section */}
       <div className={styles.logoutSection}>
         {user && (

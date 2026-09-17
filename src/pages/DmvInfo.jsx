@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/InfoPage.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../lib/structuredData";
 
 // DMV information page — shown at /dmv
 export default function DmvInfo() {
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="DMV Behind-the-Wheel Road Test Prep | Best Driving School"
+        description="What the California DMV road test covers, how our DMV package helps you prepare, and how to book a certified vehicle and instructor for test day."
+        path="/dmv"
+        structuredData={[
+          buildLocalBusinessSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "DMV Road Test Information", path: "/dmv" },
+          ]),
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

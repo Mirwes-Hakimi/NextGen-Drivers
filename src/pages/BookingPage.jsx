@@ -18,6 +18,7 @@ import { getAttribution } from "../lib/attribution";
 import { trackAppointmentScheduled } from "../lib/adPixel";
 import { trackGoogleAdsConversion } from "../lib/googleAdsPixel";
 import styles from "../styles/BookingPage.module.css";
+import SEOHead from "../components/SEOHead";
 
 export default function BookingPage() {
   const { state, search } = useLocation();
@@ -373,6 +374,7 @@ const endTime = addMinutesToTime(startTime, duration);
   if (bookingResult) {
     return (
       <div className={styles.page}>
+        <SEOHead title="Booking Confirmed | Best Driving School" description="Your driving lesson booking confirmation." path="/booking" noindex />
         <div className={styles.container}>
           <h2 className={styles.heading}>Booking Request Received!</h2>
           <p className={styles.summary}>
@@ -429,6 +431,7 @@ const endTime = addMinutesToTime(startTime, duration);
 
   return (
     <div className={styles.page}>
+    <SEOHead title="Book a Driving Lesson | Best Driving School" description="Book a behind-the-wheel driving lesson or DMV road test package." path="/booking" noindex />
     <div className={styles.container}>
       {/* Top summary: package + city + price */}
       <h2 className={styles.heading}>Book: {selectedPackage.title}</h2>

@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/InfoPage.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Adult permit / behind-the-wheel course page — shown at /adult-course
 export default function AdultCourse() {
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="Adult Driving Lessons | Best Driving School"
+        description="Behind-the-wheel driving lessons for adult beginners and drivers returning to the road, with certified instructors, in the Bay Area and Sacramento region."
+        path="/adult-course"
+        structuredData={[
+          buildLocalBusinessSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Adult Driving Lessons", path: "/adult-course" },
+          ]),
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

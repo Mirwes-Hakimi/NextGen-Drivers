@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/InfoPage.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../lib/structuredData";
 
 // New drivers guide page — shown at /new-drivers
 export default function NewDrivers() {
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="New Driver's Guide | Best Driving School"
+        description="A step-by-step roadmap for new drivers in California, from getting your learner's permit to holding your driver's license."
+        path="/new-drivers"
+        structuredData={[
+          buildLocalBusinessSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "New Driver's Guide", path: "/new-drivers" },
+          ]),
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

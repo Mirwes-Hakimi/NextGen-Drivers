@@ -13,6 +13,7 @@ import {
 import { trackAppointmentScheduled } from "../lib/adPixel";
 import { trackGoogleAdsConversion } from "../lib/googleAdsPixel";
 import styles from "../styles/BookingPage.module.css";
+import SEOHead from "../components/SEOHead";
 
 // Reached only via Stripe's success_url redirect after "Pay Now" checkout.
 // The redirect itself is never trusted as proof of payment (a user could
@@ -148,6 +149,7 @@ export default function BookingSuccess() {
   if (view.phase === "loading" || view.phase === "finalizing") {
     return (
       <div className={styles.page}>
+      <SEOHead title="Booking Confirmation | Best Driving School" description="Your driving lesson payment confirmation." path="/booking-success" noindex />
         <div className={styles.container}>
           <h2 className={styles.heading}>Confirming your payment…</h2>
           <p className={styles.summary}>This only takes a moment.</p>
@@ -159,6 +161,7 @@ export default function BookingSuccess() {
   if (view.phase === "pending") {
     return (
       <div className={styles.page}>
+      <SEOHead title="Booking Confirmation | Best Driving School" description="Your driving lesson payment confirmation." path="/booking-success" noindex />
         <div className={styles.container}>
           <h2 className={styles.heading}>Still confirming your payment…</h2>
           <p className={styles.summary}>
@@ -182,6 +185,7 @@ export default function BookingSuccess() {
   if (view.phase === "error") {
     return (
       <div className={styles.page}>
+      <SEOHead title="Booking Confirmation | Best Driving School" description="Your driving lesson payment confirmation." path="/booking-success" noindex />
         <div className={styles.container}>
           <h2 className={styles.heading}>Something went wrong</h2>
           <p className={styles.summary}>{view.message}</p>
@@ -199,6 +203,7 @@ export default function BookingSuccess() {
   const { booking, sessions, finalizeError } = view;
   return (
     <div className={styles.page}>
+      <SEOHead title="Booking Confirmation | Best Driving School" description="Your driving lesson payment confirmation." path="/booking-success" noindex />
       <div className={styles.container}>
         <h2 className={styles.heading}>Payment Successful!</h2>
         <p className={styles.summary}>

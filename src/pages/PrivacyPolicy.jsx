@@ -1,10 +1,21 @@
 import infoStyles from "../styles/InfoPage.module.css";
 import styles from "../styles/PrivacyPolicy.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Privacy Policy — shown at /privacy-policy
 export default function PrivacyPolicy() {
   return (
     <div className={infoStyles.page}>
+      <SEOHead
+        title="Privacy Policy | Best Driving School"
+        description="How Best Driving School collects, uses, and protects your personal information."
+        path="/privacy-policy"
+        structuredData={buildBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Privacy Policy", path: "/privacy-policy" },
+        ])}
+      />
 
       {/* ── Hero ── */}
       <section className={infoStyles.hero}>

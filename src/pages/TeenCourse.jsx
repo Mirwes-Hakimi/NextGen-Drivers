@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/InfoPage.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Teen driving course info page — shown at /teen-course
 export default function TeenCourse() {
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="Teen Driving Lessons | Best Driving School"
+        description="Behind-the-wheel driving lessons for teens ages 15½ and up, with certified instructors, in the Bay Area and Sacramento region."
+        path="/teen-course"
+        structuredData={[
+          buildLocalBusinessSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Teen Driving Lessons", path: "/teen-course" },
+          ]),
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

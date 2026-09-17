@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/InfoPage.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Permit practice tips page — shown at /practice
 export default function PermitPractice() {
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="California Permit Test Practice Tips | Best Driving School"
+        description="How to prepare for the California DMV written knowledge test, including what's covered and how many questions you need to get right."
+        path="/practice"
+        structuredData={buildBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Permit Practice Tips", path: "/practice" },
+        ])}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

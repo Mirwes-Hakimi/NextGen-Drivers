@@ -1,0 +1,15 @@
+# Best Driving School — robots.txt
+# Allows crawling of all real marketing/content pages; blocks
+# account/transactional pages that have no unique search value and
+# require login anyway (also marked noindex in-page — see SEOHead.jsx).
+
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /signup
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /booking
+Disallow: /booking-success
+
+Sitemap: https://www.yourbds.com/sitemap.xml

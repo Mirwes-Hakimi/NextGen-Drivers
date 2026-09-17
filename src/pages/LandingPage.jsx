@@ -5,6 +5,12 @@ import styles from "../styles/LandingPage.module.css";
 import { useAuth } from "../components/AuthContext";
 import { SCHOOL_PHONE, SCHOOL_PHONE_TEL } from "../siteConfig";
 import { FaCarSide, FaArrowRight } from "react-icons/fa";
+import SEOHead from "../components/SEOHead";
+import {
+  buildLocalBusinessSchema,
+  buildOrganizationSchema,
+  buildWebSiteSchema,
+} from "../lib/structuredData";
 
 // Reusable animation: fade up from below as element enters view
 const fadeUp = {
@@ -134,6 +140,13 @@ export default function LandingPage() {
 
   return (
     <div className={styles.page}>
+      {/* Per-page SEO tags (title/description/canonical/OG/structured data) — see SEOHead.jsx */}
+      <SEOHead
+        title="Best Driving School | Driving Lessons in the Bay Area & Sacramento, CA"
+        description="Behind-the-wheel driving lessons and DMV road test packages in the Bay Area and Sacramento region. Certified instructors, pick-up and drop-off included, pay online or at your session."
+        path="/"
+        structuredData={[buildLocalBusinessSchema(), buildOrganizationSchema(), buildWebSiteSchema()]}
+      />
 
       {/* ════════════════════════════════
            HERO SECTION

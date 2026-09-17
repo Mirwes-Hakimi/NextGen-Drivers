@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import styles from "../styles/AdminPage.module.css";
+import SEOHead from "../components/SEOHead";
 
 // The three statuses a booking can have
 const STATUS_OPTIONS = ["pending", "confirmed", "cancelled"];
@@ -190,6 +191,8 @@ export default function AdminPage() {
 
   return (
     <div className={styles.page}>
+      {/* Admin-only dashboard — never indexed */}
+      <SEOHead title="Admin Dashboard | Best Driving School" description="Manage bookings, sessions, and statuses." path="/admin" noindex />
       <div className={styles.container}>
 
         <h1 className={styles.heading}>Admin Dashboard</h1>

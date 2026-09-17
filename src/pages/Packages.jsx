@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "../styles/Packages.module.css";
 import { useNavigate } from "react-router-dom";
 import { zipToCity } from "../data/locations";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Cities we serve — used to build a flat (same price everywhere) pricing
 // table for packages that don't have per-city pricing data yet.
@@ -263,6 +265,18 @@ export default function Packages() {
 
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="Driving Lesson Packages & Pricing | Best Driving School"
+        description="Compare behind-the-wheel training packages, DMV road test packages, and mock test pricing across the Bay Area and Sacramento region. Enter your ZIP code to see pricing near you."
+        path="/packages"
+        structuredData={[
+          buildLocalBusinessSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Packages", path: "/packages" },
+          ]),
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

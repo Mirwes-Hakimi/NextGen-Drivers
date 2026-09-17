@@ -49,52 +49,14 @@
       property="og:description"
       content="Behind-the-wheel driving lessons and DMV road test packages across the Bay Area and Sacramento region. Certified instructors, pick-up and drop-off included."
     />
-    <meta property="og:image" content="/bestDrivingSchoo.png" />
+    <meta property="og:image" content="https://www.yourbds.com/bestDrivingSchoo.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Local business structured data — helps search engines match local searches -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "DrivingSchool",
-        "name": "Best Driving School",
-        "description": "Behind-the-wheel driving lessons and DMV road test packages in the Bay Area and Sacramento region.",
-        "telephone": "+15103620808",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "966 W Winton Ave Ste B",
-          "addressLocality": "Hayward",
-          "addressRegion": "CA",
-          "postalCode": "94545",
-          "addressCountry": "US"
-        },
-        "areaServed": [
-          { "@type": "City", "name": "San Francisco" },
-          { "@type": "City", "name": "Daly City" },
-          { "@type": "City", "name": "Livermore" },
-          { "@type": "City", "name": "Pleasanton" },
-          { "@type": "City", "name": "Dublin" },
-          { "@type": "City", "name": "San Ramon" },
-          { "@type": "City", "name": "Danville" },
-          { "@type": "City", "name": "Alamo" },
-          { "@type": "City", "name": "Walnut Creek" },
-          { "@type": "City", "name": "Pleasant Hill" },
-          { "@type": "City", "name": "Concord" },
-          { "@type": "City", "name": "Pittsburg" },
-          { "@type": "City", "name": "Antioch" },
-          { "@type": "City", "name": "Brentwood" },
-          { "@type": "City", "name": "Oakland" },
-          { "@type": "City", "name": "Sacramento" },
-          { "@type": "City", "name": "Folsom" },
-          { "@type": "City", "name": "Elk Grove" },
-          { "@type": "City", "name": "Roseville" },
-          { "@type": "City", "name": "Rancho Cordova" },
-          { "@type": "City", "name": "Citrus Heights" },
-          { "@type": "City", "name": "Rocklin" }
-        ],
-        "priceRange": "$$"
-      }
-    </script>
+    <!-- Structured data (LocalBusiness/Organization/BreadcrumbList) is now
+         generated per-page at runtime by src/components/SEOHead.jsx,
+         sourced from the single business-info config in src/siteConfig.js —
+         see src/lib/structuredData.js. Removed the old static block here
+         to avoid two conflicting copies of the same schema. -->
   </head>
   <body>
     <div id="root"></div>

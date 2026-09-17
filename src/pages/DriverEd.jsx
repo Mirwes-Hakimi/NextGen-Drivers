@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/InfoPage.module.css";
+import SEOHead from "../components/SEOHead";
+import { buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Driver education tips/videos page — shown at /education
 export default function DriverEd() {
   return (
     <div className={styles.page}>
+      <SEOHead
+        title="Driver Education Tips | Best Driving School"
+        description="Essential driving concepts, safety tips, and skills every new driver should know before getting behind the wheel."
+        path="/education"
+        structuredData={buildBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Driver Education", path: "/education" },
+        ])}
+      />
 
       {/* ── Hero ── */}
       <section className={styles.hero}>

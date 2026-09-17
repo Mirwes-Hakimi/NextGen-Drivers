@@ -10,6 +10,8 @@ import {
   SCHOOL_NOTIFY_EMAIL,
 } from "../emailjs.config";
 import { SCHOOL_PHONE, SCHOOL_PHONE_TEL, SCHOOL_ADDRESS } from "../siteConfig";
+import SEOHead from "../components/SEOHead";
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from "../lib/structuredData";
 
 // Contact page — shown at /contact
 export default function ContactPage() {
@@ -52,6 +54,18 @@ export default function ContactPage() {
 
   return (
     <div className={infoStyles.page}>
+      <SEOHead
+        title="Contact Us | Best Driving School"
+        description="Get in touch with Best Driving School — call, email, or send a message. Serving the Bay Area and Sacramento region with pick-up and drop-off driving lessons."
+        path="/contact"
+        structuredData={[
+          buildLocalBusinessSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Contact", path: "/contact" },
+          ]),
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className={infoStyles.hero}>
