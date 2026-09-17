@@ -40,7 +40,7 @@ export function buildLocalBusinessSchema() {
     schema.openingHoursSpecification = BUSINESS.hours;
   }
   if (BUSINESS.socialProfiles.length > 0) {
-    schema.sameAs = BUSINESS.socialProfiles;
+    schema.sameAs = BUSINESS.socialProfiles.map((p) => p.url);
   }
 
   return schema;
@@ -55,7 +55,9 @@ export function buildOrganizationSchema() {
     name: BUSINESS.name,
     url: BUSINESS.url,
     logo: BUSINESS.logo,
-    ...(BUSINESS.socialProfiles.length > 0 ? { sameAs: BUSINESS.socialProfiles } : {}),
+    ...(BUSINESS.socialProfiles.length > 0
+      ? { sameAs: BUSINESS.socialProfiles.map((p) => p.url) }
+      : {}),
   };
 }
 

@@ -36,6 +36,7 @@ import AdminRoute     from "./components/AdminRoute";   // requires admin email
 
 // ── Shared layout ──
 import Navbar         from "./pages/Navbar";
+import Footer         from "./components/Footer";
 
 function App() {
   // Captures utm_source/medium/campaign/oppref from the landing URL, if
@@ -92,6 +93,9 @@ function App() {
         {/* ── 404 fallback — catches any unknown URL ── */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+
+      {/* Footer is always visible on every page, same as Navbar */}
+      <Footer />
     </Router>
   );
 }

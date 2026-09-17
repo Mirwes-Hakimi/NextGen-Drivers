@@ -57,8 +57,9 @@ export const BUSINESS = {
   // real hours here once confirmed (used for LocalBusiness openingHours
   // structured data, which currently omits this field rather than guess).
   hours: null,
-  // TODO: no social profiles configured yet — add real profile URLs
-  // here (e.g. Instagram, Facebook) once they exist; used in the
-  // footer and Organization "sameAs" structured data.
-  socialProfiles: [],
+  // Used in the footer and Organization "sameAs" structured data.
+  socialProfiles: [
+    { label: "Instagram", url: "https://www.instagram.com/yourbestdrivingschool/" },
+    { label: "Facebook", url: "https://www.facebook.com/people/Best-Driving-School/61591633250750/" },
+  ],
 };

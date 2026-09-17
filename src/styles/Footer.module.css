@@ -1,0 +1,123 @@
+/* ─────────────────────────────────────────
+   FOOTER — appears on every page
+───────────────────────────────────────── */
+
+.footer {
+  background: #0a0a0a;
+  border-top: 1px solid rgba(249,115,22,0.15);
+  padding: 3rem 1.5rem 1.5rem;
+}
+
+.grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.brand {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin: 0 0 0.4rem;
+}
+
+.heading {
+  color: #f97316;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.4rem;
+}
+
+.text {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.text a {
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.text a:hover {
+  color: #f97316;
+}
+
+.link {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.link:hover {
+  color: #f97316;
+  text-decoration: underline;
+}
+
+.socialRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.socialLink {
+  color: #9ca3af;
+  font-size: 1.25rem;
+  display: inline-flex;
+  transition: color 0.15s;
+}
+
+.socialLink:hover {
+  color: #f97316;
+}
+
+.bookBtn {
+  display: inline-block;
+  background: linear-gradient(90deg, #ea580c, #f97316);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.6rem;
+  width: fit-content;
+}
+
+.bookBtn:hover {
+  filter: brightness(1.08);
+}
+
+.copyright {
+  max-width: 1100px;
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: #6b7280;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
