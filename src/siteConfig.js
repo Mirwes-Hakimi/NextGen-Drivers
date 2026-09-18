@@ -33,7 +33,7 @@ export const SITE_URL =
 // ─────────────────────────────────────────────────────────────
 export const BUSINESS = {
   name: "Best Driving School",
-  legalName: "Best Driving School", // TODO: replace with the exact registered legal name if incorporated (e.g. "Best Driving School, LLC")
+  legalName: "Best Driving School LLC", // confirmed via Stripe account registration
   phone: SCHOOL_PHONE,
   phoneTel: SCHOOL_PHONE_TEL,
   email: "info@yourbds.com",
