@@ -118,6 +118,20 @@
   transform: rotate(180deg);
 }
 
+/* Invisible bridge over the visual gap below the button — without this,
+   moving the cursor straight down from the button toward the panel
+   crosses a dead zone that isn't part of either element's hover area,
+   which breaks the CSS :hover chain and closes the dropdown early. */
+.dropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px; /* matches .dropdownPanel's min-width so diagonal movement toward its edges stays covered */
+  height: 10px;
+}
+
 /* Dropdown panel — hidden by default, shown on hover */
 .dropdownPanel {
   display: none;
