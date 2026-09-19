@@ -37,6 +37,7 @@ import AdminRoute     from "./components/AdminRoute";   // requires admin email
 // ── Shared layout ──
 import Navbar         from "./pages/Navbar";
 import Footer         from "./components/Footer";
+import ScrollToTop    from "./components/ScrollToTop";
 
 function App() {
   // Captures utm_source/medium/campaign/oppref from the landing URL, if
@@ -48,6 +49,9 @@ function App() {
 
   return (
     <Router>
+      {/* Resets scroll position to the top on every route change */}
+      <ScrollToTop />
+
       {/* Navbar is always visible on every page */}
       <Navbar />
 
