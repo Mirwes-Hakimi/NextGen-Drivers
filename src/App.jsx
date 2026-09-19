@@ -26,6 +26,7 @@ import NewDrivers       from "./pages/NewDrivers";       // /new-drivers
 import DriverEd         from "./pages/DriverEd";         // /education
 import ContactPage      from "./pages/ContactPage";      // /contact
 import PrivacyPolicy    from "./pages/PrivacyPolicy";    // /privacy-policy
+import GoRedirect        from "./pages/GoRedirect";       // /go/:slug — tracked partner-site redirects
 
 // ── Utility pages ──
 import NotFound       from "./pages/NotFound";       // 404
@@ -87,6 +88,9 @@ function App() {
         {/* Booking is open to guests too — signing up is optional */}
         <Route path="/booking"         element={<BookingPage />} />
         <Route path="/booking-success" element={<BookingSuccess />} />
+
+        {/* Tracked redirects to partner sites — see src/pages/GoRedirect.jsx */}
+        <Route path="/go/:slug" element={<GoRedirect />} />
 
         {/* ── Protected routes — must be logged in ── */}
         <Route path="/dashboard" element={<PrivateRoute><Home /></PrivateRoute>} />

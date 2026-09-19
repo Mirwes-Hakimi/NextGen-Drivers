@@ -11,5 +11,6 @@ Disallow: /dashboard
 Disallow: /admin
 Disallow: /booking
 Disallow: /booking-success
+Disallow: /go/
 
 Sitemap: https://www.yourbds.com/sitemap.xml

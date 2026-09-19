@@ -106,6 +106,22 @@ export default function TeenCourse() {
           </p>
         </div>
 
+        {/* Online driver's ed — required in addition to behind-the-wheel
+            training; we don't offer this ourselves, so we point teens to
+            a partner (Bay Pass Driving School) who does. */}
+        <div className={styles.infoBox}>
+          <p>
+            <strong>Also need the online driver's ed course?</strong> California
+            teens need a driver's education course in addition to behind-the-wheel
+            training. We don't offer the online course ourselves — Bay Pass Driving
+            School does.{" "}
+            <a href="/go/teen-online-course" target="_blank" rel="noopener noreferrer">
+              Take their online course
+            </a>
+            , then come back and book your behind-the-wheel sessions with us.
+          </p>
+        </div>
+
         {/* CTA */}
         <div className={styles.cta}>
           <p className={styles.ctaHeading}>Ready to get started?</p>

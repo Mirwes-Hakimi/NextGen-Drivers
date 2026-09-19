@@ -47,6 +47,17 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    match /outboundClicks/{clickId} {
+      // Logs when a visitor is redirected to a partner site (e.g. Bay
+      // Pass Driving School's online course — see src/pages/GoRedirect.jsx).
+      // Write-only from the client: anyone can log a click, nobody but
+      // the admin can read the list back (it's just internal analytics,
+      // not something a visitor needs to see).
+      allow create: if true;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
     // Everything else stays locked down by default.
     match /{document=**} {
       allow read, write: if false;

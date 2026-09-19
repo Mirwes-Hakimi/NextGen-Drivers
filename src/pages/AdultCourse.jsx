@@ -126,6 +126,21 @@ export default function AdultCourse() {
           </div>
         </div>
 
+        {/* Online DMV written-test prep — we don't offer this ourselves,
+            so we point students to a partner (Bay Pass Driving School)
+            who does. */}
+        <div className={styles.infoBox}>
+          <p>
+            <strong>Need to prepare for the DMV written knowledge test?</strong> We
+            focus on behind-the-wheel training — for online written-test prep, Bay
+            Pass Driving School offers a course.{" "}
+            <a href="/go/adult-online-course" target="_blank" rel="noopener noreferrer">
+              Take their online course
+            </a>
+            , then come back and book your behind-the-wheel sessions with us.
+          </p>
+        </div>
+
         {/* CTA */}
         <div className={styles.cta}>
           <p className={styles.ctaHeading}>Start driving with confidence</p>
